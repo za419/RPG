@@ -1,0 +1,563 @@
+defun runPits(number, stage, input, input2, hasAssaultedHQ)
+	if (number is 0)
+		back to stages
+	else
+		switch on stage
+			stage 0
+				show input buttons:
+					Assault House of Shadows (if hasAssaultedHQ is false)
+						call runPits(number, 1, 0, input2, true)
+					50% chance for each to appear:
+						Left
+							call runPits(number, 1, 1, input2, hasAssaultedHQ)
+						Straight
+							call runPits(number, 1, 2, input2, hasAssaultedHQ)
+						Right
+							call runPits(number, 1, 3, input2, hasAssaultedHQ)
+					Go to center
+						call runPits(0, stage, input, input2, hasAssaultedHQ)
+			stage 1
+				call onMove(111) with proper routine
+				switch on input
+					input 0
+						Announce charging House, see shadows and charge
+						register continue
+							call runPits(number, 2, input, input2, hasAssaultedHQ)
+					input 1
+						branch on random bool
+							true
+								Announce shop in ruins, shadow intercept
+								register continue
+									call runPits(number, 2, input, input2, hasAssaultedHQ)
+							false
+								call runPits(number, 100, input, input2, hasAssaultedHQ)
+					input 2
+						branch on random bool
+							true
+								Announce ruined home, shadow guarding
+								register continue
+									call runPits(number, 2, input, input2, hasAssaultedHQ)
+							false
+								call runPits(number, 100, input, input2, hasAssaultedHQ)
+					input 3
+						branch on random bool
+							true
+								Announce bank, shadow appears
+								register contine
+									call runPits(number, 2, input, input2, hasAssaultedHQ)
+							false
+								call runPits(number, 100, input, input2, hasAssaultedHQ)
+			stage 2
+				switch on input
+					input 0
+						set doCommitSuicide
+						show input buttons:
+							fight trio with primary weapon
+								call runPits(number, 3, input, 0, hasAssaultedHQ)
+							swap weapons
+								call runPits(number, stage, input, input2, hasAssaultedHQ)
+							run to charge
+								call runPits(number, 3, input, 1, hasAssaultedHQ)
+							flee
+								call runPits(number, 3, input, 2, hasAssaultedHQ)
+					input 1, input 2, input 3
+						set doCommitSuicide
+						show input buttons:
+							fight trio with primary weapon
+								call runPits(number, 3, input, 0, hasAssaultedHQ)
+							swap weapons
+								call runPits(number, stage, input, input2, hasAssaultedHQ)
+							flee
+								call runPits(number, 3, input, 1, hasAssaultedHQ)
+					default
+						User broke app. Tease them!
+			stage 3
+				switch on input
+					input 0
+						switch on input2
+							input2 0
+								if weapon is a bow and it strength is low (.5>difficulty multiplier times .75 times weapon absolute strength)
+									play archeryMinigame with difficulty-dependent settings
+									if the user died
+										report user death
+									else
+										report victory
+										register continue
+											call runPits(number, 4, input, input2, hasAssaultedHQ)
+								else
+									set undead flag to false
+									switch on user weapon type
+										type sharp
+											determine user death based on needing to not set CLOSE_RANGE_ONLY and needing ACCURATE, CLOSE_RANGE, LIGHT, QUICK_RELOAD.
+											if the user died
+												report user death, having defeated a random number of the trio (0-2)
+											else
+												report victory
+										type archery
+											determine user death (.75 times weapon absolute strength)
+											if the user died
+												report user death, having defeated a random number of the trio (0-2)
+											else
+												report victory (GoTEgg, .8 probability modifier)
+										type modern
+											play aimMinigame
+											set undead flag if the result was a bullseye
+											if the weapon is automatic
+												set dead flag to (reported distance divided by 80% of maximum distance < average of random double and difficultyMult plus one half
+												if the user died
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															set dead flag to false
+															report impossible survival
+												else
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															report bullseye
+											else (if the weapon is automatic)
+												set dead flag to (reported distance divided by 60% of maximum distance < average of random double and difficultyMult plus one half
+												if the user died
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															set dead flag to false
+															report impossible survival
+												else
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															report bullseye
+										type nuclear (weapon)
+											kill user
+											report user death and victory
+										type future
+											is the weapon CLOSE_RANGE_ONLY? (As of the time of this writing, this is the quickest way to check if we have a lightsaber or a raygun)
+												report lightsaber victory
+											else
+												report raygun victory
+								start created thread
+								snooze for 25 milliseconds to allow for some decisions to be made
+								if the user is dead and the undead flag is not set (undead flag denotes to ignore death)
+									set default continue
+								else
+									register continue
+										call runPits(number, 4, input, input2, hasAssaultedHQ)
+							input2 1
+								if easter egg (probability of 5%)
+									report impossible victory by explosive
+								else
+									report user death
+								if the user died
+									set default continue
+								else
+									register continue
+										call runPits(0, stage, input, input2, true)
+							input2 2
+								report user death
+					input 1
+						switch on input2
+							input2 0
+								if weapon is a bow and it strength is low (.65>difficulty multiplier times .75 times weapon absolute strength)
+									play archeryMinigame with difficulty-dependent settings
+									if the user died
+										report user death
+									else
+										report victory
+										register continue
+											call runPits(number, 4, input, input2, hasAssaultedHQ)
+								else
+									set undead flag to false
+									switch on user weapon type
+										type sharp
+											determine user death based on needing to not set CLOSE_RANGE_ONLY and needing CLOSE_RANGE, LIGHT.
+											if the user died
+												report user death (Possible litEgg, 80% chance if titled (50%))
+											else
+												report victory
+										type archery
+											determine user death (.65 times weapon absolute strength)
+											if the user died
+												report user death, having defeated a random number of the trio (0-2)
+											else
+												report victory (ESEgg, .5 probability modifier) - Meridia
+										type modern
+											play aimMinigame
+											set undead flag if the result was a bullseye
+											if the weapon is light or explosive
+												set dead flag to (reported distance divided by 70% of maximum distance (80% if both light and explosive) < average of random double and difficultyMult plus one half
+												if the user died
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															set dead flag to false
+															report impossible survival
+												else
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															report bullseye
+											else (if the weapon is light or explosive)
+												set dead flag to (reported distance divided by 60% of maximum distance < average of random double and difficultyMult plus one half
+												if the user died
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															set dead flag to false
+															report impossible survival
+												else
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															report bullseye
+										type nuclear (weapon)
+											kill user
+											report user death and victory
+										type future
+											is the weapon CLOSE_RANGE_ONLY? (As of the time of this writing, this is the quickest way to check if we have a lightsaber or a raygun)
+												report lightsaber victory
+											else
+												report raygun victory
+								start created thread
+								snooze for 25 milliseconds to allow for some decisions to be made
+								if the user is dead and the undead flag is not set (undead flag denotes to ignore death)
+									set default continue
+								else
+									register continue
+										call runPits(number, 4, input, input2, hasAssaultedHQ)
+							input2 1
+								if determineUserDeath(2, 3)
+									report failure to escape and user death
+								else
+									report user victory
+									call runPits(number-1, 0, 0, 0, determineUserDeath)
+					input 2 // Note that this is repeated even though it looks the same, since different messages will be displayed. 
+						switch on input2
+							input2 0
+								if weapon is a bow and it strength is low (.575>difficulty multiplier times .75 times weapon absolute strength)
+									play archeryMinigame with difficulty-dependent settings
+									if the user died
+										report user death
+									else
+										report victory
+										register continue
+											call runPits(number, 4, input, input2, hasAssaultedHQ)
+								else
+									set undead flag to false
+									switch on user weapon type
+										type sharp
+											determine user death based on needing to not set CLOSE_RANGE_ONLY and needing ACCURATE, CLOSE_RANGE, LIGHT, QUICK_RELOAD.
+											if the user died
+												report user death, having defeated a random number of the trio (0-2)
+											else
+												report victory
+										type archery
+											determine user death (.65 times weapon absolute strength)
+											if the user died
+												report user death, having defeated a random number of the trio (0-2)
+											else
+												report victory (ESEgg, .5 probability modifier) - Meridia
+										type modern
+											play aimMinigame
+											set undead flag if the result was a bullseye
+											if the weapon is light or explosive
+												set dead flag to (reported distance divided by 70% of maximum distance (80% if both light and explosive) < average of random double and difficultyMult plus one half
+												if the user died
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															set dead flag to false
+															report impossible survival
+												else
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															report bullseye
+											else (if the weapon is light or explosive)
+												set dead flag to (reported distance divided by 60% of maximum distance < average of random double and difficultyMult plus one half
+												if the user died
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															set dead flag to false
+															report impossible survival
+												else
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															report bullseye
+										type nuclear (weapon)
+											kill user
+											report user death and victory
+										type future
+											is the weapon CLOSE_RANGE_ONLY? (As of the time of this writing, this is the quickest way to check if we have a lightsaber or a raygun)
+												report lightsaber victory
+											else
+												report raygun victory
+								start created thread
+								snooze for 25 milliseconds to allow for some decisions to be made
+								if the user is dead and the undead flag is not set (undead flag denotes to ignore death)
+									set default continue
+								else
+									register continue
+										call runPits(number, 4, input, input2, hasAssaultedHQ)
+							input2 1
+								if determineUserDeath(4, 5)
+									report failure to escape and user death
+								else
+									report user victory
+									call runPits(number-1, 0, 0, 0, determineUserDeath)
+					input 3 // Note that this is repeated even though it looks the same, since different messages will be displayed. 
+						switch on input2
+							input2 0
+								if weapon is a bow and it strength is low (.55>difficulty multiplier times .75 times weapon absolute strength)
+									play archeryMinigame with difficulty-dependent settings
+									if the user died
+										report user death
+									else
+										report victory
+										register continue
+											call runPits(number, 4, input, input2, hasAssaultedHQ)
+								else
+									set undead flag to false
+									switch on user weapon type
+										type sharp
+											determine user death based on needing to not set CLOSE_RANGE_ONLY and needing ACCURATE, CLOSE_RANGE, LIGHT, QUICK_RELOAD.
+											if the user died
+												report user death, having defeated a random number of the trio (0-2)
+											else
+												report victory
+										type archery
+											determine user death (.65 times weapon absolute strength)
+											if the user died
+												report user death, having defeated a random number of the trio (0-2)
+											else
+												report victory (ESEgg, .5 probability modifier) - Meridia
+										type modern
+											play aimMinigame
+											set undead flag if the result was a bullseye
+											if the weapon is light or explosive
+												set dead flag to (reported distance divided by 70% of maximum distance (80% if both light and explosive) < average of random double and difficultyMult plus one half
+												if the user died
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															set dead flag to false
+															report impossible survival
+												else
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															report bullseye
+											else (if the weapon is light or explosive)
+												set dead flag to (reported distance divided by 60% of maximum distance < average of random double and difficultyMult plus one half
+												if the user died
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															set dead flag to false
+															report impossible survival
+												else
+													switch on result type
+														output missed
+															report missed
+														output grazed
+															report grazed
+														output poor
+															report poor
+														output hit
+															report hit
+														output good
+															report good
+														output critical
+															report critical
+														output bullseye
+															report bullseye
+										type nuclear (weapon)
+											kill user
+											report user death and victory
+										type future
+											is the weapon CLOSE_RANGE_ONLY? (As of the time of this writing, this is the quickest way to check if we have a lightsaber or a raygun)
+												report lightsaber victory
+											else
+												report raygun victory
+								start created thread
+								snooze for 25 milliseconds to allow for some decisions to be made
+								if the user is dead and the undead flag is not set (undead flag denotes to ignore death)
+									set default continue
+								else
+									register continue
+										call runPits(number, 4, input, input2, hasAssaultedHQ)
+							input2 1
+								if determineUserDeath(1, 3)
+									report failure to escape and user death
+								else
+									report user victory
+									call runPits(number-1, 0, 0, 0, determineUserDeath)
+						default
+							User broke app. Tease them!

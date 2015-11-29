@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+	android:layoutAnimation="@anim/fadeinlayout"
+	android:orientation="vertical"
+	android:id="@+id/inputLayout"
+	android:minWidth="400dp"
+	android:animateLayoutChanges="true">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="What do you do?"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content"
+		android:id="@+id/inputTitle"
+		android:layout_gravity="center_horizontal"
+		android:gravity="center_horizontal"/>
+
+	<ScrollView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginTop="20dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="20dp"
+		android:layout_weight="1">
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			style="?android:attr/buttonBarStyle"
+			android:layout_width="wrap_content"
+			android:orientation="vertical"
+			android:id="@+id/inputButtonBar"
+			android:animateLayoutChanges="true">
+
+		</LinearLayout>
+
+	</ScrollView>
+
+</LinearLayout>
+

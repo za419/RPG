@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:id="@+id/quitLayout"
+	android:animateLayoutChanges="true"
+	android:layoutAnimation="@anim/fadeinlayout">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="What do you want to do?"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content"
+		android:id="@+id/quitTitle"
+		android:layout_gravity="center_horizontal"
+		android:gravity="center_horizontal"/>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:orientation="horizontal"
+		android:id="@+id/quitButtonBar"
+		android:layout_gravity="center|center_vertical|center_horizontal"
+		android:layout_marginTop="200dp">
+
+		<Button
+			android:layout_height="wrap_content"
+			android:text="Quit"
+			android:layout_width="wrap_content"
+			android:id="@+id/quitQuitButton"
+			android:onClick="switchLayout"/>
+
+		<Button
+			android:layout_height="wrap_content"
+			android:text="Try Again"
+			android:layout_width="wrap_content"
+			android:id="@+id/quitContinueButton"
+			android:layout_marginLeft="50dp"
+			android:onClick="restartGame"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+

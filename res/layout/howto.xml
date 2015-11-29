@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="wrap_content"
+	android:layoutAnimation="@anim/fadeinlayout"
+	android:layout_margin="10dp">
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:id="@+id/howToLayout"
+		android:animateLayoutChanges="true">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="How to play RPG"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content"
+			android:id="@+id/howToTitle"
+			android:layout_marginBottom="50dp"
+			android:shadowColor="#330401"
+			android:shadowDx="3"
+			android:shadowDy="3"
+			android:shadowRadius="3"
+			android:layout_gravity="center_horizontal"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="RPG is a simple text-based game. To begin, you may wish to first configure the game settings from the 'options' button of the main screen. Of course, you may simply press 'PLAY' if you so wish."
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/howToOne"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="There are several screens which require you to input text, such as your name. Just type as you like, and press the enter key when you're done. The application will do its best to determine if your answer needs to have some extraneous verbiage removed, but it is very imperfect in this regard."
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:layout_marginTop="20dp"
+			android:id="@+id/howToTwo"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="Configuration options are now saved in each game save. The 'persist' parameter in the options menu governs whether changes to the user interface persist through loading savegames. Persisted changes include 'fullscreen', typing speed, and 'batching'. Enable it if you would like these to remain the same even if a save-game is loaded with different values for these - disable it if you would like save-specific behavior for these."
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:layout_marginTop="20dp"
+			android:id="@+id/howToThree"/>
+
+	</LinearLayout>
+
+</ScrollView>
+

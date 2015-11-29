@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="wrap_content"
+	android:fillViewport="true"
+	android:foregroundGravity="center|center_vertical|center_horizontal|fill|fill_vertical|fill_horizontal"
+	android:layoutAnimation="@anim/fadeinlayout">
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:id="@+id/grueLayout"
+		android:gravity="center|center_vertical|center_horizontal"
+		android:minWidth="400dp"
+		android:animateLayoutChanges="true">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="You have been eaten by a Grue."
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content"
+			android:id="@+id/grueContent"
+			android:layout_gravity="center|center_vertical|center_horizontal"
+			android:layout_marginTop="200dp"
+			android:textColor="#FF0000"
+			android:shadowDx="5"
+			android:shadowColor="#FF0000"
+			android:shadowDy="5"
+			android:shadowRadius="5"/>
+
+		<Button
+			android:layout_height="wrap_content"
+			android:text="Continue"
+			android:layout_width="wrap_content"
+			android:gravity="center_vertical|center_horizontal"
+			android:id="@+id/gameContinueButton"
+			android:textColor="#FF0000"
+			android:shadowColor="#108800"
+			android:shadowDx="5"
+			android:shadowDy="5"
+			android:shadowRadius="5"
+			android:layout_gravity="bottom|right"
+			android:layout_marginTop="200dp"/>
+
+	</LinearLayout>
+
+</ScrollView>
+

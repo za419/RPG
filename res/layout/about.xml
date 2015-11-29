@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="wrap_content"
+	android:animateLayoutChanges="true"
+	android:layoutAnimation="@anim/fadeinlayout">
+
+	<RelativeLayout
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:id="@+id/aboutLayout"
+		android:animateLayoutChanges="true"
+		android:layoutAnimation="@anim/fadeinlayout">
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:id="@+id/aboutTitleLayout"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="15dp">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="About"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content"
+				android:id="@+id/aboutTitle"
+				android:shadowColor="#FF0000"
+				android:shadowDx="5"
+				android:shadowDy="5"
+				android:shadowRadius="5"
+				android:textColor="#00FF00"
+				android:layout_gravity="center_horizontal"
+				android:layout_marginRight="15dp"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="RPG"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content"
+				android:id="@+id/aboutTitle2"
+				android:shadowColor="#FFFFFF"
+				android:shadowDx="0"
+				android:shadowDy="0"
+				android:shadowRadius="25"
+				android:textColor="#000000"/>
+
+		</LinearLayout>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="RPG, by Ryan Hodin, is a game conceived out of boredom on a TI-84+ CSE calculator circa January 2014. It spent approximately a month in production, officially meeting final criteria on February 27th, 2014. However, due to the memory constraints of the platform, several concessions were made in order to allow the program to function, the author made the decision to clone the game on Android, but with the features made possible by the considerably lesser constraints of the platform. Work started on February 28th, 2014."
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:layout_below="@id/aboutTitleLayout"
+			android:id="@+id/aboutInfo"
+			android:layout_marginStart="15dp"
+			android:layout_marginEnd="15dp"
+			android:shadowColor="#FFFFFF"
+			android:shadowDx="2"
+			android:shadowDy="0"
+			android:shadowRadius="5"
+			android:layout_marginTop="10dp"
+			android:textColor="#7B0700"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="Acknowledgements"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content"
+			android:id="@+id/aboutTitle3"
+			android:layout_below="@id/aboutInfo"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="15dp"
+			android:shadowColor="#FF0000"
+			android:shadowDx="5"
+			android:shadowDy="5"
+			android:shadowRadius="5"
+			android:textColor="#FFFFFF"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="There are several people I would like to thank for their help in making RPG possible:"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/aboutAcknowledgements"
+			android:layout_below="@id/aboutTitle3"
+			android:layout_marginTop="10dp"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp"
+			android:textColor="#0000FF"
+			android:shadowColor="#004C4D"
+			android:shadowDx="5"
+			android:shadowDy="5"
+			android:shadowRadius="5"/>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="vertical"
+			android:layout_below="@id/aboutAcknowledgements"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="7dp"
+			android:id="@+id/aboutAcknowledgementList"
+			android:layout_marginLeft="40dp"
+			android:layout_marginRight="20dp">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="- To Anna Hartman, for whom my hand was once over my heart, for her help in improving RPG creatively, and in generally giving me a hand."
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/aboutAcknowledgementAnna"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="- To Steven Rose, for always noting that my code is buggy, for providing a critical eye to my code, and for generally being irritating enough to make me write reasonably good code."
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/aboutAcknowledgementSteven"
+				android:layout_marginTop="14dp"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="- To Michelle Alber, for enthusiastically wanting to play RPG at all stages of development, and helping to give me cause to finish it."
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:layout_marginTop="14dp"
+				android:id="@+id/aboutAcknowledgementMichelle"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="- To Sebastian Johnson, for helping me with my combat, for critiquing my plotline and for helping me decide, when I was out of ideas, in which direction to take RPG."
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/aboutAcknowledgementSebastian"
+				android:layout_marginTop="14dp"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="- To Infocom, for the creation of the Zork trilogy, and thus giving me inspiration for RPG and for my monsters."
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/aboutAcknowledgementInfocom"
+				android:layout_marginTop="14dp"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="- To Texas Instruments, for producing a calculator, that while limited, inspired me to write code, and provided a platform for my creative expression."
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:layout_marginTop="14dp"
+				android:id="@+id/aboutAcknowledgementTI"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="- To the developers of AIDE, the Android IDE, for providing me with an application to allow me to write applications such as this from my mobile phone."
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/aboutAcknowledgementAIDE"
+				android:layout_marginTop="14dp"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="- And, to all the others that have helped me out with this, and all the other projects that led up to it, over the years, for their help, and for their understanding of my not mentioning them explicitly."
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/aboutAcknowledgementOther"
+				android:layout_marginTop="14dp"/>
+
+		</LinearLayout>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="About The Author"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/aboutTitleLast"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/aboutAcknowledgementList"
+			android:layout_marginTop="300dp"
+			android:shadowColor="#FF0000"
+			android:shadowDx="5"
+			android:shadowDy="5"
+			android:shadowRadius="5"
+			android:textColor="#0000FF"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="There is nothing interesting to be said about the author. He is boring, and unsure of why you're bothering to read this. Stop it. Go away, and play the game I worked so hard to create."
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:layout_width="wrap_content"
+			android:id="@+id/aboutTheAuthor"
+			android:shadowColor="#000099"
+			android:shadowDx="5"
+			android:shadowDy="5"
+			android:shadowRadius="5"
+			android:textColor="#FF0000"
+			android:layout_below="@id/aboutTitleLast"
+			android:layout_marginTop="50dp"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:text="Changelog (Version History)"
+			android:layout_below="@id/aboutTheAuthor"
+			android:id="@+id/aboutChangelogTitle"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="150dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:layout_width="wrap_content"
+			android:text="@string/changelog"
+			android:layout_below="@id/aboutChangelogTitle"
+			android:layout_centerHorizontal="true"
+			android:layout_margin="20dp"
+			android:id="@+id/aboutChangelog"/>
+
+	</RelativeLayout>
+
+</ScrollView>
+

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="horizontal"
+	android:id="@+id/aimerLayout"
+	android:animateLayoutChanges="true"
+	android:layoutAnimation="@anim/fadeinlayout">
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:orientation="vertical"
+		android:layout_alignParentTop="true"
+		android:layout_toEndOf="@id/aimerBullseyeLayout"
+		android:layout_centerHorizontal="true">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="Aim your shot"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content"
+			android:gravity="center_horizontal"
+			android:layout_margin="2dp"
+			android:layout_gravity="center_horizontal"
+			android:id="@+id/aimerTitle"/>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:id="@+id/aimerTimingLayout"
+			android:layout_marginBottom="10dp"
+			android:layout_gravity="center_horizontal">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Game starts in:"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/aimerTimingTitle"
+				android:layout_marginRight="10dp"/>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="NaN"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/aimerTiming"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<RelativeLayout
+		android:layout_height="match_parent"
+		android:layout_width="275dp"
+		android:id="@+id/aimerBullseyeLayout"
+		android:layout_gravity="center_horizontal"
+		android:animateLayoutChanges="true"
+		android:layout_centerHorizontal="false"
+		android:layout_alignParentLeft="true">
+
+		<ImageView
+			android:layout_height="match_parent"
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_width="match_parent"
+			android:src="@drawable/bullseye"
+			android:id="@+id/aimerBullseye"
+			android:scaleType="fitXY"
+			android:layout_centerHorizontal="true"/>
+
+		<ImageView
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:src="@drawable/crosshairs"
+			android:id="@+id/aimerCrosshairs"
+			android:scaleType="fitXY"
+			android:visibility="gone"/>
+
+	</RelativeLayout>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:orientation="vertical"
+		android:layout_gravity="right"
+		android:layout_marginLeft="200dp"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true">
+
+		<ImageButton
+			android:layout_height="50dp"
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_width="40dp"
+			android:src="@drawable/arrow"
+			android:id="@+id/aimerUpArrow"
+			android:layout_gravity="center_horizontal"
+			android:scaleType="fitXY"
+			android:layout_marginTop="10dp"/>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:id="@+id/aimerSideArrowsLayout"
+			android:layout_gravity="center_horizontal"
+			android:layout_margin="10dp"
+			android:animateLayoutChanges="true">
+
+			<ImageButton
+				android:layout_height="40dp"
+				style="?android:attr/buttonBarButtonStyle"
+				android:layout_width="50dp"
+				android:src="@drawable/arrow"
+				android:id="@+id/aimerLeftArrow"
+				android:rotation="270"
+				android:layout_marginRight="80dp"
+				android:scaleType="fitXY"/>
+
+			<ImageButton
+				android:layout_height="40dp"
+				style="?android:attr/buttonBarButtonStyle"
+				android:layout_width="50dp"
+				android:src="@drawable/arrow"
+				android:scaleType="fitXY"
+				android:rotation="90"
+				android:id="@+id/aimerRightArrow"/>
+
+		</LinearLayout>
+
+		<ImageButton
+			android:layout_height="50dp"
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_width="40dp"
+			android:src="@drawable/arrow"
+			android:scaleType="fitXY"
+			android:rotation="180"
+			android:layout_gravity="center_horizontal"
+			android:id="@+id/aimerDownArrow"/>
+
+	</LinearLayout>
+
+</RelativeLayout>
+

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/saveManagerMenuBack" android:layout_width="wrap_content" android:layout_height="wrap_content" android:title="Go Back" android:menuCategory="system" android:titleCondensed="Back"></item>
+    <item android:id="@+id/saveManagerMenuExit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:title="Exit"></item>
+    
+
+</menu>

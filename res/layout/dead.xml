@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:id="@+id/deadLayout"
+	android:animateLayoutChanges="true"
+	android:layoutAnimation="@anim/fadeinlayout">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="You have died"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content"
+		android:id="@+id/deadTitle"
+		android:layout_gravity="center_horizontal"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Your adventure has come to a Grim and Gruesome end... You are dead."
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="wrap_content"
+		android:id="@+id/deadText"
+		android:layout_marginTop="20dp"
+		android:layout_marginLeft="5dp"/>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Continue"
+		android:layout_width="wrap_content"
+		android:id="@+id/deadContinue"
+		android:layout_marginTop="200dp"
+		android:layout_gravity="right"
+		android:layout_marginRight="5dp"
+		android:onClick="switchLayout"/>
+
+</LinearLayout>
+

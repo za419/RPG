@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:animateLayoutChanges="true"
+	android:layoutAnimation="@anim/fadeinlayout"
+	android:id="@+id/saveManagerLayout">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content"
+		android:text="Save Manager"
+		android:id="@+id/saveManagerTitle"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginTop="10dp"/>
+
+	<ScrollView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginLeft="40dp"
+		android:layout_marginRight="40dp"
+		android:layout_marginTop="25dp"
+		android:layout_weight="1"
+		android:id="@+id/saveManagerScroller"
+		android:animateLayoutChanges="true"
+		android:layoutAnimation="@anim/fadeinlayout"
+		android:visibility="gone">
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="vertical"
+			android:id="@+id/saveManagerSavesLayout"
+			android:animateLayoutChanges="true"
+			android:layoutAnimation="@anim/fadeinlayout"
+			android:visibility="gone"/>
+
+	</ScrollView>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:orientation="horizontal"
+		android:animateLayoutChanges="true"
+		android:layoutAnimation="@anim/fadeinlayout"
+		android:id="@+id/saveManagerActionBar"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginTop="10dp">
+
+		<Button
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="Delete a save"
+			android:id="@+id/saveManagerDeleteButton"
+			android:layout_marginRight="7dp"
+			android:onClick="showSaveManagerSaves"
+			android:shadowColor="#FF0000"
+			android:shadowDx="2"
+			android:shadowDy="2"
+			android:shadowRadius="2"/>
+
+		<Button
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="Cancel"
+			android:id="@+id/saveManagerCancelButton"
+			android:shadowColor="#000000"
+			android:shadowDx="2"
+			android:shadowDy="2"
+			android:shadowRadius="2"
+			android:onClick="onBackPressed"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:orientation="horizontal"
+		android:animateLayoutChanges="true"
+		android:layoutAnimation="@anim/fadeinlayout"
+		android:id="@+id/saveManagerProcessingLayout"
+		android:layout_marginTop="10dp"
+		android:layout_margin="10dp"
+		android:layout_gravity="center_horizontal"
+		android:visibility="gone">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="Processing..."
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/saveManagerProcessingTitle"
+			android:layout_gravity="center_vertical"/>
+
+		<ProgressBar
+			android:layout_height="wrap_content"
+			style="?android:attr/progressBarStyleLarge"
+			android:layout_width="wrap_content"
+			android:indeterminate="true"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+

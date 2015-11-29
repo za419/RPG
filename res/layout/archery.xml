@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:id="@+id/archeryLayout"
+	android:gravity="top"
+	android:animateLayoutChanges="true"
+	android:layoutAnimation="@anim/fadeinlayout">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Hit the bullseye as many times as possible to win!"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content"
+		android:id="@+id/archeryTitle"
+		android:layout_gravity="center_horizontal"
+		android:gravity="center_horizontal"
+		android:layout_marginTop="2dp"
+		android:layout_marginBottom="10dp"/>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="horizontal"
+		android:id="@+id/archeryDataLayout"
+		android:layout_gravity="center_horizontal"
+		android:gravity="center_horizontal"
+		android:layout_marginLeft="2dp"
+		android:layout_marginRight="2dp"
+		android:animateLayoutChanges="true">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="Needed:"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/archeryThresholdLabel"
+			android:layout_marginRight="10dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="Infinity"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/archeryThreshold"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="Current:"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/archeryCurrentLabel"
+			android:layout_marginLeft="25dp"
+			android:layout_marginRight="10dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="0"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/archeryCurrent"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="horizontal"
+		android:id="@+id/archeryTimingLayout"
+		android:layout_marginLeft="2dp"
+		android:layout_marginRight="2dp"
+		android:layout_marginTop="2dp"
+		android:gravity="center_horizontal"
+		android:animateLayoutChanges="true">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="Starts in:"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/archeryTimingLabel"
+			android:layout_marginRight="10dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="NaN"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/archeryTiming"/>
+
+	</LinearLayout>
+
+	<ProgressBar
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginTop="2dp"
+		android:id="@+id/archeryWait"
+		android:visibility="visible"
+		android:indeterminate="true"/>
+
+	<LinearLayout
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:id="@+id/archeryBullseyeLayout"
+		android:layout_marginTop="10dp"
+		android:animateLayoutChanges="true">
+
+		<ImageButton
+			android:layout_height="100dp"
+			style="?android:attr/buttonBarButtonStyle"
+			android:layout_width="100dp"
+			android:src="@drawable/bullseye_small"
+			android:id="@+id/archeryBullseye"
+			android:adjustViewBounds="true"
+			android:layout_marginTop="10dp"
+			android:layout_marginLeft="10dp"
+			android:scaleType="fitXY"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+

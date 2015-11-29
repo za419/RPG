@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:id="@+id/gameLayout"
+		android:animateLayoutChanges="true">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="This is a Title"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content"
+			android:layout_marginBottom="30dp"
+			android:id="@+id/gameTitle"
+			android:layout_gravity="center_horizontal"
+			android:visibility="gone"
+			android:gravity="center_horizontal"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="If you can see this, you just tore a hole in the fabric of the RPG space-time continuum. Good job. Now you have to close and reopen the app. Hey, while I have you here, how about I remind you to READ ALL THE GAME TEXT! Just because I let you skip it, that does not mean you should skip it."
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:id="@+id/gameText"/>
+
+		<Button
+			android:layout_height="wrap_content"
+			android:text="Continue"
+			android:layout_width="wrap_content"
+			android:id="@+id/gameContinueButton"
+			android:layout_gravity="bottom|right"
+			android:layout_marginTop="150dp"
+			android:visibility="gone"
+			android:textColor="#FF0000"
+			android:shadowColor="#108800"
+			android:shadowDx="5"
+			android:shadowDy="5"
+			android:shadowRadius="5"/>
+
+	</LinearLayout>
+
+</ScrollView>
+

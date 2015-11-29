@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="wrap_content"
+	android:fillViewport="true"
+	android:layout_gravity="center"
+	android:foregroundGravity="center"
+	android:layoutAnimation="@anim/fadeinlayout">
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:orientation="vertical"
+		android:id="@+id/configLayout"
+		android:gravity="left"
+		android:minWidth="500dp"
+		android:animateLayoutChanges="true">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="RPG Configuration"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content"
+			android:id="@+id/configTitle"
+			android:gravity="center_horizontal"
+			android:layout_gravity="top|center_horizontal"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="20dp"
+			android:shadowColor="#009900"
+			android:shadowDx="7"
+			android:shadowDy="7"
+			android:shadowRadius="7"
+			android:textColor="#00FF00"/>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="horizontal"
+			android:id="@+id/configDifficultyLayout"
+			android:minWidth="400dp"
+			android:visibility="visible"
+			android:gravity="left"
+			android:animateLayoutChanges="true">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Difficulty"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/configDifficultyTitle"
+				android:layout_gravity="left|center_vertical"
+				android:layout_marginRight="15dp"
+				android:shadowColor="#990000"
+				android:shadowDx="5"
+				android:shadowDy="5"
+				android:shadowRadius="5"
+				android:textColor="#FF0000"/>
+
+			<SeekBar
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:layout_gravity="fill_horizontal"
+				android:id="@+id/configDifficulty"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp"
+			android:id="@+id/configDelayLayout"
+			android:animateLayoutChanges="true">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Pause Delay Factor"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:layout_marginRight="15dp"
+				android:id="@+id/configDelayLabel"
+				android:textColor="#0000FF"
+				android:shadowColor="#00FFFF"
+				android:shadowDx="5"
+				android:shadowDy="5"
+				android:shadowRadius="5"
+				android:layout_gravity="center_vertical"/>
+
+			<SeekBar
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:layout_gravity="fill_horizontal"
+				android:id="@+id/configDelay"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="horizontal"
+			android:layout_marginTop="7dp"
+			android:gravity="center_vertical"
+			android:id="@+id/configBatchLayout"
+			android:layout_marginRight="15dp"
+			android:background="#3B3B3B"
+			android:animateLayoutChanges="true">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Typing Power-Save"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:layout_marginRight="15dp"
+				android:id="@+id/configBatchLabel"
+				android:shadowColor="#0000FF"
+				android:shadowDx="5"
+				android:shadowDy="5"
+				android:shadowRadius="5"
+				android:textColor="#00FF00"/>
+
+			<SeekBar
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:id="@+id/configBatch"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp"
+			android:id="@+id/configEasterEggLayout"
+			android:gravity="left"
+			android:animateLayoutChanges="true">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Easter Eggs"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/configEasterEggLabel"
+				android:layout_gravity="center_vertical"
+				android:shadowColor="#990000"
+				android:shadowDx="5"
+				android:shadowDy="5"
+				android:shadowRadius="5"
+				android:textColor="#00FF00"
+				android:layout_marginRight="25dp"/>
+
+			<Switch
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:id="@+id/configEasterEgg"
+				android:gravity="right"
+				android:layout_gravity="right"
+				android:layout_marginRight="0dp"
+				android:paddingRight="0dp"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="vertical"
+			android:layout_marginTop="7dp"
+			android:id="@+id/configEasterOptionsLayout"
+			android:background="#3B3B3B"
+			android:gravity="left"
+			android:visibility="visible"
+			android:layout_marginRight="15dp"
+			android:animateLayoutChanges="true">
+
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:orientation="vertical"
+				android:animateLayoutChanges="true">
+
+				<LinearLayout
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
+					android:orientation="horizontal"
+					android:id="@+id/configEasterOptionsOddsLayout"
+					android:minWidth="400dp"
+					android:animateLayoutChanges="true">
+
+					<TextView
+						android:layout_height="wrap_content"
+						android:text="Frequency"
+						android:textAppearance="?android:attr/textAppearanceMedium"
+						android:layout_width="wrap_content"
+						android:id="@+id/configEasterOptionsOddsLabel"
+						android:layout_marginRight="15dp"
+						android:layout_gravity="center_vertical"
+						android:shadowColor="#000027"
+						android:shadowDx="5"
+						android:shadowDy="5"
+						android:shadowRadius="5"
+						android:textColor="#EC6746"/>
+
+					<LinearLayout
+						android:layout_height="wrap_content"
+						android:layout_width="match_parent"
+						android:orientation="vertical"
+						android:animateLayoutChanges="true">
+
+						<SeekBar
+							android:layout_height="wrap_content"
+							android:layout_width="match_parent"
+							android:id="@+id/configEasterOptionsOdds"/>
+
+					</LinearLayout>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginTop="7dp"
+				android:id="@+id/configEasterOptionsSchoolLayout"
+				android:animateLayoutChanges="true">
+
+				<TextView
+					android:layout_height="wrap_content"
+					android:text="Scholastic"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:layout_width="wrap_content"
+					android:id="@+id/configEasterOptionsSchoolLabel"
+					android:shadowColor="#4E0059"
+					android:shadowDx="5"
+					android:shadowDy="5"
+					android:shadowRadius="5"
+					android:textColor="#FF9F00"
+					android:layout_marginRight="15dp"
+					android:layout_gravity="center_vertical"/>
+
+				<Switch
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_gravity="right"
+					android:id="@+id/configEasterOptionsScholastic"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginTop="7dp"
+				android:id="@+id/configEasterOptionsGoTLayout"
+				android:animateLayoutChanges="true">
+
+				<TextView
+					android:layout_height="wrap_content"
+					android:text="Westeros"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:layout_width="wrap_content"
+					android:id="@+id/configEasterOptionsGoTLabel"
+					android:layout_gravity="center_vertical"
+					android:layout_marginRight="15dp"
+					android:shadowColor="#FF0000"
+					android:textColor="#FDB500"
+					android:shadowDx="5"
+					android:shadowDy="5"
+					android:shadowRadius="5"/>
+
+				<Switch
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:id="@+id/configEasterOptionsGoT"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginTop="7dp"
+				android:id="@+id/configEasterOptionsESLayout"
+				android:animateLayoutChanges="true">
+
+				<TextView
+					android:layout_height="wrap_content"
+					android:text="Scrolls of the Elders"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:layout_width="wrap_content"
+					android:layout_marginRight="15dp"
+					android:id="@+id/configEasterOptionsESLabel"
+					android:textColor="#000000"
+					android:shadowColor="#FF0000"
+					android:shadowDx="5"
+					android:shadowDy="5"
+					android:shadowRadius="5"
+					android:layout_gravity="center_vertical"/>
+
+				<Switch
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:id="@+id/configEasterOptionsES"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginTop="7dp"
+				android:id="@+id/configEasterOptionsLitLayout">
+
+				<TextView
+					android:layout_height="wrap_content"
+					android:text="Literary"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:layout_width="wrap_content"
+					android:id="@+id/configEasterOptionsLitLabel"
+					android:layout_marginRight="15dp"
+					android:textColor="#997C00"
+					android:shadowColor="#FFFFFF"
+					android:shadowDx="4"
+					android:shadowDy="4"
+					android:shadowRadius="5"
+					android:layout_gravity="center_vertical"/>
+
+				<Switch
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:id="@+id/configEasterOptionsLit"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp"
+			android:id="@+id/configSpecMonLayout"
+			android:gravity="left"
+			android:animateLayoutChanges="true">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Special Monster Actions"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/configSpecMonLabel"
+				android:layout_gravity="center_vertical"
+				android:layout_marginRight="15dp"
+				android:shadowColor="#000099"
+				android:shadowDx="5"
+				android:shadowDy="5"
+				android:shadowRadius="5"
+				android:textColor="#FF0000"/>
+
+			<Switch
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:id="@+id/configSpecMon"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp"
+			android:id="@+id/configGenderLayout"
+			android:animateLayoutChanges="true">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Gender"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/configGenderLabel"
+				android:layout_gravity="center_vertical"
+				android:layout_marginRight="15dp"
+				android:shadowColor="#0000FF"
+				android:textColor="#D200B6"
+				android:shadowDx="5"
+				android:shadowDy="5"
+				android:shadowRadius="5"/>
+
+			<Switch
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:id="@+id/configGender"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="vertical"
+			android:layout_marginTop="7dp"
+			android:id="@+id/configGenderOptionsLayout"
+			android:background="#3B3B3B"
+			android:gravity="left"
+			android:visibility="visible"
+			android:layout_marginRight="15dp"
+			android:animateLayoutChanges="true">
+
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:orientation="horizontal"
+				android:id="@+id/configGenderOptionsTwoLayout"
+				android:animateLayoutChanges="true">
+
+				<TextView
+					android:layout_height="wrap_content"
+					android:text="Two-gender system"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:layout_width="wrap_content"
+					android:id="@+id/configGenderOptionsTwoLabel"
+					android:layout_gravity="center_vertical"
+					android:shadowColor="#000000"
+					android:shadowDx="5"
+					android:shadowDy="5"
+					android:shadowRadius="5"
+					android:layout_marginRight="14dp"/>
+
+				<Switch
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:id="@+id/configGenderOptionsTwo"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:orientation="vertical"
+				android:id="@+id/configGenderOptionsMultiLayout"
+				android:background="#6F6969"
+				android:layout_marginTop="5dp"
+				android:animateLayoutChanges="true">
+
+				<LinearLayout
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:orientation="horizontal"
+					android:id="@+id/configGenderOptionsSpecialLayout"
+					android:animateLayoutChanges="true">
+
+					<TextView
+						android:layout_height="wrap_content"
+						android:text="Special Genders"
+						android:textAppearance="?android:attr/textAppearanceMedium"
+						android:layout_width="wrap_content"
+						android:id="@+id/configGenderOptionsSpecialLabel"
+						android:layout_gravity="center_vertical"
+						android:layout_marginRight="15dp"
+						android:shadowColor="#FFFFFF"
+						android:shadowDx="5"
+						android:shadowDy="5"
+						android:shadowRadius="5"
+						android:textColor="#000000"/>
+
+					<Switch
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:id="@+id/configGenderOptionsSpecial"/>
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="5dp"
+					android:id="@+id/configGenderOptionsCustomLayout"
+					android:animateLayoutChanges="true">
+
+					<TextView
+						android:layout_height="wrap_content"
+						android:text="Custom Gender Field"
+						android:textAppearance="?android:attr/textAppearanceMedium"
+						android:layout_width="wrap_content"
+						android:id="@+id/configGenderOptionsCustomLabel"
+						android:layout_gravity="center_vertical"
+						android:shadowColor="#990000"
+						android:shadowDx="5"
+						android:shadowDy="5"
+						android:shadowRadius="5"
+						android:layout_marginRight="15dp"/>
+
+					<Switch
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:id="@+id/configGenderOptionsCustom"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:orientation="horizontal"
+				android:id="@+id/configGenderOptionsAddressLayout"
+				android:layout_marginTop="7dp"
+				android:animateLayoutChanges="true">
+
+				<TextView
+					android:layout_height="wrap_content"
+					android:text="Gender Specific Addressing"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:layout_width="wrap_content"
+					android:id="@+id/configGenderOptionsAddressLabel"
+					android:layout_marginRight="15dp"
+					android:layout_gravity="center_vertical"
+					android:shadowColor="#EC92F0"
+					android:shadowDx="5"
+					android:shadowDy="5"
+					android:shadowRadius="5"
+					android:textColor="#FFFFFF"/>
+
+				<Switch
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:id="@+id/configGenderOptionsAddress"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp"
+			android:id="@+id/configFullscreenLayout">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Fullscreen (Immersive) mode"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:layout_marginRight="15dp"
+				android:id="@+id/configFullscreenLabel"
+				android:layout_gravity="center_vertical"
+				android:shadowDx="5"
+				android:shadowDy="5"
+				android:shadowRadius="5"
+				android:shadowColor="#4F45EE"/>
+
+			<Switch
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:id="@+id/configFullscreen"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:id="@+id/configAutosaveLayout"
+			android:layout_marginTop="10dp">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Autosave game progress"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:layout_marginRight="15dp"
+				android:id="@+id/configAutosaveLabel"
+				android:textColor="#000000"
+				android:shadowColor="#0000FF"
+				android:shadowDx="5"
+				android:shadowDy="5"
+				android:shadowRadius="5"
+				android:layout_gravity="center_vertical"/>
+
+			<Switch
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:id="@+id/configAutosave"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="vertical"
+			android:layout_marginTop="7dp"
+			android:layout_marginRight="15dp"
+			android:id="@+id/configAutosaveWarningLayout"
+			android:background="#3B3B3B">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Note that with this feature disabled, performance might increase slightly in some areas, disk wear might be reduced, and other good things might happen, but at the expense of the game only saving progress on the occasion that the user seems to be leaving. Loss of progress may result: Use with caution."
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:id="@+id/configAutosaveWarning"/>
+
+		</LinearLayout>
+
+		<Button
+			android:layout_height="wrap_content"
+			android:text="Reset To Default"
+			android:layout_width="wrap_content"
+			android:id="@+id/configResetButton"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="25dp"
+			android:onClick="resetConfigToDefault"/>
+
+	</LinearLayout>
+
+</ScrollView>
+

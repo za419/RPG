@@ -13,7 +13,7 @@ class Cconfig implements Serializable, Parcelable
 	public boolean easterEggs; // Are easter eggs enabled?
 	public int easterFrequency; // If the above is true, frequency of appearance modifier for randomly appearing eggs.
 	public boolean schoolEggs; // If easter eggs are ON, do eggs like IB appear?
-	public boolean GoTEggs; // If easter eggs are ON, do eggs like Khalëësi appear?
+	public boolean GoTEggs; // If easter eggs are ON, do eggs like Khaleesi appear?
 	public boolean ESEggs; // If easter eggs are ON, do eggs like Dovahkiin appear?
 	public boolean litEggs; // If easter eggs are ON, do literary eggs like "It is a far, far better rest than I go to" appear?
 	public boolean specMon; // Are there special actions for special monsters? Ex. "You have been eaten by a grue."
@@ -316,7 +316,7 @@ class Cconfig implements Serializable, Parcelable
 				});
 				proc.start();
 			}
-			
+
 			public void readPrefs()
 			{
 				readPrefs(t.getSharedPreferences("RPG Preferences", 0));

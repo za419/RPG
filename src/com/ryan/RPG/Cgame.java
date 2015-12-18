@@ -69,10 +69,10 @@ class Cgame implements Serializable, Parcelable
 		t.config.computerPaused=true;
 		doCommitSuicide=false;
 		t.user.dead=false;
-		
+
 		if (t.config.autosave)
 		{
-			(new Thread(new Runnable() // We don't want to save on the runStage thread, that might cause a noticeable delay. Note that if saving takes too long, we may get a conflict between several saves occuring at once. Consider naming the save thread.
+			(new Thread(new Runnable() // We don't want to save on the runStage thread, that might cause a noticeable delay. Note that if saving takes too long, we may get a conflict between several saves occurring at once. Consider naming the save thread.
 			{
 				@Override
 				public void run()
@@ -192,7 +192,7 @@ class Cgame implements Serializable, Parcelable
 								if (t.config.GoTEggs)
 								{
 									genders.add("The Dothraki do not follow your Genders");
-									genders.add("Khalëësi");
+									genders.add("Khaleesi");
 									genders.add("Dragon - Male");
 									genders.add("Dragon - Female");
 									genders.add("Dragon - Other");
@@ -345,7 +345,7 @@ class Cgame implements Serializable, Parcelable
 											{
 												// Close the soft keyboard, now that there's nothing for it to write to.
 												((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(((EditText)t.findViewById(t.user.parsedGender)).getWindowToken(), 0);
-												
+
 												t.user.gender=((TextView)t.findViewById(t.user.parsedGender)).getText().toString().trim();
 												if (t.config.addressGender)
 												{

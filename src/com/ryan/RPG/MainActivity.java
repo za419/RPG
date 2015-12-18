@@ -415,7 +415,7 @@ public class MainActivity extends Activity
 		});
 		t.th.start();
 	}
-	
+
 	public void onBackPressed (View v)
 	{
 		onBackPressed(); // This function only exists to let buttons call through to onBackPressed().
@@ -862,7 +862,7 @@ public class MainActivity extends Activity
 	{
 		((LinearLayout)findViewById(R.id.configAutosaveWarningLayout)).setVisibility(show ? View.GONE : View.VISIBLE);
 	}
-	
+
 	public void formatHowTo()
 	{
 		TextView tv=(TextView)findViewById(R.id.howToOne);
@@ -925,19 +925,19 @@ public class MainActivity extends Activity
 											switchLayout(v);
 										}
 									});
-									
+
 									// This code causes crashes. It would otherwise reopen the deletion screen
-//									t.frameTick(); // Wait for the layout to be created.
-//									runOnUiThread(new Runnable()
-//									{
-//										@Override
-//										public void run()
-//										{
-//											View v=new View(t);
-//											v.setId(R.id.saveManagerDeleteButton);
-//											showSaveManagerSaves(v); // Regenerate the list of saves.
-//										}
-//									});
+									//									t.frameTick(); // Wait for the layout to be created.
+									//									runOnUiThread(new Runnable()
+									//									{
+									//										@Override
+									//										public void run()
+									//										{
+									//											View v=new View(t);
+									//											v.setId(R.id.saveManagerDeleteButton);
+									//											showSaveManagerSaves(v); // Regenerate the list of saves.
+									//										}
+									//									});
 								}
 							});
 							th.start();
@@ -1008,7 +1008,7 @@ public class MainActivity extends Activity
 		});
 		return false;
 	}
-	
+
 	public void sayWhat (String what) // Common say() code.
 	{
 		Thread.currentThread().setPriority(Thread.MAX_PRIORITY-2);
@@ -1305,7 +1305,7 @@ public class MainActivity extends Activity
 		}
 
 		public static final Parcelable.Creator<parcelableView> CREATOR = new Parcelable.Creator<parcelableView> ()
-		{
+				{
 			@Override
 			public parcelableView createFromParcel (Parcel in)
 			{
@@ -1317,7 +1317,7 @@ public class MainActivity extends Activity
 			{
 				return new parcelableView[n];
 			}
-		};
+				};
 	}
 
 	public void syncCurrentView()
@@ -1487,7 +1487,7 @@ public class MainActivity extends Activity
 		final Animation a=AnimationUtils.loadAnimation(this, R.anim.fadeout);
 		final View v=findViewById(currentView);
 		if (v!=null) // Even if v is null, we let the game wait for the animation to not play 
-					 // This avoids some issues with code that expects fadeout() to play - Even if something happens to currentView, we should still let that code catch up.
+			// This avoids some issues with code that expects fadeout() to play - Even if something happens to currentView, we should still let that code catch up.
 		{
 			runOnUiThread(new Runnable()
 			{
@@ -1516,7 +1516,7 @@ public class MainActivity extends Activity
 		}
 		else
 			num=config.gameNumber;
-		
+
 		edit.putString("SaveGame"+num, user.toString()); // Update the save name. TODO change this in a later release, when save names can be changed.
 		if (Build.VERSION.SDK_INT>=9)
 			edit.apply();
@@ -1534,7 +1534,7 @@ public class MainActivity extends Activity
 		else
 			edit.commit();
 	}
-	
+
 	public void saveGameTo (int n) // Saves the current game to slot n or SaveGameCount+1, whichever is lower, without permanently mutating config.
 	{
 		int tmp=config.gameNumber;
@@ -1564,9 +1564,9 @@ public class MainActivity extends Activity
 			return;
 		}
 		game.loadFrom(sp);
-		
+
 		config.writePrefs(); // Config saves to the default. Just to make sure its there.
-		
+
 		Cconfig bak=null; // For persist.
 		if (config.persist)
 			bak=config;
@@ -1578,7 +1578,7 @@ public class MainActivity extends Activity
 			config.pauseMultiplier=bak.pauseMultiplier;
 		}
 	}
-	
+
 	public void loadGameFrom (int n) // Loads the current game from slot n without permanently mutating config.
 	{
 		int tmp=config.gameNumber;
@@ -1724,7 +1724,7 @@ public class MainActivity extends Activity
 		if (t.game!=null)
 			config.startCompute();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -1732,7 +1732,7 @@ public class MainActivity extends Activity
 		inflater.inflate(R.menu.empty, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu)
 	{
@@ -1768,12 +1768,12 @@ public class MainActivity extends Activity
 		}
 		return true;
 	}
-	
+
 	@Override public void onOptionsMenuClosed(Menu menu)
 	{
 		setUi(); // Ensures that opening and closing the options menu doesn't disrupt our UI, which it usually did otherwise.
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -1894,18 +1894,18 @@ public class MainActivity extends Activity
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event)
 	{
-	    if (keyCode == KeyEvent.KEYCODE_MENU)
-	    {
-	        invalidateOptionsMenu();
-	        return false;
-	    }
-	    return super.onKeyUp(keyCode, event);
+		if (keyCode == KeyEvent.KEYCODE_MENU)
+		{
+			invalidateOptionsMenu();
+			return false;
+		}
+		return super.onKeyUp(keyCode, event);
 	}
-	
+
 	public List<Button> getSavedGameButtons (final SaveCallback sc) // sc.call() is called on the UI thread with the number of the save chosen by the user.
 	{
 		final SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
@@ -2001,7 +2001,7 @@ public class MainActivity extends Activity
 	{
 		Log.e(LogTag, message);
 	}
-	
+
 	public abstract class SaveCallback
 	{
 		public void call(int savenum){}

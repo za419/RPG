@@ -1,4 +1,4 @@
-package com.ryan.RPG;
+package com.RyanHodin.RPG;
 
 import android.os.*;
 import android.view.*;

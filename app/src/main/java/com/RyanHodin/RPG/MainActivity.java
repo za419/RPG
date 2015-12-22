@@ -1,4 +1,4 @@
-﻿package com.ryan.RPG;
+﻿package com.RyanHodin.RPG;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

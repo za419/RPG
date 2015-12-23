@@ -1543,7 +1543,10 @@ public class MainActivity extends Activity
 		else
 			num=config.gameNumber;
 
-		edit.putString("SaveGame"+num, user.toString()); // Update the save name. TODO change this in a later release, when save names can be changed.
+		if (user.isArthur) // Special condition for King Arthur
+			edit.putString("SaveGame"+num, user.toString()+", King of the Britons.");
+		else
+			edit.putString("SaveGame"+num, user.toString()); // Update the save name. TODO change this in a later release, when save names can be changed.
 		if (Build.VERSION.SDK_INT>=9)
 			edit.apply();
 		else

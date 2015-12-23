@@ -1691,11 +1691,8 @@ class Cgame implements Serializable, Parcelable
 							t.th=new Thread(new Runnable()
 							{
 								@Override
-								public void run ()
-								{
-									t.user.weapon.name="bow";
-									t.user.weapon.type=Cweapon.TYPE_ARCHERY;
-									t.user.weapon.setCharacteristics(Cweapon.BOLT_FIRE|Cweapon.CLOSE_RANGE|Cweapon.LOW_POWER|Cweapon.ONE_ROUND_MAGAZINE);
+								public void run () {
+									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_ARCHERY, Cweapon.BOLT_FIRE|Cweapon.CLOSE_RANGE|Cweapon.LOW_POWER|Cweapon.ONE_ROUND_MAGAZINE, 0, "bow", null));
 									runStage();
 								}
 							});

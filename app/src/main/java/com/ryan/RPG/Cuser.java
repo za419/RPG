@@ -1,14 +1,15 @@
 package com.ryan.RPG;
 
-import android.os.*;
-import android.view.*;
-import android.view.View.*;
-import android.widget.*;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.view.View;
+import android.view.View.OnClickListener;
 
-import java.util.*;
 import java.io.Serializable;
-
-import android.content.*;
+import java.util.HashMap;
+import java.util.Map;
 
 class Cuser implements Serializable, Parcelable
 {
@@ -24,6 +25,7 @@ class Cuser implements Serializable, Parcelable
 	public Map<String, Integer> genderComp;
 	public Thread worker;
 	public boolean dead;
+	public boolean isArthur;
 
 	public static MainActivity t;
 
@@ -38,6 +40,7 @@ class Cuser implements Serializable, Parcelable
 		genderAddress=null;
 		buildGenderAddressComp();
 		buildGenderComp();
+		isArthur=false;
 	}
 
 	private Cuser (Parcel in)
@@ -48,6 +51,9 @@ class Cuser implements Serializable, Parcelable
 		parsedGender=in.readInt();
 		weapon=in.readParcelable(Cweapon.class.getClassLoader());
 		gold=in.readParcelable(Cgold.class.getClassLoader());
+		boolean vals []=new boolean[1];
+		in.readBooleanArray(vals);
+		isArthur=vals[0];
 	}
 
 	public void saveTo(SharedPreferences.Editor edit) // Does not commit changes. This is the responsibility of the calling function.
@@ -365,7 +371,7 @@ class Cuser implements Serializable, Parcelable
 					case Cweapon.TYPE_FUTURE:
 						t.say(t.capitalize(weapon.name)+"s are Strong","You point the "+weapon+" at your chest.\nRight when you\'re about to fire, Gandalf appears, and yells,\n\t\"No! You must not!\"");
 						break;
-					case Cweapon.TYPE_USED_FOR_CONVIENIENCE:
+					case Cweapon.TYPE_USED_FOR_CONVENIENCE:
 					default:
 						t.say("Gandalf slaps you, and you go flying, dropping everything along the way.\n\tYou see a familiar cave up ahead... You think you might be heading for it.\n\nYou hit your head on a rock on your way flying inside, and you lose consciousness.");
 					}
@@ -380,29 +386,25 @@ class Cuser implements Serializable, Parcelable
 				@Override
 				public void run ()
 				{
-					((Button)t.findViewById(R.id.gameContinueButton)).setOnClickListener(new OnClickListener()
-					{
+					t.findViewById(R.id.gameContinueButton).setOnClickListener(new OnClickListener() {
 						@Override
-						public void onClick(View v)
-						{
-							weapon.type=Cweapon.TYPE_USED_FOR_CONVIENIENCE;
+						public void onClick(View v) {
+							weapon.type = Cweapon.TYPE_USED_FOR_CONVENIENCE;
 							commitSuicide();
 						}
 					});
 				}
 			});
-		else if (weapon.type==Cweapon.TYPE_USED_FOR_CONVIENIENCE)
+		else if (weapon.type==Cweapon.TYPE_USED_FOR_CONVENIENCE)
 			t.runOnUiThread(new Runnable()
 			{
 				@Override
 				public void run()
 				{
-					((Button)t.findViewById(R.id.gameContinueButton)).setOnClickListener(new OnClickListener()
-					{
+					t.findViewById(R.id.gameContinueButton).setOnClickListener(new OnClickListener() {
 						@Override
-						public void onClick (View v)
-						{
-							t.user=new Cuser();
+						public void onClick(View v) {
+							t.user = new Cuser();
 							t.config.difficultyComputer.interrupt();
 							t.startPlay(v);
 						}
@@ -448,10 +450,11 @@ class Cuser implements Serializable, Parcelable
 		p.writeInt(parsedGender);
 		p.writeParcelable(weapon, n);
 		p.writeParcelable(gold, n);
+		p.writeBooleanArray(new boolean[] {isArthur});
 	}
 
 	public static final Parcelable.Creator<Cuser> CREATOR=new Parcelable.Creator<Cuser>()
-			{
+	{
 		@Override
 		public Cuser createFromParcel (Parcel in)
 		{
@@ -463,5 +466,5 @@ class Cuser implements Serializable, Parcelable
 		{
 			return new Cuser[n];
 		}
-			};
+	};
 }

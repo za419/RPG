@@ -1,9 +1,12 @@
 package com.ryan.RPG;
 
-import android.os.*;
-import android.content.*;
-import java.util.*;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
+import java.util.Random;
 
 class Cconfig implements Serializable, Parcelable
 {
@@ -209,20 +212,20 @@ class Cconfig implements Serializable, Parcelable
 		p.writeInt(gameNumber);
 		p.writeBooleanArray(new boolean[]
 				{
-				easterEggs,
-				schoolEggs,
-				GoTEggs,
-				ESEggs,
-				litEggs,
-				specMon,
-				gender,
-				twoGender,
-				specialGender,
-				customGender,
-				addressGender,
-				fullscreen,
-				autosave,
-				persist
+						easterEggs,
+						schoolEggs,
+						GoTEggs,
+						ESEggs,
+						litEggs,
+						specMon,
+						gender,
+						twoGender,
+						specialGender,
+						customGender,
+						addressGender,
+						fullscreen,
+						autosave,
+						persist
 				});
 	}
 

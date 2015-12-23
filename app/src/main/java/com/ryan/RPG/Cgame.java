@@ -1,22 +1,35 @@
 package com.ryan.RPG;
 
-import android.os.*;
-import android.view.*;
-import android.view.View.*;
-import android.view.inputmethod.*;
-import android.widget.*;
-import android.util.*;
-import android.content.*;
-import android.graphics.*;
-import android.text.*;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.InputType;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
-import java.util.*;
 import java.io.Serializable;
-
-import android.widget.FrameLayout.*;
-import android.annotation.*;
-import android.view.animation.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 class Cgame implements Serializable, Parcelable
 {
@@ -344,7 +357,7 @@ class Cgame implements Serializable, Parcelable
 											public void run ()
 											{
 												// Close the soft keyboard, now that there's nothing for it to write to.
-												((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(((EditText)t.findViewById(t.user.parsedGender)).getWindowToken(), 0);
+												((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(t.findViewById(t.user.parsedGender).getWindowToken(), 0);
 
 												t.user.gender=((TextView)t.findViewById(t.user.parsedGender)).getText().toString().trim();
 												if (t.config.addressGender)
@@ -778,11 +791,19 @@ class Cgame implements Serializable, Parcelable
 							t.th=new Thread(new Runnable()
 							{
 								@Override
-								public void run()
-								{
-									t.user.weapon.name="sword";
-									t.user.weapon.type=Cweapon.TYPE_SHARP;
-									t.user.weapon.setCharacteristics(Cweapon.ACCURATE|Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.HIGH_CALIBER|Cweapon.LIGHT|Cweapon.ONE_ROUND_MAGAZINE|Cweapon.QUICK_RELOAD);
+								public void run() {
+									if (t.user.isArthur) {
+										t.user.weapon.name="Excalibur"; // King Arthur gets the greatest of swords
+										t.user.weapon.setCharacteristics(Cweapon.ACCURATE|Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.HIGH_CALIBER|Cweapon.HIGH_POWER_ROUNDS|Cweapon.LEGENDARY|Cweapon.LIGHT|Cweapon.ONE_ROUND_MAGAZINE|Cweapon.QUICK_RELOAD);
+										t.user.weapon.strengthModifier=1+t.gen.nextDouble(); // Excalibur is in epic condition.
+									}
+									else {
+										t.user.weapon.name = "sword";
+										t.user.weapon.setCharacteristics(Cweapon.ACCURATE | Cweapon.CLOSE_RANGE | Cweapon.CLOSE_RANGE_ONLY | Cweapon.HIGH_CALIBER  | Cweapon.ONE_ROUND_MAGAZINE | Cweapon.QUICK_RELOAD);
+										t.user.weapon.strengthModifier=-0.05*t.gen.nextDouble(); // The sword should be in poor condition
+										// This exaggerates the difference between the sword and Excalibur
+									}
+									t.user.weapon.type = Cweapon.TYPE_SHARP;
 									inputted=1;
 									runStage();
 								}
@@ -1607,7 +1628,7 @@ class Cgame implements Serializable, Parcelable
 						@Override
 						public void onClick (View v)
 						{
-							t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVIENIENCE;
+							t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVENIENCE;
 							t.user.commitSuicide();
 						}
 					});
@@ -1905,7 +1926,7 @@ class Cgame implements Serializable, Parcelable
 							break;
 						default:
 							t.say("Your weapon is unknown to this universe as of the time being, so...");
-							t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVIENIENCE;
+							t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVENIENCE;
 							t.user.commitSuicide();
 						}
 					}
@@ -3196,6 +3217,7 @@ class Cgame implements Serializable, Parcelable
 
 	public void runArthur(final byte stage, String input)
 	{
+		t.user.isArthur=true;
 		switch (stage)
 		{
 		case 0:
@@ -3773,7 +3795,7 @@ class Cgame implements Serializable, Parcelable
 						break;
 					default:
 						t.logError("Invalid weapon code: "+t.user.weapon.type);
-						t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVIENIENCE;
+						t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVENIENCE;
 						r=new Runnable()
 						{
 							@Override
@@ -3794,7 +3816,7 @@ class Cgame implements Serializable, Parcelable
 								@Override
 								public void run()
 								{
-									if (t.user.weapon.type==Cweapon.TYPE_USED_FOR_CONVIENIENCE)
+									if (t.user.weapon.type==Cweapon.TYPE_USED_FOR_CONVENIENCE)
 										t.user.commitSuicide();
 									else if (t.user.dead)
 									{
@@ -5453,7 +5475,7 @@ class Cgame implements Serializable, Parcelable
 						{
 							if (t.user.weapon.type==Cweapon.TYPE_FUTURE)
 							{
-								t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVIENIENCE;
+								t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVENIENCE;
 								t.user.commitSuicide();
 							}
 							else if (t.config.triggerEgg(.2))

@@ -1,24 +1,50 @@
-﻿package com.ryan.RPG;
+package com.RyanHodin.RPG;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.*;
-import android.os.*;
-import android.view.*;
-import android.view.View.*;
-import android.view.inputmethod.*;
-import android.widget.*;
-import android.util.*;
-import android.content.*;
-import android.graphics.*;
-import android.widget.CompoundButton.*;
-import android.widget.SeekBar.*;
-import android.text.*;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.content.ComponentCallbacks2;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.StrictMode;
+import android.text.InputType;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.*;
 import java.io.Serializable;
-
-import android.view.animation.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends Activity
 {
@@ -721,7 +747,7 @@ public class MainActivity extends Activity
 
 	private void showConfigBatch(boolean show)
 	{
-		((LinearLayout)findViewById(R.id.configBatchLayout)).setVisibility(show ? View.VISIBLE : View.GONE);
+		findViewById(R.id.configBatchLayout).setVisibility(show ? View.VISIBLE : View.GONE);
 		if (show)
 		{
 			SeekBar batching=(SeekBar)findViewById(R.id.configBatch);
@@ -744,7 +770,7 @@ public class MainActivity extends Activity
 
 	private void showConfigEasterEggOptions (boolean show)
 	{
-		((LinearLayout)findViewById(R.id.configEasterOptionsLayout)).setVisibility(show ? View.VISIBLE : View.GONE);
+		findViewById(R.id.configEasterOptionsLayout).setVisibility(show ? View.VISIBLE : View.GONE);
 		if (show)
 		{
 			SeekBar freq=(SeekBar)findViewById(R.id.configEasterOptionsOdds);
@@ -811,7 +837,7 @@ public class MainActivity extends Activity
 
 	private void showConfigTwoGenderOptions (boolean show)
 	{
-		((LinearLayout)findViewById(R.id.configGenderOptionsMultiLayout)).setVisibility(show ? View.VISIBLE : View.GONE);
+		findViewById(R.id.configGenderOptionsMultiLayout).setVisibility(show ? View.VISIBLE : View.GONE);
 		if (show)
 		{
 			Switch SG=(Switch)findViewById(R.id.configGenderOptionsSpecial);
@@ -840,7 +866,7 @@ public class MainActivity extends Activity
 
 	public void showConfigGenderOptions (boolean show)
 	{
-		((LinearLayout)findViewById(R.id.configGenderOptionsLayout)).setVisibility(show ? View.VISIBLE : View.GONE);
+		findViewById(R.id.configGenderOptionsLayout).setVisibility(show ? View.VISIBLE : View.GONE);
 		if (show)
 		{
 			showConfigTwoGenderOptions(!config.twoGender);
@@ -860,7 +886,7 @@ public class MainActivity extends Activity
 
 	public void showConfigAutosaveWarning (boolean show)
 	{
-		((LinearLayout)findViewById(R.id.configAutosaveWarningLayout)).setVisibility(show ? View.GONE : View.VISIBLE);
+		findViewById(R.id.configAutosaveWarningLayout).setVisibility(show ? View.GONE : View.VISIBLE);
 	}
 
 	public void formatHowTo()
@@ -1096,7 +1122,7 @@ public class MainActivity extends Activity
 				setContentView(R.layout.game);
 				((TextView)findViewById(R.id.gameText)).setText("");
 				((TextView)findViewById(R.id.gameTitle)).setText(title);
-				((TextView)findViewById(R.id.gameTitle)).setVisibility(View.VISIBLE);
+				findViewById(R.id.gameTitle).setVisibility(View.VISIBLE);
 			}
 		});
 

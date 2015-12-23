@@ -1,4 +1,4 @@
-package com.ryan.RPG;
+package com.RyanHodin.RPG;
 
 import android.content.SharedPreferences;
 import android.os.Build;

@@ -62,6 +62,7 @@ class Cuser implements Serializable, Parcelable
 		edit.putString("userGender", gender);
 		edit.putString("userGenderAddress", genderAddress);
 		edit.putInt("userParsedGender", parsedGender);
+		edit.putBoolean("userIsArthur", isArthur);
 		weapon.saveTo(edit);
 		gold.saveTo(edit);
 		if (Build.VERSION.SDK_INT>=9)
@@ -76,6 +77,7 @@ class Cuser implements Serializable, Parcelable
 		gender=sp.getString("userGender", gender);
 		genderAddress=sp.getString("userGenderAddress", genderAddress);
 		parsedGender=sp.getInt("userParsedGender", parsedGender);
+		isArthur=sp.getBoolean("userIsArthur", isArthur);
 		if (Thread.interrupted())
 			return;
 		weapon.loadFrom(sp);

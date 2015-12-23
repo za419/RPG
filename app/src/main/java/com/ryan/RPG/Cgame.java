@@ -829,8 +829,12 @@ class Cgame implements Serializable, Parcelable
 						String title="You enter the cave";
 						if (t.user.dead)
 							t.say(title,"Ignoring the sword, you enter.\n\tImmediately, the creature from the last cave attacks you. It is incredibly angry, and no "+t.user.weapon+" will scare it off.");
-						else
-							t.say(title,"With the sword in hand, you enter.\n\tImmediately, the creature that fled the last cave attacks you. It is incredibly angry, and a stick will not be enough to make it flee.\n\n\tLuckily, you had the prudence to grab the "+t.user.weapon+".\n\tYou ready it.");
+						else {
+							if (t.user.isArthur)
+								t.say(title,"You take the sword, and examine it.\n\nIt seemed to call to you like an old friend, and suddenly you recognize it: It is "+t.user.weapon+"!\n\n\n\tYou take a moment with the blade, twirling it about to remember.\n\n\tAll of a sudden, a shape approaches: You recognize it as the creature from the last cave.\n\tYou bring "+t.user.weapon+" to bear.");
+							else
+								t.say(title, "With the sword in hand, you enter.\n\tImmediately, the creature that fled the last cave attacks you. It is incredibly angry, and a stick will not be enough to make it flee.\n\n\tLuckily, you had the prudence to grab the " + t.user.weapon + ".\n\tYou ready it.");
+						}
 					}
 				});
 				t.th.start();

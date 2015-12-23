@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d814b241-3e36-4a92-ac45-d3716ead384d" name="Default" comment="Add Excalibur - Fixes #2&#10;Excalibur, the new TYPE_SHARP on the block, is the most epic weapon before the gunstore, and by far the best TYPE_SHARP there is.&#10;Excalibur can be obtained by picking up the cave sword (standard sword) having triggered the King Arthur easter egg.&#10;&#10;Also, fix a spelling error for weapon types.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+    <list default="true" id="d814b241-3e36-4a92-ac45-d3716ead384d" name="Default" comment="Add Excalibur to the changelog">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/ryan/RPG/Cgame.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/ryan/RPG/Cgame.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="RPG.iws" />
@@ -65,8 +65,8 @@
       <file leaf-file-name="Cgame.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ryan/RPG/Cgame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.295082">
-              <caret line="809" column="31" selection-start-line="809" selection-start-column="31" selection-end-line="809" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.889029">
+              <caret line="954" column="16" selection-start-line="954" selection-start-column="16" selection-end-line="954" selection-end-column="16" />
               <folding>
                 <element signature="e#19591#22832#0" expanded="true" />
                 <element signature="e#19966#20378#0" expanded="true" />
@@ -76,8 +76,10 @@
                 <element signature="e#22761#22762#0" expanded="true" />
                 <element signature="e#22799#22800#0" expanded="true" />
                 <element signature="e#22831#22832#0" expanded="true" />
-                <element signature="e#24164#24302#0" expanded="true" />
-                <element signature="e#24301#24302#0" expanded="true" />
+                <element signature="e#22990#24032#0" expanded="true" />
+                <element signature="e#24031#24032#0" expanded="true" />
+                <element signature="e#24591#24729#0" expanded="true" />
+                <element signature="e#24728#24729#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1675,8 +1677,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/ryan/RPG/Cconfig.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/ryan/RPG/Cuser.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/ryan/RPG/Cweapon.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ryan/RPG/Cgame.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ryan/RPG/Cgame.java" />
       </list>
     </option>
   </component>
@@ -1975,7 +1977,13 @@
       <option name="project" value="LOCAL" />
       <updated>1450844667453</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add Excalibur to the changelog">
+      <created>1450845045136</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1450845045136</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2022,7 +2030,8 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <MESSAGE value="Add Excalibur - Fixes #2&#10;Excalibur, the new TYPE_SHARP on the block, is the most epic weapon before the gunstore, and by far the best TYPE_SHARP there is.&#10;Excalibur can be obtained by picking up the cave sword (standard sword) having triggered the King Arthur easter egg.&#10;&#10;Also, fix a spelling error for weapon types." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Excalibur - Fixes #2&#10;Excalibur, the new TYPE_SHARP on the block, is the most epic weapon before the gunstore, and by far the best TYPE_SHARP there is.&#10;Excalibur can be obtained by picking up the cave sword (standard sword) having triggered the King Arthur easter egg.&#10;&#10;Also, fix a spelling error for weapon types." />
+    <MESSAGE value="Add Excalibur to the changelog" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Excalibur to the changelog" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -2180,8 +2189,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ryan/RPG/Cgame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.295082">
-          <caret line="809" column="31" selection-start-line="809" selection-start-column="31" selection-end-line="809" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.889029">
+          <caret line="954" column="16" selection-start-line="954" selection-start-column="16" selection-end-line="954" selection-end-column="16" />
           <folding>
             <element signature="e#19591#22832#0" expanded="true" />
             <element signature="e#19966#20378#0" expanded="true" />
@@ -2191,8 +2200,10 @@
             <element signature="e#22761#22762#0" expanded="true" />
             <element signature="e#22799#22800#0" expanded="true" />
             <element signature="e#22831#22832#0" expanded="true" />
-            <element signature="e#24164#24302#0" expanded="true" />
-            <element signature="e#24301#24302#0" expanded="true" />
+            <element signature="e#22990#24032#0" expanded="true" />
+            <element signature="e#24031#24032#0" expanded="true" />
+            <element signature="e#24591#24729#0" expanded="true" />
+            <element signature="e#24728#24729#0" expanded="true" />
           </folding>
         </state>
       </provider>

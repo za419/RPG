@@ -624,59 +624,59 @@ public class MainActivity extends Activity
 		SeekBar diff=(SeekBar)findViewById(R.id.configDifficulty);
 		diff.setMax(100);
 		diff.setProgress(config.difficulty);
-		diff.setOnSeekBarChangeListener(new OnSeekBarChangeListener ()
-		{
+		diff.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
-			public void onProgressChanged(SeekBar s, int lev, boolean user)
-			{
-				if (user)
-				{
-					config.difficulty=lev;
-					if (config.difficultyComputer!=null)
-					{
+			public void onProgressChanged(SeekBar s, int lev, boolean user) {
+				if (user) {
+					config.difficulty = lev;
+					if (config.difficultyComputer != null) {
 						config.difficultyComputer.interrupt();
-						config.difficultyComputer=null;
+						config.difficultyComputer = null;
 					}
 				}
 			}
 
-			@Override public void onStartTrackingTouch(SeekBar b){}
-			@Override public void onStopTrackingTouch(SeekBar b){}
+			@Override
+			public void onStartTrackingTouch(SeekBar b) {
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar b) {
+			}
 		});
 
 		SeekBar delay=(SeekBar)findViewById(R.id.configDelay);
 		delay.setMax(200);
-		delay.setProgress((int)(100.0*config.pauseMultiplier));
-		delay.setOnSeekBarChangeListener(new OnSeekBarChangeListener ()
-		{
+		delay.setProgress((int) (100.0 * config.pauseMultiplier));
+		delay.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
-			public void onProgressChanged(SeekBar s, int lev, boolean user)
-			{
-				if (user)
-				{
-					if (lev==0 ^ config.pauseMultiplier==0.0)
-						showConfigBatch(lev!=0);
-					config.pauseMultiplier=lev/100.0;
-					if (lev<=60 && lev>0)
-					{
-						config.batching=(int)Math.min(Math.pow(config.pauseMultiplier, -1), 10)-1;
-						((SeekBar)findViewById(R.id.configBatch)).setProgress(config.batching);
+			public void onProgressChanged(SeekBar s, int lev, boolean user) {
+				if (user) {
+					if (lev == 0 ^ config.pauseMultiplier == 0.0)
+						showConfigBatch(lev != 0);
+					config.pauseMultiplier = lev / 100.0;
+					if (lev <= 60 && lev > 0) {
+						config.batching = (int) Math.min(Math.pow(config.pauseMultiplier, -1), 10) - 1;
+						((SeekBar) findViewById(R.id.configBatch)).setProgress(config.batching);
 					}
 				}
 			}
 
-			@Override public void onStartTrackingTouch(SeekBar b){}
-			@Override public void onStopTrackingTouch(SeekBar b){}
+			@Override
+			public void onStartTrackingTouch(SeekBar b) {
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar b) {
+			}
 		});
-		showConfigBatch(config.pauseMultiplier!=0);
+		showConfigBatch(config.pauseMultiplier != 0);
 
 		Switch EE=(Switch)findViewById(R.id.configEasterEgg);
 		EE.setChecked(config.easterEggs);
-		EE.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
+		EE.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton swit, boolean on)
-			{
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
 				showConfigEasterEggOptions(on);
 				config.easterEggs = on;
 			}
@@ -685,22 +685,18 @@ public class MainActivity extends Activity
 
 		Switch SM=(Switch)findViewById(R.id.configSpecMon);
 		SM.setChecked(config.specMon);
-		SM.setOnCheckedChangeListener(new OnCheckedChangeListener ()
-		{
+		SM.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton b, boolean on)
-			{
-				config.specMon=on;
+			public void onCheckedChanged(CompoundButton b, boolean on) {
+				config.specMon = on;
 			}
 		});
 
 		Switch TG=(Switch)findViewById(R.id.configGenderOptionsTwo);
 		TG.setChecked(config.twoGender);
-		TG.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
+		TG.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton swit, boolean on)
-			{
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
 				showConfigTwoGenderOptions(!on);
 				config.twoGender = on;
 			}
@@ -708,11 +704,9 @@ public class MainActivity extends Activity
 
 		Switch G=(Switch)findViewById(R.id.configGender);
 		G.setChecked(config.gender);
-		G.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
+		G.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton swit, boolean on)
-			{
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
 				showConfigGenderOptions(on);
 				config.gender = on;
 			}
@@ -721,28 +715,33 @@ public class MainActivity extends Activity
 
 		Switch FS=(Switch)findViewById(R.id.configFullscreen);
 		FS.setChecked(config.fullscreen);
-		FS.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
+		FS.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton swit, boolean on)
-			{
-				config.fullscreen=on;
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
+				config.fullscreen = on;
 				t.setUi();
 			}
 		});
 
 		Switch AS=(Switch)findViewById(R.id.configAutosave);
 		AS.setChecked(config.autosave);
-		AS.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
+		AS.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged (CompoundButton swit, boolean on)
-			{
-				config.autosave=on;
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
+				config.autosave = on;
 				showConfigAutosaveWarning(on);
 			}
 		});
 		showConfigAutosaveWarning(config.autosave);
+
+		Switch PR=(Switch)findViewById(R.id.configPersist);
+		PR.setChecked(config.persist);
+		PR.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
+				config.persist=on;
+			}
+		});
 	}
 
 	private void showConfigBatch(boolean show)

@@ -1160,6 +1160,7 @@ public class MainActivity extends Activity
 			 *   (This may not be a bad thing, if it is intentional.)              *
 			 * Finally, if it isn't random enough, then typing will be monotonous. *
 			 * Be careful when tweaking it. TAKE BACKUPS!!!                        *
+			 * (Thank the gods for version control. All hail Git!)                 *
 			 ***********************************************************************/
 
 		{
@@ -1190,6 +1191,7 @@ public class MainActivity extends Activity
 			 *   (This may not be a bad thing, if it is intentional.)              *
 			 * Finally, if it isn't random enough, then typing will be monotonous. *
 			 * Be careful when tweaking it. TAKE BACKUPS!!!                        *
+			 * (Thank the gods for version control. All hail Git!)                 *
 			 ***********************************************************************/
 
 		{

@@ -247,7 +247,7 @@ class Cuser implements Serializable, Parcelable
 		if (tmp==null)
 			parsedGender=999999999;
 		else
-			parsedGender=tmp.intValue();
+			parsedGender=tmp;
 	}
 
 	public void commitSuicide()
@@ -365,7 +365,7 @@ class Cuser implements Serializable, Parcelable
 					case Cweapon.TYPE_FUTURE:
 						t.say(t.capitalize(weapon.name)+"s are Strong","You point the "+weapon+" at your chest.\nRight when you\'re about to fire, Gandalf appears, and yells,\n\t\"No! You must not!\"");
 						break;
-					case Cweapon.TYPE_USED_FOR_CONVIENIENCE:
+					case Cweapon.TYPE_USED_FOR_CONVENIENCE:
 					default:
 						t.say("Gandalf slaps you, and you go flying, dropping everything along the way.\n\tYou see a familiar cave up ahead... You think you might be heading for it.\n\nYou hit your head on a rock on your way flying inside, and you lose consciousness.");
 					}
@@ -380,24 +380,24 @@ class Cuser implements Serializable, Parcelable
 				@Override
 				public void run ()
 				{
-					((Button)t.findViewById(R.id.gameContinueButton)).setOnClickListener(new OnClickListener()
+					t.findViewById(R.id.gameContinueButton).setOnClickListener(new OnClickListener()
 					{
 						@Override
 						public void onClick(View v)
 						{
-							weapon.type=Cweapon.TYPE_USED_FOR_CONVIENIENCE;
+							weapon.type=Cweapon.TYPE_USED_FOR_CONVENIENCE;
 							commitSuicide();
 						}
 					});
 				}
 			});
-		else if (weapon.type==Cweapon.TYPE_USED_FOR_CONVIENIENCE)
+		else if (weapon.type==Cweapon.TYPE_USED_FOR_CONVENIENCE)
 			t.runOnUiThread(new Runnable()
 			{
 				@Override
 				public void run()
 				{
-					((Button)t.findViewById(R.id.gameContinueButton)).setOnClickListener(new OnClickListener()
+					t.findViewById(R.id.gameContinueButton).setOnClickListener(new OnClickListener()
 					{
 						@Override
 						public void onClick (View v)

@@ -154,7 +154,7 @@ class Cweapon implements Serializable, Parcelable
 	public static final byte TYPE_MODERN=4;
 	public static final byte TYPE_NUCLEAR=5;
 	public static final byte TYPE_FUTURE=6;
-	public static final byte TYPE_USED_FOR_CONVIENIENCE=7; // If a weapon type is set to this, attacking with it (should) result in automatic use of the backup. Later, of course.
+	public static final byte TYPE_USED_FOR_CONVENIENCE =7; // If a weapon type is set to this, attacking with it (should) result in automatic use of the backup. Later, of course.
 	// To elaborate further, that last type is used so that calling commitSuicide() with it equipped will trigger the "Gandalf slaps you. You go flying" scene.
 
 	public static final int AUTOMATIC=1;
@@ -619,7 +619,7 @@ class Cweapon implements Serializable, Parcelable
 	{
 		if (backup==null)
 			return false;
-		if (backup.type==TYPE_USED_FOR_CONVIENIENCE) // This shouldn't exist. Remove it.
+		if (backup.type== TYPE_USED_FOR_CONVENIENCE) // This shouldn't exist. Remove it.
 		{
 			if (backup.backup!=null) // If the backup has a backup
 			{

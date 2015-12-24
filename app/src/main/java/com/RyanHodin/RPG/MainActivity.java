@@ -554,7 +554,7 @@ public class MainActivity extends Activity
 									// Close the soft keyboard, now that there's nothing for it to write to.
 									((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 									String str=view.getText().toString().trim();
-									if ("".equals(str) || str==null)
+									if ("".equals(str))
 										user.name="Blondie";
 									else
 										user.name=capitalize(str);
@@ -1148,7 +1148,7 @@ public class MainActivity extends Activity
 		Message m=Message.obtain();
 		if (m==null)
 			m=new Message();
-		m.obj=new String(""+c);
+		m.obj= "" + c;
 		m.what=1;
 		if (pause(gen.nextInt(gen.nextInt(80)+1)+gen.nextInt(gen.nextInt(80)+1)+10+m.getWhen())) // This line controls typing speed across the entire Activity.
 
@@ -1235,7 +1235,7 @@ public class MainActivity extends Activity
 
 		public static parcelableView getByViewId (int id)
 		{
-			int view=-1;
+			int view;
 			switch (id)
 			{
 			case R.id.aboutLayout:
@@ -1419,7 +1419,7 @@ public class MainActivity extends Activity
 
 	public String capitalize(String str) // Capitalize the fist character of a string. Usually, this can be used to guarantee that an output is gramatically correct.
 	{
-		return new String(Character.toUpperCase(str.charAt(0))+str.substring(1));
+		return Character.toUpperCase(str.charAt(0)) + str.substring(1);
 	}
 
 	public boolean frameTick()
@@ -1599,7 +1599,7 @@ public class MainActivity extends Activity
 		if (config.persist)
 			bak=config;
 		config.readPrefs(sp);
-		if (bak.persist) // Restore config values that shouldn't be changed in save load 
+		if (bak!=null && bak.persist) // Restore config values that shouldn't be changed in save load
 		{
 			config.batching=bak.batching;
 			config.fullscreen=bak.fullscreen;
@@ -1612,6 +1612,7 @@ public class MainActivity extends Activity
 		int tmp=config.gameNumber;
 		SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
 		config.gameNumber=n;
+		// TODO check if n is a valid save
 		loadGame();
 		config.gameNumber=tmp;
 	}
@@ -1997,7 +1998,7 @@ public class MainActivity extends Activity
 			return "";
 		if (count==1)
 			return what;
-		StringBuffer sb=new StringBuffer(what);
+		StringBuilder sb=new StringBuilder(what);
 		for (; count>1; --count)
 			sb.append(what);
 		return sb.toString();
@@ -2009,7 +2010,7 @@ public class MainActivity extends Activity
 			return "";
 		if (count==1)
 			return ""+what;
-		StringBuffer sb=new StringBuffer(what);
+		StringBuilder sb=new StringBuilder(""+what);
 		for (; count>1; --count)
 			sb.append(what);
 		return sb.toString();

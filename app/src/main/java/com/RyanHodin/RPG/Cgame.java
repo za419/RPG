@@ -3311,7 +3311,8 @@ class Cgame implements Serializable, Parcelable
 										// Close the soft keyboard, now that there's nothing for it to write to.
 										((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 										final String str=ev.getText().toString().trim();
-										((TextView)t.findViewById(R.id.gameText)).append("\n\n\""+str+"\"\n\n");
+										((TextView)t.findViewById(R.id.gameText)).append("\n\n\"" + str + "\"\n\n");
+										t.setUi();
 										t.th=new Thread (new Runnable()
 										{
 											@Override
@@ -3398,6 +3399,7 @@ class Cgame implements Serializable, Parcelable
 								((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 								final String str=ev.getText().toString().trim();
 								((TextView)t.findViewById(R.id.gameText)).append("\n\n\""+str+"\"\n\n");
+								t.setUi();
 								t.th=new Thread (new Runnable()
 								{
 									@Override
@@ -3484,6 +3486,7 @@ class Cgame implements Serializable, Parcelable
 								((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 								final String str=ev.getText().toString().trim();
 								((TextView)t.findViewById(R.id.gameText)).append("\n\n\""+str+"\"\n\n");
+								t.setUi();
 								t.th=new Thread (new Runnable()
 								{
 									@Override

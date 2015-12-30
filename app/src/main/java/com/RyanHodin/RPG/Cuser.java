@@ -427,7 +427,7 @@ class Cuser implements Serializable, Parcelable
 		if (o==null || !(o instanceof Cuser))
 			return false;
 		Cuser u=(Cuser)o;
-		return toString().equals(u.toString()) && gold.equals(u.gold) && weapon.equals(u.weapon);
+		return toString().equals(u.toString()) && gold.equals(u.gold) && weapon.equals(u.weapon) && isArthur==u.isArthur && clearedGunstore==u.clearedGunstore;
 	}
 
 	@Override

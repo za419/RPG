@@ -1622,11 +1622,15 @@ class Cgame implements Serializable, Parcelable
 							t.say(t.capitalize(t.user.weapon.name)+"fight", "You run up to the archer, barely managing to get in a swing, when the archer shoots you.");
 							break;
 						case Cweapon.TYPE_SHARP:
-							if (t.user.weapon.characteristicSet(Cweapon.LEGENDARY)) {
-								t.determineUserDeath(.2);
+							if (t.user.weapon.characteristicSet(Cweapon.LEGENDARY)) { // Excalibur check
+								t.determineUserDeath(.2); // Excalibur weighting
+								if (t.user.dead)
+									t.say("The Might of "+t.user.weapon, "With "+t.user.weapon+" in hand, you charge the archer.\n\n\tA few arrows fly towards you, and one strikes you in the stomach, stopping you in your tracks.\n\n\t"+t.user.weapon+" falls beside you as your eyes fixate upon it, barely seeing the archer walk up beside you to draw a killing arrow from his quiver.\n\n\n\tAs you watch, "+t.user.weapon+" is surrounded by a pool of growing, shimmering water, forming a mirror.\n\n\tAs the blade is enveloped, it begins to dissolve, becoming one with the water, until it is but a part of the pool.\n\n\tAs the archer shoots an arrow into your head, you watch the pool that was "+t.user.weapon+" dissolve into the soil, lost once more in the oceans of time.");
+								else
+									t.say("The Might of "+t.user.weapon, "With "+t.user.weapon+" in hand, you charge the archer.\n\n\tA few arrows fly towards you, but you dodge one half, and "+(t.gen.nextBoolean() ? "swiftly" : "deftly")+" deflect the other.\n\n\tHaving closed the distance between yourself and the archer, you swing your legendary blade at your enemy.\n\n\n\tThe archer deftly rolls away, but "+t.user.weapon+" knows what to do, adjusting its swing, pulling you along, until you cleave the archer in two.");
 							}
 							else {
-								t.determineUserDeath(.5);
+								t.determineUserDeath(.5); // Traditional weighting
 								t.say(t.capitalize(t.user.weapon.name) + " battle!", "You run up to the archer, and lunge!\n\n\t" + (t.user.dead ? "Unfortunately, you miss, and get shot in the " + (t.config.easterEggs && t.config.ESEggs && t.config.triggerEgg(.9) ? "knee." : "back.") : "You connect!\n\n\tThe archer falls, dead.\n\n\tThe bow drops to the ground.\n\tYou eye it."));
 							}
 							break;

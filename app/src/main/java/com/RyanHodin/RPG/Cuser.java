@@ -439,7 +439,7 @@ class Cuser implements Serializable, Parcelable
 	@Override
 	public String toString()
 	{
-		return name+(t.config.gender && t.config.addressGender ? " "+genderAddress : "");
+		return name+(t.config.gender && t.config.addressGender ? " "+genderAddress : "")+(isArthur ? ", King of the Britons" : "");
 	}
 
 	@Override

@@ -1622,11 +1622,16 @@ class Cgame implements Serializable, Parcelable
 							t.say(t.capitalize(t.user.weapon.name)+"fight", "You run up to the archer, barely managing to get in a swing, when the archer shoots you.");
 							break;
 						case Cweapon.TYPE_SHARP:
-							t.determineUserDeath(.5);
-							t.say(t.capitalize(t.user.weapon.name)+" battle!", "You run up to the archer, and lunge!\n\n\t"+(t.user.dead ? "Unfortunately, you miss, and get shot in the "+(t.config.easterEggs && t.config.ESEggs && t.config.triggerEgg(.9) ? "knee." : "back.") : "You connect!\n\n\tThe archer falls, dead.\n\n\tThe bow drops to the ground.\n\tYou eye it."));
+							if (t.user.weapon.characteristicSet(Cweapon.LEGENDARY)) {
+								t.determineUserDeath(.2);
+							}
+							else {
+								t.determineUserDeath(.5);
+								t.say(t.capitalize(t.user.weapon.name) + " battle!", "You run up to the archer, and lunge!\n\n\t" + (t.user.dead ? "Unfortunately, you miss, and get shot in the " + (t.config.easterEggs && t.config.ESEggs && t.config.triggerEgg(.9) ? "knee." : "back.") : "You connect!\n\n\tThe archer falls, dead.\n\n\tThe bow drops to the ground.\n\tYou eye it."));
+							}
 							break;
 						case Cweapon.TYPE_MODERN:
-							t.determineUserDeath(1, 3);
+							t.determineUserDeath(1, 6);
 							t.say(t.capitalize(t.user.weapon.name)+" vs. bow", "You carefully take aim at the archer, and pull the trigger.\n\n\t"+(t.user.dead ? "Unfortunately, you miss, and get shot before you can aim again." : (t.gen.nextBoolean() ? "A neat hole appears in the archer\'s chest." : "You wing the archer, the bow swinging off it\'s aim, and then you shoot again, scoring a fatal hit.")+"\n\n\tThe bow falls to the ground.\n\tYou eye it, but decide that you prefer your "+t.user.weapon+"."));
 							break;
 						case Cweapon.TYPE_FUTURE:

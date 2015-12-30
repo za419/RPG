@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.ryan.RPG"
+        applicationId "com.RyanHodin.RPG"
         minSdkVersion 14
         targetSdkVersion 21
     }

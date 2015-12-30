@@ -1992,6 +1992,7 @@ class Cgame implements Serializable, Parcelable
 			break;
 		case 35:
 			t.fadeout();
+			t.user.clearedGunstore=true; // Sanity setting.
 			t.runOnUiThread(new Runnable()
 			{
 				@Override

@@ -1,22 +1,35 @@
 package com.RyanHodin.RPG;
 
-import android.os.*;
-import android.view.*;
-import android.view.View.*;
-import android.view.inputmethod.*;
-import android.widget.*;
-import android.util.*;
-import android.content.*;
-import android.graphics.*;
-import android.text.*;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.InputType;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
-import java.util.*;
 import java.io.Serializable;
-
-import android.widget.FrameLayout.*;
-import android.annotation.*;
-import android.view.animation.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 class Cgame implements Serializable, Parcelable
 {
@@ -132,7 +145,7 @@ class Cgame implements Serializable, Parcelable
 				public void run()
 				{
 					LinearLayout l=prepInput("What gender are you?");
-					List<String> genders=new ArrayList<String> (100);
+					List<String> genders=new ArrayList<String>(100);
 					genders.add("Male");
 					genders.add("Female");
 					if (!t.config.twoGender)
@@ -268,13 +281,12 @@ class Cgame implements Serializable, Parcelable
 								int id=Build.VERSION.SDK_INT>=17 ? View.generateViewId() : 5;
 								sv.setId(id);
 								t.currentView=id;
-								LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+								LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 								t.setContentView(sv);
 								LinearLayout l=new LinearLayout(t);
 								l.setOrientation(LinearLayout.VERTICAL);
 								sv.addView(l);
 								t.setUi();
-								lp=new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 								lp.topMargin=10;
 								OnFocusChangeListener ofcl=new OnFocusChangeListener()
 								{
@@ -344,7 +356,7 @@ class Cgame implements Serializable, Parcelable
 											public void run ()
 											{
 												// Close the soft keyboard, now that there's nothing for it to write to.
-												((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(((EditText)t.findViewById(t.user.parsedGender)).getWindowToken(), 0);
+												((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(t.findViewById(t.user.parsedGender).getWindowToken(), 0);
 
 												t.user.gender=((TextView)t.findViewById(t.user.parsedGender)).getText().toString().trim();
 												if (t.config.addressGender)
@@ -708,9 +720,18 @@ class Cgame implements Serializable, Parcelable
 								@Override
 								public void run()
 								{
-									t.user.weapon.name="sword";
-									t.user.weapon.type=Cweapon.TYPE_SHARP;
-									t.user.weapon.setCharacteristics(Cweapon.ACCURATE|Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.HIGH_CALIBER|Cweapon.LIGHT|Cweapon.ONE_ROUND_MAGAZINE|Cweapon.QUICK_RELOAD);
+									if (t.user.isArthur) {
+										t.user.weapon.name="Excalibur"; // King Arthur gets the greatest of swords
+										t.user.weapon.setCharacteristics(Cweapon.ACCURATE|Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.HIGH_CALIBER|Cweapon.HIGH_POWER_ROUNDS|Cweapon.LEGENDARY|Cweapon.LIGHT|Cweapon.ONE_ROUND_MAGAZINE|Cweapon.QUICK_RELOAD);
+										t.user.weapon.strengthModifier=1+t.gen.nextDouble(); // Excalibur is in epic condition.
+									}
+									else {
+										t.user.weapon.name = "sword";
+										t.user.weapon.setCharacteristics(Cweapon.ACCURATE | Cweapon.CLOSE_RANGE | Cweapon.CLOSE_RANGE_ONLY | Cweapon.HIGH_CALIBER  | Cweapon.ONE_ROUND_MAGAZINE | Cweapon.QUICK_RELOAD);
+										t.user.weapon.strengthModifier=-0.05*t.gen.nextDouble(); // The sword should be in poor condition
+										// This exaggerates the difference between the sword and Excalibur
+									}
+									t.user.weapon.type = Cweapon.TYPE_SHARP;
 									inputted=0;
 									runStage();
 								}
@@ -778,11 +799,19 @@ class Cgame implements Serializable, Parcelable
 							t.th=new Thread(new Runnable()
 							{
 								@Override
-								public void run()
-								{
-									t.user.weapon.name="sword";
-									t.user.weapon.type=Cweapon.TYPE_SHARP;
-									t.user.weapon.setCharacteristics(Cweapon.ACCURATE|Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.HIGH_CALIBER|Cweapon.LIGHT|Cweapon.ONE_ROUND_MAGAZINE|Cweapon.QUICK_RELOAD);
+								public void run() {
+									if (t.user.isArthur) {
+										t.user.weapon.name="Excalibur"; // King Arthur gets the greatest of swords
+										t.user.weapon.setCharacteristics(Cweapon.ACCURATE|Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.HIGH_CALIBER|Cweapon.HIGH_POWER_ROUNDS|Cweapon.LEGENDARY|Cweapon.LIGHT|Cweapon.ONE_ROUND_MAGAZINE|Cweapon.QUICK_RELOAD);
+										t.user.weapon.strengthModifier=1+t.gen.nextDouble(); // Excalibur is in epic condition.
+									}
+									else {
+										t.user.weapon.name = "sword";
+										t.user.weapon.setCharacteristics(Cweapon.ACCURATE | Cweapon.CLOSE_RANGE | Cweapon.CLOSE_RANGE_ONLY | Cweapon.HIGH_CALIBER  | Cweapon.ONE_ROUND_MAGAZINE | Cweapon.QUICK_RELOAD);
+										t.user.weapon.strengthModifier=-0.05*t.gen.nextDouble(); // The sword should be in poor condition
+										// This exaggerates the difference between the sword and Excalibur
+									}
+									t.user.weapon.type = Cweapon.TYPE_SHARP;
 									inputted=1;
 									runStage();
 								}
@@ -808,8 +837,12 @@ class Cgame implements Serializable, Parcelable
 						String title="You enter the cave";
 						if (t.user.dead)
 							t.say(title,"Ignoring the sword, you enter.\n\tImmediately, the creature from the last cave attacks you. It is incredibly angry, and no "+t.user.weapon+" will scare it off.");
-						else
-							t.say(title,"With the sword in hand, you enter.\n\tImmediately, the creature that fled the last cave attacks you. It is incredibly angry, and a stick will not be enough to make it flee.\n\n\tLuckily, you had the prudence to grab the "+t.user.weapon+".\n\tYou ready it.");
+						else {
+							if (t.user.isArthur)
+								t.say(title,"You take the sword, and examine it.\n\n\tIt seemed to call to you like an old friend, and suddenly you recognize it: It is "+t.user.weapon+"!\n\n\n\tYou take a moment with the blade, twirling it about to remember.\n\n\tAll of a sudden, a shape approaches: You recognize it as the creature from the last cave.\n\tYou bring "+t.user.weapon+" to bear.");
+							else
+								t.say(title, "With the sword in hand, you enter.\n\tImmediately, the creature that fled the last cave attacks you. It is incredibly angry, and a stick will not be enough to make it flee.\n\n\tLuckily, you had the prudence to grab the " + t.user.weapon + ".\n\tYou ready it.");
+						}
 					}
 				});
 				t.th.start();
@@ -1025,7 +1058,10 @@ class Cgame implements Serializable, Parcelable
 			});
 			break;
 		case 15:
-			t.determineUserDeath(1, 3);
+			if (t.user.weapon.characteristicSet(Cweapon.LEGENDARY)) // Check for Excalibur
+				t.determineUserDeath(1,5); // Slightly reduced odds of death
+			else
+				t.determineUserDeath(1, 3); // Standard, "Traditional" weighting
 			t.th=new Thread(new Runnable()
 			{
 				@Override
@@ -1126,7 +1162,7 @@ class Cgame implements Serializable, Parcelable
 				@Override
 				public void run()
 				{
-					t.say("Into the Darkness of Death", "You continue into the forboding darkness of the cave, trembling in fear, wondering what the next monster to come far too close to ending your life will be.\n\n\n\n\tYour fears are answered in a horrifying way when you see an enormous, hulking, towering shape in front of you.\n\n\tIt lumbers toward you, the ground quaking as it stomps.\n\n\tYou quickly contemplate taking flight.");
+					t.say("Into the Darkness of Death", "You continue into the foreboding darkness of the cave, trembling in fear, wondering what the next monster to come far too close to ending your life will be.\n\n\n\n\tYour fears are answered in a horrifying way when you see an enormous, hulking, towering shape in front of you.\n\n\tIt lumbers toward you, the ground quaking as it stomps.\n\n\tYou quickly contemplate taking flight.");
 				}
 			});
 			t.th.start();
@@ -1191,7 +1227,10 @@ class Cgame implements Serializable, Parcelable
 			});
 			break;
 		case 19:
-			t.determineUserDeath(2, 3);
+			if (t.user.weapon.characteristicSet(Cweapon.LEGENDARY)) // Check for Excalibur
+				t.determineUserDeath(3, 10); // Slightly less than one third
+			else
+				t.determineUserDeath(2, 3); // Two thirds "Traditional" weighting
 			t.th=new Thread(new Runnable()
 			{
 				@Override
@@ -1583,11 +1622,20 @@ class Cgame implements Serializable, Parcelable
 							t.say(t.capitalize(t.user.weapon.name)+"fight", "You run up to the archer, barely managing to get in a swing, when the archer shoots you.");
 							break;
 						case Cweapon.TYPE_SHARP:
-							t.determineUserDeath(.5);
-							t.say(t.capitalize(t.user.weapon.name)+" battle!", "You run up to the archer, and lunge!\n\n\t"+(t.user.dead ? "Unfortunately, you miss, and get shot in the "+(t.config.easterEggs && t.config.ESEggs && t.config.triggerEgg(.9) ? "knee." : "back.") : "You connect!\n\n\tThe archer falls, dead.\n\n\tThe bow drops to the ground.\n\tYou eye it."));
+							if (t.user.weapon.characteristicSet(Cweapon.LEGENDARY)) { // Excalibur check
+								t.determineUserDeath(.2); // Excalibur weighting
+								if (t.user.dead)
+									t.say("The Might of "+t.user.weapon, "With "+t.user.weapon+" in hand, you charge the archer.\n\n\tA few arrows fly towards you, and one strikes you in the stomach, stopping you in your tracks.\n\n\t"+t.user.weapon+" falls beside you as your eyes fixate upon it, barely seeing the archer walk up beside you to draw a killing arrow from his quiver.\n\n\n\tAs you watch, "+t.user.weapon+" is surrounded by a pool of growing, shimmering water, forming a mirror.\n\n\tAs the blade is enveloped, it begins to dissolve, becoming one with the water, until it is but a part of the pool.\n\n\tAs the archer shoots an arrow into your head, you watch the pool that was "+t.user.weapon+" dissolve into the soil, lost once more in the oceans of time.");
+								else
+									t.say("The Might of "+t.user.weapon, "With "+t.user.weapon+" in hand, you charge the archer.\n\n\tA few arrows fly towards you, but you dodge one half, and "+(t.gen.nextBoolean() ? "swiftly" : "deftly")+" deflect the other.\n\n\tHaving closed the distance between yourself and the archer, you swing your legendary blade at your enemy.\n\n\n\tThe archer deftly rolls away, but "+t.user.weapon+" knows what to do, adjusting its swing, pulling you along, until you cleave the archer in two.");
+							}
+							else {
+								t.determineUserDeath(.5); // Traditional weighting
+								t.say(t.capitalize(t.user.weapon.name) + " battle!", "You run up to the archer, and lunge!\n\n\t" + (t.user.dead ? "Unfortunately, you miss, and get shot in the " + (t.config.ESEggs && t.config.triggerEgg(.9) ? "knee." : "back.") : "You connect!\n\n\tThe archer falls, dead.\n\n\tThe bow drops to the ground.\n\tYou eye it."));
+							}
 							break;
 						case Cweapon.TYPE_MODERN:
-							t.determineUserDeath(1, 3);
+							t.determineUserDeath(1, 6);
 							t.say(t.capitalize(t.user.weapon.name)+" vs. bow", "You carefully take aim at the archer, and pull the trigger.\n\n\t"+(t.user.dead ? "Unfortunately, you miss, and get shot before you can aim again." : (t.gen.nextBoolean() ? "A neat hole appears in the archer\'s chest." : "You wing the archer, the bow swinging off it\'s aim, and then you shoot again, scoring a fatal hit.")+"\n\n\tThe bow falls to the ground.\n\tYou eye it, but decide that you prefer your "+t.user.weapon+"."));
 							break;
 						case Cweapon.TYPE_FUTURE:
@@ -1607,7 +1655,7 @@ class Cgame implements Serializable, Parcelable
 						@Override
 						public void onClick (View v)
 						{
-							t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVIENIENCE;
+							t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVENIENCE;
 							t.user.commitSuicide();
 						}
 					});
@@ -1658,11 +1706,8 @@ class Cgame implements Serializable, Parcelable
 							t.th=new Thread(new Runnable()
 							{
 								@Override
-								public void run ()
-								{
-									t.user.weapon.name="bow";
-									t.user.weapon.type=Cweapon.TYPE_ARCHERY;
-									t.user.weapon.setCharacteristics(Cweapon.BOLT_FIRE|Cweapon.CLOSE_RANGE|Cweapon.LOW_POWER|Cweapon.ONE_ROUND_MAGAZINE);
+								public void run () {
+									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_ARCHERY, Cweapon.BOLT_FIRE|Cweapon.CLOSE_RANGE|Cweapon.LOW_POWER|Cweapon.ONE_ROUND_MAGAZINE, 0, "bow", null));
 									runStage();
 								}
 							});
@@ -1703,7 +1748,7 @@ class Cgame implements Serializable, Parcelable
 				@Override
 				public void run()
 				{
-					t.say("Weaponry is King", "Movng away from the cave yet again, you encounter an abandoned gunstore.\n\n\tInside, there are two shapes.");
+					t.say("Weaponry is King", "Moving away from the cave yet again, you encounter an abandoned gunstore.\n\n\tInside, there are two shapes.");
 				}
 			});
 			t.th.start();
@@ -1886,7 +1931,10 @@ class Cgame implements Serializable, Parcelable
 						switch (t.user.weapon.type)
 						{
 						case Cweapon.TYPE_SHARP:
-							t.determineUserDeath(.75);
+							if (t.user.weapon.characteristicSet(Cweapon.LEGENDARY)) // Excalibur check
+								t.determineUserDeath(.4); // Easier weighting for Excalibur
+							else
+								t.determineUserDeath(.75); // Traditional weighting
 							if (t.user.dead)
 								t.say ("Swordfight!", "You slash at one creature, then the other, trying to keep the creatures away from you, but they overwhelm you.");
 							else
@@ -1896,7 +1944,7 @@ class Cgame implements Serializable, Parcelable
 							break;
 						case Cweapon.TYPE_MODERN:
 							if (t.determineUserDeath(.25))
-								t.say("A hit and a miss", "You place one shot cleanly between the eyes of the nearest creaure.\n\tIt falls, dead.\n\n\tThe second creature lunges toward you, and you fire, hitting it in the shoulder, failing to kill it.");
+								t.say("A hit and a miss", "You place one shot cleanly between the eyes of the nearest creature.\n\tIt falls, dead.\n\n\tThe second creature lunges toward you, and you fire, hitting it in the shoulder, failing to kill it.");
 							else
 								t.say("Sharpshooter", "You cleanly shoot the near creature between the eyes, killing it instantly.\n\n\tYou spin around, and quickly shoot the far creature.\n\tIt stumbles, and you fire another round into it\'s skull.");
 							break;
@@ -1905,7 +1953,7 @@ class Cgame implements Serializable, Parcelable
 							break;
 						default:
 							t.say("Your weapon is unknown to this universe as of the time being, so...");
-							t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVIENIENCE;
+							t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVENIENCE;
 							t.user.commitSuicide();
 						}
 					}
@@ -1917,6 +1965,7 @@ class Cgame implements Serializable, Parcelable
 			{
 				Random gen=new Random();
 				t.user.gold.amount=(int)((99*Math.abs(gen.nextGaussian()))+1); // If the user is still alive,then they're going to the gunstore. It will be more persistent here.
+				t.user.clearedGunstore=true;
 			}
 			prepContinueButton();
 			break;
@@ -1930,8 +1979,12 @@ class Cgame implements Serializable, Parcelable
 				{
 					if (inputted==-1)
 						t.say("With the monsters defeated, you clean their remnants off of you, then survey your prize, walls and walls full of weapons"+(t.user.gold.amount==0 ? "" : ", and the contents of the cash register"+(t.user.gold.amount==1 ? ": " : ", which is oddly full of ")+t.user.gold)+".\n\n\tYou decide to grab a weapon, then depart.");
-					else
+					else if (t.user.clearedGunstore)
 						t.say("Return", "You return to the gunstore.\n\n\tLuckily, it\'s still lacking as far as things that want to kill and eat you are concerned.\n\n\tYou look to the walls, filled with more weapons than you can count, again resolving to grab one, then go back to the valley.");
+					else {
+						stage=29; // Return to the gunstore fight
+						runStage();
+					}
 				}
 			});
 			t.th.start();
@@ -1939,6 +1992,7 @@ class Cgame implements Serializable, Parcelable
 			break;
 		case 35:
 			t.fadeout();
+			t.user.clearedGunstore=true; // Sanity setting.
 			t.runOnUiThread(new Runnable()
 			{
 				@Override
@@ -2040,7 +2094,7 @@ class Cgame implements Serializable, Parcelable
 						l.addView(b);
 						b=new Button(t);
 					}
-					b.setText("Revolver");
+					b.setText(t.gen.nextBoolean() ? "Revolver" : "Colt .45");
 					b.setOnClickListener(new OnClickListener()
 					{
 						@Override
@@ -2054,7 +2108,7 @@ class Cgame implements Serializable, Parcelable
 								@Override
 								public void run()
 								{
-									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_MODERN, Cweapon.CLOSE_RANGE|Cweapon.HIGH_CALIBER|Cweapon.LIGHT|Cweapon.SLOW_RELOAD, -.01, t.gen.nextBoolean() ? "revolver" : "six-shot", null));
+									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_MODERN, Cweapon.ANCIENT|Cweapon.CLOSE_RANGE|Cweapon.HIGH_CALIBER|Cweapon.HIGH_POWER_ROUNDS|Cweapon.HIGH_RECOIL|Cweapon.LIGHT|Cweapon.SLOW_RELOAD, .04, t.gen.nextBoolean() ? "Colt .45" : (t.gen.nextBoolean() ? "revolver" : "six-shot"), null));
 									t.game.runStage();
 								}
 							});
@@ -2939,7 +2993,7 @@ class Cgame implements Serializable, Parcelable
 				@Override
 				public void run()
 				{
-					t.say("The Valley", "You move away from the gunstore.\n\n\tAfter a good amount of walking, you finally enter the lush valley.\n\tYou find yourself surrounded by greenery and life, but the valley is much smaller than it seemed from a distance. Unfortunately, you need to leave it.\n\n\n\tYou search for a way away.\n\n\tStraight away from the path that leads to the gunstore is a downtrodden set of stones, almost as a staircase, leadng to a familiar skyline.\n\n\tFacing it, you see smoke out of the corner of your eye. Turning to your right, you see the light of a huge, hellish inferno on the horizon. You can almost see the fires. A large highway leads directly towards this pit.");
+					t.say("The Valley", "You move away from the gunstore.\n\n\tAfter a good amount of walking, you finally enter the lush valley.\n\tYou find yourself surrounded by greenery and life, but the valley is much smaller than it seemed from a distance. Unfortunately, you need to leave it.\n\n\n\tYou search for a way away.\n\n\tStraight away from the path that leads to the gunstore is a downtrodden set of stones, almost as a staircase, leading to a familiar skyline.\n\n\tFacing it, you see smoke out of the corner of your eye. Turning to your right, you see the light of a huge, hellish inferno on the horizon. You can almost see the fires. A large highway leads directly towards this pit.");
 				}
 			});
 			t.th.start();
@@ -3061,7 +3115,7 @@ class Cgame implements Serializable, Parcelable
 								t.user.weapon.backup=null;
 						}
 						if (say)
-							t.say("Familiarity", "You go to familiarity.\n\n\n\n\tAs you reach the summit of the stairs, you see a destroyed line of buildings, from tall skyscapers fallen into pieces, to houses in shambles.\n\n\tBefore you can continue further, Gandalf appears!\n\tHe yells,\n\n\t\tNo!\n\t\tYou must not!\n\t\tYour journey is not complete!\n\n\tBefore you can reply, he slaps you.\n\n\tYou go flying"+str+", and land in the pits.");
+							t.say("Familiarity", "You go to familiarity.\n\n\n\n\tAs you reach the summit of the stairs, you see a destroyed line of buildings, from tall skyscrapers fallen into pieces, to houses in shambles.\n\n\tBefore you can continue further, Gandalf appears!\n\tHe yells,\n\n\t\tNo!\n\t\tYou must not!\n\t\tYour journey is not complete!\n\n\tBefore you can reply, he slaps you.\n\n\tYou go flying"+str+", and land in the pits.");
 					}
 				});
 				t.th.start();
@@ -3127,22 +3181,22 @@ class Cgame implements Serializable, Parcelable
 				public void run ()
 				{
 					String who=t.gen.nextBoolean() ? "Author" : "Programmer";
-					String occurence;
+					String occurrence;
 					if (t.gen.nextBoolean())
 					{
 						if (t.gen.nextBoolean())
-							occurence="a meteor appears, and flattens you.";
+							occurrence="a meteor appears, and flattens you.";
 						else
-							occurence="a lightning bolt strikes you, and fries you.";
+							occurrence="a lightning bolt strikes you, and fries you.";
 					}
 					else
 					{
 						if (t.gen.nextBoolean())
-							occurence="a dinosaur appears, and eats you.";
+							occurrence="a dinosaur appears, and eats you.";
 						else
-							occurence="a nuclear bomb appears under your feet and explodes, vaporizing you.";
+							occurrence="a nuclear bomb appears under your feet and explodes, vaporizing you.";
 					}
-					t.say("The End of the World...?","The "+who+" has run out of ideas, so "+occurence);
+					t.say("The End of the World...?","The "+who+" has run out of ideas, so "+occurrence);
 				}
 			});
 			t.th.start();
@@ -3196,6 +3250,7 @@ class Cgame implements Serializable, Parcelable
 
 	public void runArthur(final byte stage, String input)
 	{
+		t.user.isArthur=true;
 		switch (stage)
 		{
 		case 0:
@@ -3261,7 +3316,8 @@ class Cgame implements Serializable, Parcelable
 										// Close the soft keyboard, now that there's nothing for it to write to.
 										((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 										final String str=ev.getText().toString().trim();
-										((TextView)t.findViewById(R.id.gameText)).append("\n\n\""+str+"\"\n\n");
+										((TextView)t.findViewById(R.id.gameText)).append("\n\n\"" + str + "\"\n\n");
+										t.setUi();
 										t.th=new Thread (new Runnable()
 										{
 											@Override
@@ -3348,6 +3404,7 @@ class Cgame implements Serializable, Parcelable
 								((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 								final String str=ev.getText().toString().trim();
 								((TextView)t.findViewById(R.id.gameText)).append("\n\n\""+str+"\"\n\n");
+								t.setUi();
 								t.th=new Thread (new Runnable()
 								{
 									@Override
@@ -3434,6 +3491,7 @@ class Cgame implements Serializable, Parcelable
 								((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 								final String str=ev.getText().toString().trim();
 								((TextView)t.findViewById(R.id.gameText)).append("\n\n\""+str+"\"\n\n");
+								t.setUi();
 								t.th=new Thread (new Runnable()
 								{
 									@Override
@@ -3487,7 +3545,7 @@ class Cgame implements Serializable, Parcelable
 	{
 		if (t.config.autosave)
 		{
-			(new Thread(new Runnable() // We don't want to save on the runStage thread, that might cause a noticeable delay. Note that if saving takes too long, we may get a conflict between several saves occuring at once. Consider naming the save thread.
+			(new Thread(new Runnable() // We don't want to save on the runStage thread, that might cause a noticeable delay. Note that if saving takes too long, we may get a conflict between several saves occurring at once. Consider naming the save thread.
 			{
 				@Override
 				public void run()
@@ -3528,7 +3586,7 @@ class Cgame implements Serializable, Parcelable
 							@Override
 							public void run()
 							{
-								t.say("Always prepared", "You prepare to fight the spirit with your "+t.user.weapon+".\n\n\n\tIt seemingly finds your effort humorous, as it pauses its approach to laugh.\n\n\n\n\tThinking your "+t.user.weapon.backup+" more suited to the task, you discard the "+t.user.weapon+", throwing it to the side and away from your presence, and draw your "+t.user.weapon.backup+".\n\n\tThe shadow thinks this a more seriosu threat, as it stops its laughter and prepares itself to engage you.");
+								t.say("Always prepared", "You prepare to fight the spirit with your "+t.user.weapon+".\n\n\n\tIt seemingly finds your effort humorous, as it pauses its approach to laugh.\n\n\n\n\tThinking your "+t.user.weapon.backup+" more suited to the task, you discard the "+t.user.weapon+", throwing it to the side and away from your presence, and draw your "+t.user.weapon.backup+".\n\n\tThe shadow thinks this a more serious threat, as it stops its laughter and prepares itself to engage you.");
 							}
 						});
 						t.th.start();
@@ -3643,7 +3701,7 @@ class Cgame implements Serializable, Parcelable
 							}
 						});
 						l.addView(b);
-						if (t.config.triggerEgg(t.gen.nextInt(10)+1/11))
+						if (t.config.triggerEgg((t.gen.nextInt(10)+1)/11))
 						{
 							b=new Button(t);
 							b.setText("Make friends with the creature");
@@ -3708,7 +3766,7 @@ class Cgame implements Serializable, Parcelable
 									default:
 										word="considerably ";
 									}
-									t.say("Close call", "You swing your sword, and connect.\n\n\n\tThe moment your sword touches the "+(t.gen.nextBoolean() ? "shadow" : "shape")+", the creature dissolves into a swirl of smoke, and your sword continues as if it wasn\'t there.\n\n\n\n\n\tYou shiver, questioning reality, and your sanity, "+word+"more than you already were.\n\n\n\n\n\n\n\tTryijg to walk it off, you deicide to continue along the highway.");
+									t.say("Close call", "You swing your sword, and connect.\n\n\n\tThe moment your sword touches the "+(t.gen.nextBoolean() ? "shadow" : "shape")+", the creature dissolves into a swirl of smoke, and your sword continues as if it wasn\'t there.\n\n\n\n\n\tYou shiver, questioning reality, and your sanity, "+word+"more than you already were.\n\n\n\n\n\n\n\tTrying to walk it off, you decide to continue along the highway.");
 								}
 							}
 						};
@@ -3765,7 +3823,7 @@ class Cgame implements Serializable, Parcelable
 							public void run()
 							{
 								if (t.user.weapon.characteristicSet(Cweapon.CLOSE_RANGE_ONLY))
-									t.say("Jedi","You meet the "+(t.gen.nextBoolean() ? "shadow" : "vision")+", and swing your lightsaber.\n\n\tThe shadow disappears into smoke at the edges of your visoon as the "+t.user.weapon+" slices through it.\n\n\tYou continue, not particularly caring if it was real.");
+									t.say("Jedi","You meet the "+(t.gen.nextBoolean() ? "shadow" : "vision")+", and swing your lightsaber.\n\n\tThe shadow disappears into smoke at the edges of your vision as the "+t.user.weapon+" slices through it.\n\n\tYou continue, not particularly caring if it was real.");
 								else
 									t.say(t.capitalize(t.user.weapon.toString())+" über alles", "You level your "+t.user.weapon+" at the "+(t.gen.nextBoolean() ? "shadow" : "figure")+", and pull the trigger.\n\n\tBy the time the splash from the impact of the shot clears, the shadow is gone, but strangely there\'s no ash.\n\n\tYou ignore it, not caring about your own sanity.");
 							}
@@ -3773,7 +3831,7 @@ class Cgame implements Serializable, Parcelable
 						break;
 					default:
 						t.logError("Invalid weapon code: "+t.user.weapon.type);
-						t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVIENIENCE;
+						t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVENIENCE;
 						r=new Runnable()
 						{
 							@Override
@@ -3794,7 +3852,7 @@ class Cgame implements Serializable, Parcelable
 								@Override
 								public void run()
 								{
-									if (t.user.weapon.type==Cweapon.TYPE_USED_FOR_CONVIENIENCE)
+									if (t.user.weapon.type==Cweapon.TYPE_USED_FOR_CONVENIENCE)
 										t.user.commitSuicide();
 									else if (t.user.dead)
 									{
@@ -3869,9 +3927,9 @@ class Cgame implements Serializable, Parcelable
 								{
 									for (int n=0, m=(t.gen.nextInt(4)+2); n<m; ++n)
 										message+="\n";
-									message+="\tAfter a while of wandering along the Highway, yet another adventurer appears, this time with a "+weapons[i]+"!\n\n\tBegrudingly, you kill "+(t.gen.nextBoolean() ? "him" : "her")+", and continue walking along the Highway, caring even less about the humans.";
+									message+="\tAfter a while of wandering along the Highway, yet another adventurer appears, this time with a "+weapons[i]+"!\n\n\tBegrudgingly, you kill "+(t.gen.nextBoolean() ? "him" : "her")+", and continue walking along the Highway, caring even less about the humans.";
 								}
-								t.say("Assimilation", "You try to make friends with the "+(t.gen.nextBoolean() ? "shadow" : "vision")+"...\n\n\tMiraculously, it accepts you!\n\n\n\tIt escorts you to the pits, where you are brought to the shadow headquarters.\n\n\tThe "+(t.gen.nextBoolean() ? "shadows" : "mystical beings")+" perform some sort of ritual, and you watch as your body slips away from you as you become one of them.\n\n\n\tYou move out to the Highway, and immediately, you\'re attacked by an adventurer with a "+weapons[0]+"!\n\n\tYou try to befriend "+(t.gen.nextBoolean() ? "him" : "her")+", but you\'re forced to retailiate.\n\n\tYou can\'t help but lose some faith in humans."+message+"\n\n\tSuddenly, you find an adventurer!\n\t"+(t.gen.nextBoolean() ? "He" : "She")+" tries to run, but you can\'t help but kill any adventurer in your path.\n\n\n\tBarely afterward, another comes along, and tries to make friends.\n\n\tPerhaps if you hadn\'t spent so long on the Highway, you\'d accept, but now...\n\tYou kill "+(t.gen.nextBoolean() ? "him" : "her")+".\n\n\n\tThree days later, an adventurer appears with a "+(t.gen.nextBoolean() ? "raygun" : "lightsaber")+", and ends you.\n\n\n\tGandalf nods in approval, as you disappear into a swirl of smoke.");
+								t.say("Assimilation", "You try to make friends with the "+(t.gen.nextBoolean() ? "shadow" : "vision")+"...\n\n\tMiraculously, it accepts you!\n\n\n\tIt escorts you to the pits, where you are brought to the shadow headquarters.\n\n\tThe "+(t.gen.nextBoolean() ? "shadows" : "mystical beings")+" perform some sort of ritual, and you watch as your body slips away from you as you become one of them.\n\n\n\tYou move out to the Highway, and immediately, you\'re attacked by an adventurer with a "+weapons[0]+"!\n\n\tYou try to befriend "+(t.gen.nextBoolean() ? "him" : "her")+", but you\'re forced to retaliate.\n\n\tYou can\'t help but lose some faith in humans."+message+"\n\n\tSuddenly, you find an adventurer!\n\t"+(t.gen.nextBoolean() ? "He" : "She")+" tries to run, but you can\'t help but kill any adventurer in your path.\n\n\n\tBarely afterward, another comes along, and tries to make friends.\n\n\tPerhaps if you hadn\'t spent so long on the Highway, you\'d accept, but now...\n\tYou kill "+(t.gen.nextBoolean() ? "him" : "her")+".\n\n\n\tThree days later, an adventurer appears with a "+(t.gen.nextBoolean() ? "raygun" : "lightsaber")+", and ends you.\n\n\n\tGandalf nods in approval, as you disappear into a swirl of smoke.");
 							}
 							else
 							{
@@ -3907,7 +3965,7 @@ class Cgame implements Serializable, Parcelable
 	{
 		if (t.config.autosave)
 		{
-			(new Thread(new Runnable() // We don't want to save on the runStage thread, that might cause a noticeable delay. Note that if saving takes too long, we may get a conflict between several saves occuring at once. Consider naming the save thread.
+			(new Thread(new Runnable() // We don't want to save on the runStage thread, that might cause a noticeable delay. Note that if saving takes too long, we may get a conflict between several saves occurring at once. Consider naming the save thread.
 			{
 				@Override
 				public void run()
@@ -4505,7 +4563,7 @@ class Cgame implements Serializable, Parcelable
 												t.say("Outnumbered and outdone", "You face the creatures with your "+t.user.weapon+", fending them away, but one gets past you long before you can strike any.");
 												break;
 											case 1:
-												t.say("Death "+(t.gen.nextBoolean() ? "Unbounded" : "knows no bounds"), "You swing your sword at the leading "+(t.gen.nextBoolean() ? "shadow" : "figure")+", and, miraculously, connect.\n\n\tThe lead shafow disappears in a swirl of smoke, and you turn to face the next, but you\'re caught from behind by the last.");
+												t.say("Death "+(t.gen.nextBoolean() ? "Unbounded" : "knows no bounds"), "You swing your sword at the leading "+(t.gen.nextBoolean() ? "shadow" : "figure")+", and, miraculously, connect.\n\n\tThe lead shadow disappears in a swirl of smoke, and you turn to face the next, but you\'re caught from behind by the last.");
 												break;
 											case 2:
 												t.say("The Darkness of Death", "You move quickly, as quickly as you ever have in your life.\n\n\tYou turn the leading shadow into a swirl of smoke, then the second.\n\nThe third, however, evades your swing, not letting it touch, and ends you.");
@@ -4516,7 +4574,7 @@ class Cgame implements Serializable, Parcelable
 											}
 										}
 										else
-											t.say(t.gen.nextBoolean() ? "Swordsman" : "Sword master", "You swing your sword as fast as humanly possible, turning one, then two, "+(t.gen.nextBoolean() ? "shadows" : "figures")+" into swirling smoke.\n\n\tThe last shadow charges toward you, but your sword nicks it, and it disapears.\n\n\tA booming voice, almost like Gandalf\'s, echoes from the clouds:\n\n\t\tWhy do you still carry that puny "+t.user.weapon+"??\n\t\tFind a new weapon.\n\t\tNow.\n\n\n\n\n\tYou turn your attention away from the voice, and to the House of Shadows.");
+											t.say(t.gen.nextBoolean() ? "Swordsman" : "Sword master", "You swing your sword as fast as humanly possible, turning one, then two, "+(t.gen.nextBoolean() ? "shadows" : "figures")+" into swirling smoke.\n\n\tThe last shadow charges toward you, but your sword nicks it, and it disappears.\n\n\tA booming voice, almost like Gandalf\'s, echoes from the clouds:\n\n\t\tWhy do you still carry that puny "+t.user.weapon+"??\n\t\tFind a new weapon.\n\t\tNow.\n\n\n\n\n\tYou turn your attention away from the voice, and to the House of Shadows.");
 									}
 								};
 								break;
@@ -4550,7 +4608,7 @@ class Cgame implements Serializable, Parcelable
 												t.say(title, "You turn to face the shadows, but they easily defeat you before you get off a single shot.");
 												break;
 											case 1:
-												t.say(title, "You spin to face your enemy, and fire a single "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "bolt" : "arrow")+" at the leading "+(t.gen.nextBoolean() ? "shadow" : "apparition")+".\n\n\tYour aim "+(t.gen.nextBoolean() ? "is true" : (t.gen.nextBoolean() ? "is that of a master" : "is masterful"))+", turning the leader of the trio into a swirl of smoke.\n\n\tHowever, before you can ready yourself again, the other two elminate you.");
+												t.say(title, "You spin to face your enemy, and fire a single "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "bolt" : "arrow")+" at the leading "+(t.gen.nextBoolean() ? "shadow" : "apparition")+".\n\n\tYour aim "+(t.gen.nextBoolean() ? "is true" : (t.gen.nextBoolean() ? "is that of a master" : "is masterful"))+", turning the leader of the trio into a swirl of smoke.\n\n\tHowever, before you can ready yourself again, the other two eliminate you.");
 												break;
 											case 2:
 												t.say(title, "You load one "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "bolt" : "arrow")+", and thoughtlessly fire it at the lead "+(t.gen.nextBoolean() ? "shadow" : "figure")+".\n\n\tYou\'ve practiced your archery considerably, and the shot flies directly into its target.\n\n\tYou ignore the sight as your opponent disappears into a swirling cloud of shadowy smoke, and dodge the advance of your second adversary, which you shoot shortly afterwards.\n\n\n\tAlas, you lost track of the third shadow, which comes from behind you, and kills you.");
@@ -4560,7 +4618,7 @@ class Cgame implements Serializable, Parcelable
 											}
 										}
 										else
-											t.say((t.config.GoTEggs && t.config.triggerEgg(.8)) ? "Lightbringer" : "Defeater of Shadows", "You turn, snappily aiming your "+t.user.weapon+" directly at the leading "+(t.gen.nextBoolean() ? "shadow" : "apparition")+", and shooting it.\n\n\tPaying it no attention as it disappears into swirling smoke.\n\n\tInstead, as if by instinct, you roll towards the House of Shadows."+(t.gen.nextBoolean() ? "" : "\n\n\tYou quickly recover from the pain of your miscalculation after you slam into the outer wall.")+"\n\n\tWithout taking the time to stand, you adjust your aim, directly at the second enemy.\n\n\tQuickly, you release your shot, sending "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "a bolt" : "an arrow")+" flying into the second shape, then clattering to the ground as your opponent swirls away.\n\n\n\tThe third charges, but you pull one "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "bolt" : "arrow")+" from your reserves, and drive it through your final adversary, noting the lack of resistance as it goes through.\n\n\tYou watch the remmains of your opponent swirl away, and note your two fired shots have vanished.");
+											t.say((t.config.GoTEggs && t.config.triggerEgg(.8)) ? "Lightbringer" : "Defeater of Shadows", "You turn, snappily aiming your "+t.user.weapon+" directly at the leading "+(t.gen.nextBoolean() ? "shadow" : "apparition")+", and shooting it.\n\n\tPaying it no attention as it disappears into swirling smoke.\n\n\tInstead, as if by instinct, you roll towards the House of Shadows."+(t.gen.nextBoolean() ? "" : "\n\n\tYou quickly recover from the pain of your miscalculation after you slam into the outer wall.")+"\n\n\tWithout taking the time to stand, you adjust your aim, directly at the second enemy.\n\n\tQuickly, you release your shot, sending "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "a bolt" : "an arrow")+" flying into the second shape, then clattering to the ground as your opponent swirls away.\n\n\n\tThe third charges, but you pull one "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "bolt" : "arrow")+" from your reserves, and drive it through your final adversary, noting the lack of resistance as it goes through.\n\n\tYou watch the remains of your opponent swirl away, and note your two fired shots have vanished.");
 									}
 								};
 								break;
@@ -4686,7 +4744,7 @@ class Cgame implements Serializable, Parcelable
 													t.say(title, "You ready yourself, aiming directly at the closest "+(t.gen.nextBoolean() ? "shadow" : "apparition")+".\n\n\n\tYou quickly fire a shot, fully aware of the threat of the two remaining shadows, and watch only for a moment as the round flies through the air, and hits its mark.\n\n\n\tThe "+(t.gen.nextBoolean() ? "shadow" : "figure")+" turns into a swirling cloud of smoke, and you swing your "+t.user.weapon+" to fire at its lieutenant.\n\n\n\tYour enemy advances towards you, and you calmly "+(t.gen.nextBoolean() ? "squeeze" : "pull")+" the trigger.\n\n\n\tYour aim was near-perfect, but the "+(t.gen.nextBoolean() ? "figure" : "shadow")+" sees it coming, and moves to "+(t.gen.nextBoolean() ? "evade" : "dodge")+" it.\n\n\tThe shadow is not quite quick enough, and the round strikes it, turning it to smoke.\n\n\n\tThe final shadow seems to have disappeared, but you see a hint of motion in the corner of your eye, and, almost as if by instinct, turn to face it.\n\n\n\n\n\n\tThe shadow is charging at you, doing its best to end you and defend the House of Shadows, but you are too quick for it, deftly pulling the trigger, and turning the shadow into a cloud of smoke.\n\n\n\tAfter contently watching it swirl away, you turn to face the House of Shadows.");
 													break;
 												case targetingMinigame.output.GOOD:
-													t.say(title, "You quickly survey the field before you, and the three shadows that are before you.\n\n\n\tYou adjust your aim, leveling your "+t.user.weapon+" at the "+(t.gen.nextBoolean() ? "nearest" : "leading")+" "+(t.gen.nextBoolean() ? "apparition" : "shadow")+", prepared to fire.\n\n\n\tAs the "+(t.gen.nextBoolean() ? "figures" : "shadows")+" begin to approach you, you grin ever-so-slightly, and "+(t.gen.nextBoolean() ? "squeeze" : "pull")+" the trigger.\n\n\n\tThe round glides smoothly towards its target, impacting it, and converting it into a swirling cloud of smoke.\n\n\n\tYou turn slightly, ready to fire at the next enemy, and "+(t.gen.nextBoolean() ? "adjust" : "calibrate")+" your aim.\n\n\n\n\tWhen your sights are in place, you fire, and turn the second "+(t.gen.nextBoolean() ? "enemy" : "apparition")+" into swirling smoke.\n\n\n\n\tYou frown slightly.\n\n\tYou could have sworn there where three, yet an empty battlefield and two kills seems to sugest otherwise.\n\n\n\tYou cautiously survey the area, then slowly start to move towards the House of Shadows.\n\n\n\tSuddenly, you see a dark smudge on the edge of your vision, and you turn to grab a better look.\n\n\n\tThe "+(t.gen.nextBoolean() ? "shadow" : "apparition")+", seeing that you found it, charges, as if it was hoping to eliminate you before you can do the same to it, but you fire, and it vanishes, replaced only by smoke.");
+													t.say(title, "You quickly survey the field before you, and the three shadows that are before you.\n\n\n\tYou adjust your aim, leveling your "+t.user.weapon+" at the "+(t.gen.nextBoolean() ? "nearest" : "leading")+" "+(t.gen.nextBoolean() ? "apparition" : "shadow")+", prepared to fire.\n\n\n\tAs the "+(t.gen.nextBoolean() ? "figures" : "shadows")+" begin to approach you, you grin ever-so-slightly, and "+(t.gen.nextBoolean() ? "squeeze" : "pull")+" the trigger.\n\n\n\tThe round glides smoothly towards its target, impacting it, and converting it into a swirling cloud of smoke.\n\n\n\tYou turn slightly, ready to fire at the next enemy, and "+(t.gen.nextBoolean() ? "adjust" : "calibrate")+" your aim.\n\n\n\n\tWhen your sights are in place, you fire, and turn the second "+(t.gen.nextBoolean() ? "enemy" : "apparition")+" into swirling smoke.\n\n\n\n\tYou frown slightly.\n\n\tYou could have sworn there where three, yet an empty battlefield and two kills seems to suggest otherwise.\n\n\n\tYou cautiously survey the area, then slowly start to move towards the House of Shadows.\n\n\n\tSuddenly, you see a dark smudge on the edge of your vision, and you turn to grab a better look.\n\n\n\tThe "+(t.gen.nextBoolean() ? "shadow" : "apparition")+", seeing that you found it, charges, as if it was hoping to eliminate you before you can do the same to it, but you fire, and it vanishes, replaced only by smoke.");
 													break;
 												case targetingMinigame.output.CRITICAL:
 													t.say(title, "You stare down the three approaching "+(t.gen.nextBoolean() ? "shadows" : "figures")+", sizing up your opposition.\n\n\n\tThe moment they move to attack, you start to fire, cleanly eliminating your leading "+(t.gen.nextBoolean() ? "target" : "enemy")+", and adjust your aim, targeting the second.\n\n\tIt makes an attempt to flee, but you fire, hitting it in what passes as its head.\n\n\n\tThe last shadow attempts to dodge your line of sight, but you follow it, and eliminate it too.\n\n\n\n\n\tYou pause for only a second to watch the trio disappear into swirling smoke as it diffuses, then turn towards the House of Shadows.");
@@ -4912,7 +4970,7 @@ class Cgame implements Serializable, Parcelable
 												t.say(t.gen.nextBoolean() ? "Newcomer" : "Novice", "You bring your "+t.user.weapon+" to bear, fumbling only slightly, then beginning to "+(t.gen.nextBoolean() ? "slash" : "stab")+" at the "+(t.gen.nextBoolean() ? "shadow" : "figure")+", but it evades you at every thrust."+t.multiplyString('\n', t.gen.nextInt(4)+2)+"\tFinally, after a number of mistakes, it outmaneuvers you."+t.multiplyString('\n', t.gen.nextInt(5)+2)+"\tThe last thought in your head before your "+(t.gen.nextBoolean() ? "time" : "existence")+" is ended, "+((t.config.litEggs && t.config.triggerEgg(.8)) ? ("if you had been allowed to give an utterance to the thoughts that were inspiring you, and they were prophetic, they would have been these:"+t.multiplyString('\n', 2+t.gen.nextInt(3))+"\t\t\"I see a great evil fall across a skyline, a city I thought I used to know.\n\t\t\"I see a man, old, bearded, watching in disappointment as the blots form on my name. I see him, foremost of judges and honored men, bringing another, all too much like me, to this place - Then fair to look upon, without a trace of this day\'s disfigurement - and I hear him tell my replacement my story, with a disappointed and somber voice.\n\t\t\"It is a far, far, sorrier thing that I do, than I have ever done; it is a far, far more dismaying rest that I go to than I have ever known.\""+t.multiplyString('\n', t.gen.nextInt(4)+2)+"\tUnfortunately for your memory, you failed to realize that this was not, in fact, \"A Tale of Two Shadows\".") /* Note that adding some gender-specific pronouns to that might not be the worst idea. */ : "is one of sadness: Sadness that you were never able to properly use your "+t.user.weapon+" well enough to defeat the Shadow in the Pits."));
 										}
 										else
-											t.say(t.gen.nextBoolean() ? "Swordsman" : "Sword master", "You swing your sword as fast as humanly possible, turning one, then two, "+(t.gen.nextBoolean() ? "shadows" : "figures")+" into swirling smoke.\n\n\tThe last shadow charges toward you, but your sword nicks it, and it disapears.\n\n\tA booming voice, almost like Gandalf\'s, echoes from the clouds:\n\n\t\tWhy do you still carry that puny "+t.user.weapon+"??\n\t\tFind a new weapon.\n\t\tNow.\n\n\n\n\n\tYou turn your attention away from the voice, and to the House of Shadows.");
+											t.say(t.gen.nextBoolean() ? "Swordsman" : "Sword master", "You swing your sword as fast as humanly possible, turning one, then two, "+(t.gen.nextBoolean() ? "shadows" : "figures")+" into swirling smoke.\n\n\tThe last shadow charges toward you, but your sword nicks it, and it disappears.\n\n\tA booming voice, almost like Gandalf\'s, echoes from the clouds:\n\n\t\tWhy do you still carry that puny "+t.user.weapon+"??\n\t\tFind a new weapon.\n\t\tNow.\n\n\n\n\n\tYou turn your attention away from the voice, and to the House of Shadows.");
 									}
 								};
 								break;
@@ -4946,7 +5004,7 @@ class Cgame implements Serializable, Parcelable
 												t.say(title, "You turn to face the shadows, but they easily defeat you before you get off a single shot.");
 												break;
 											case 1:
-												t.say(title, "You spin to face your enemy, and fire a single "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "bolt" : "arrow")+" at the leading "+(t.gen.nextBoolean() ? "shadow" : "apparition")+".\n\n\tYour aim "+(t.gen.nextBoolean() ? "is true" : (t.gen.nextBoolean() ? "is that of a master" : "is masterful"))+", turning the leader of the trio into a swirl of smoke.\n\n\tHowever, before you can ready yourself again, the other two elminate you.");
+												t.say(title, "You spin to face your enemy, and fire a single "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "bolt" : "arrow")+" at the leading "+(t.gen.nextBoolean() ? "shadow" : "apparition")+".\n\n\tYour aim "+(t.gen.nextBoolean() ? "is true" : (t.gen.nextBoolean() ? "is that of a master" : "is masterful"))+", turning the leader of the trio into a swirl of smoke.\n\n\tHowever, before you can ready yourself again, the other two eliminate you.");
 												break;
 											case 2:
 												t.say(title, "You load one "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "bolt" : "arrow")+", and thoughtlessly fire it at the lead "+(t.gen.nextBoolean() ? "shadow" : "figure")+".\n\n\tYou\'ve practiced your archery considerably, and the shot flies directly into its target.\n\n\tYou ignore the sight as your opponent disappears into a swirling cloud of shadowy smoke, and dodge the advance of your second adversary, which you shoot shortly afterwards.\n\n\n\tAlas, you lost track of the third shadow, which comes from behind you, and kills you.");
@@ -4956,7 +5014,7 @@ class Cgame implements Serializable, Parcelable
 											}
 										}
 										else
-											t.say((t.config.GoTEggs && t.config.triggerEgg(.8)) ? "Lightbringer" : "Defeater of Shadows", "You turn, snappily aiming your "+t.user.weapon+" directly at the leading "+(t.gen.nextBoolean() ? "shadow" : "apparition")+", and shooting it.\n\n\tPaying it no attention as it disappears into swirling smoke.\n\n\tInstead, as if by instinct, you roll towards the House of Shadows."+(t.gen.nextBoolean() ? "" : "\n\n\tYou quickly recover from the pain of your miscalculation after you slam into the outer wall.")+"\n\n\tWithout taking the time to stand, you adjust your aim, directly at the second enemy.\n\n\tQuickly, you release your shot, sending "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "a bolt" : "an arrow")+" flying into the second shape, then clattering to the ground as your opponent swirls away.\n\n\n\tThe third charges, but you pull one "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "bolt" : "arrow")+" from your reserves, and drive it through your final adversary, noting the lack of resistance as it goes through.\n\n\tYou watch the remmains of your opponent swirl away, and note your two fired shots have vanished.");
+											t.say((t.config.GoTEggs && t.config.triggerEgg(.8)) ? "Lightbringer" : "Defeater of Shadows", "You turn, snappily aiming your "+t.user.weapon+" directly at the leading "+(t.gen.nextBoolean() ? "shadow" : "apparition")+", and shooting it.\n\n\tPaying it no attention as it disappears into swirling smoke.\n\n\tInstead, as if by instinct, you roll towards the House of Shadows."+(t.gen.nextBoolean() ? "" : "\n\n\tYou quickly recover from the pain of your miscalculation after you slam into the outer wall.")+"\n\n\tWithout taking the time to stand, you adjust your aim, directly at the second enemy.\n\n\tQuickly, you release your shot, sending "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "a bolt" : "an arrow")+" flying into the second shape, then clattering to the ground as your opponent swirls away.\n\n\n\tThe third charges, but you pull one "+("crossbow".equalsIgnoreCase(t.user.weapon.name) ? "bolt" : "arrow")+" from your reserves, and drive it through your final adversary, noting the lack of resistance as it goes through.\n\n\tYou watch the remains of your opponent swirl away, and note your two fired shots have vanished.");
 									}
 								};
 								break;
@@ -5082,7 +5140,7 @@ class Cgame implements Serializable, Parcelable
 													t.say(title, "You ready yourself, aiming directly at the closest "+(t.gen.nextBoolean() ? "shadow" : "apparition")+".\n\n\n\tYou quickly fire a shot, fully aware of the threat of the two remaining shadows, and watch only for a moment as the round flies through the air, and hits its mark.\n\n\n\tThe "+(t.gen.nextBoolean() ? "shadow" : "figure")+" turns into a swirling cloud of smoke, and you swing your "+t.user.weapon+" to fire at its lieutenant.\n\n\n\tYour enemy advances towards you, and you calmly "+(t.gen.nextBoolean() ? "squeeze" : "pull")+" the trigger.\n\n\n\tYour aim was near-perfect, but the "+(t.gen.nextBoolean() ? "figure" : "shadow")+" sees it coming, and moves to "+(t.gen.nextBoolean() ? "evade" : "dodge")+" it.\n\n\tThe shadow is not quite quick enough, and the round strikes it, turning it to smoke.\n\n\n\tThe final shadow seems to have disappeared, but you see a hint of motion in the corner of your eye, and, almost as if by instinct, turn to face it.\n\n\n\n\n\n\tThe shadow is charging at you, doing its best to end you and defend the House of Shadows, but you are too quick for it, deftly pulling the trigger, and turning the shadow into a cloud of smoke.\n\n\n\tAfter contently watching it swirl away, you turn to face the House of Shadows.");
 													break;
 												case targetingMinigame.output.GOOD:
-													t.say(title, "You quickly survey the field before you, and the three shadows that are before you.\n\n\n\tYou adjust your aim, leveling your "+t.user.weapon+" at the "+(t.gen.nextBoolean() ? "nearest" : "leading")+" "+(t.gen.nextBoolean() ? "apparition" : "shadow")+", prepared to fire.\n\n\n\tAs the "+(t.gen.nextBoolean() ? "figures" : "shadows")+" begin to approach you, you grin ever-so-slightly, and "+(t.gen.nextBoolean() ? "squeeze" : "pull")+" the trigger.\n\n\n\tThe round glides smoothly towards its target, impacting it, and converting it into a swirling cloud of smoke.\n\n\n\tYou turn slightly, ready to fire at the next enemy, and "+(t.gen.nextBoolean() ? "adjust" : "calibrate")+" your aim.\n\n\n\n\tWhen your sights are in place, you fire, and turn the second "+(t.gen.nextBoolean() ? "enemy" : "apparition")+" into swirling smoke.\n\n\n\n\tYou frown slightly.\n\n\tYou could have sworn there where three, yet an empty battlefield and two kills seems to sugest otherwise.\n\n\n\tYou cautiously survey the area, then slowly start to move towards the House of Shadows.\n\n\n\tSuddenly, you see a dark smudge on the edge of your vision, and you turn to grab a better look.\n\n\n\tThe "+(t.gen.nextBoolean() ? "shadow" : "apparition")+", seeing that you found it, charges, as if it was hoping to eliminate you before you can do the same to it, but you fire, and it vanishes, replaced only by smoke.");
+													t.say(title, "You quickly survey the field before you, and the three shadows that are before you.\n\n\n\tYou adjust your aim, leveling your "+t.user.weapon+" at the "+(t.gen.nextBoolean() ? "nearest" : "leading")+" "+(t.gen.nextBoolean() ? "apparition" : "shadow")+", prepared to fire.\n\n\n\tAs the "+(t.gen.nextBoolean() ? "figures" : "shadows")+" begin to approach you, you grin ever-so-slightly, and "+(t.gen.nextBoolean() ? "squeeze" : "pull")+" the trigger.\n\n\n\tThe round glides smoothly towards its target, impacting it, and converting it into a swirling cloud of smoke.\n\n\n\tYou turn slightly, ready to fire at the next enemy, and "+(t.gen.nextBoolean() ? "adjust" : "calibrate")+" your aim.\n\n\n\n\tWhen your sights are in place, you fire, and turn the second "+(t.gen.nextBoolean() ? "enemy" : "apparition")+" into swirling smoke.\n\n\n\n\tYou frown slightly.\n\n\tYou could have sworn there where three, yet an empty battlefield and two kills seems to suggest otherwise.\n\n\n\tYou cautiously survey the area, then slowly start to move towards the House of Shadows.\n\n\n\tSuddenly, you see a dark smudge on the edge of your vision, and you turn to grab a better look.\n\n\n\tThe "+(t.gen.nextBoolean() ? "shadow" : "apparition")+", seeing that you found it, charges, as if it was hoping to eliminate you before you can do the same to it, but you fire, and it vanishes, replaced only by smoke.");
 													break;
 												case targetingMinigame.output.CRITICAL:
 													t.say(title, "You stare down the three approaching "+(t.gen.nextBoolean() ? "shadows" : "figures")+", sizing up your opposition.\n\n\n\tThe moment they move to attack, you start to fire, cleanly eliminating your leading "+(t.gen.nextBoolean() ? "target" : "enemy")+", and adjust your aim, targeting the second.\n\n\tIt makes an attempt to flee, but you fire, hitting it in what passes as its head.\n\n\n\tThe last shadow attempts to dodge your line of sight, but you follow it, and eliminate it too.\n\n\n\n\n\tYou pause for only a second to watch the trio disappear into swirling smoke as it diffuses, then turn towards the House of Shadows.");
@@ -5435,7 +5493,7 @@ class Cgame implements Serializable, Parcelable
 								"differential equations",
 								"optimization"
 						};
-						t.say("The Diploma", "You black out, and awake in an IB HL Math classroom.\n\n\tAs you look around in confusion, the teacher begins to teach "+topics[t.gen.nextInt(topics.length)]+".\n\n\tYou feel...\n\tMotivated, strangely enough.\n\n\n\n\tThrough hard work, perserverance, and worship of Lord 2-19, you get the IB diploma.");
+						t.say("The Diploma", "You black out, and awake in an IB HL Math classroom.\n\n\tAs you look around in confusion, the teacher begins to teach "+topics[t.gen.nextInt(topics.length)]+".\n\n\tYou feel...\n\tMotivated, strangely enough.\n\n\n\n\tThrough hard work, perseverance, and worship of Lord 2-19, you get the IB diploma.");
 					}
 				}
 			});
@@ -5453,7 +5511,7 @@ class Cgame implements Serializable, Parcelable
 						{
 							if (t.user.weapon.type==Cweapon.TYPE_FUTURE)
 							{
-								t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVIENIENCE;
+								t.user.weapon.type=Cweapon.TYPE_USED_FOR_CONVENIENCE;
 								t.user.commitSuicide();
 							}
 							else if (t.config.triggerEgg(.2))

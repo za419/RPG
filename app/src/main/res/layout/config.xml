@@ -424,7 +424,7 @@
 					android:shadowDx="5"
 					android:shadowDy="5"
 					android:shadowRadius="5"
-					android:layout_marginRight="14dp"/>
+					android:layout_marginRight="15dp"/>
 
 				<Switch
 					android:layout_height="wrap_content"
@@ -601,6 +601,34 @@
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="wrap_content"
 				android:id="@+id/configAutosaveWarning"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp"
+			android:id="@+id/configPersistLayout">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="wrap_content"
+				android:text="Game Configuration Persistence"
+				android:layout_marginRight="15dp"
+				android:layout_gravity="center_vertical"
+				android:id="@+id/configPersistLabel"
+				android:textColor="#0000FF"
+				android:shadowColor="#000000"
+				android:shadowDx="5"
+				android:shadowDy="5"
+				android:shadowRadius="5"/>
+
+			<Switch
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:id="@+id/configPersist"/>
 
 		</LinearLayout>
 

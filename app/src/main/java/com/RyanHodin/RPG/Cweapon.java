@@ -1,15 +1,17 @@
 package com.RyanHodin.RPG;
 
-import android.os.*;
-import android.view.*;
-import android.view.View.*;
-import android.widget.*;
-import android.graphics.*;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
-import java.util.*;
 import java.io.Serializable;
-
-import android.content.*;
+import java.util.Random;
 
 class Cweapon implements Serializable, Parcelable
 {
@@ -50,10 +52,10 @@ class Cweapon implements Serializable, Parcelable
 		m_randomCondition=gen.nextGaussian()/8;
 	}
 
-	public Cweapon (byte typ, int vals, double strength, String nomer, Cweapon secondary)
+	public Cweapon (byte typ, int chars, double strength, String nomer, Cweapon secondary)
 	{
 		type=typ;
-		characteristics=vals;
+		characteristics=chars;
 		name=nomer;
 		backup=secondary;
 		strengthModifier=Math.max(Math.min(strength, .2), -.2);
@@ -95,7 +97,7 @@ class Cweapon implements Serializable, Parcelable
 		edit.putInt("weaponCharacteristics", characteristics);
 		edit.putString("weaponName", name);
 		edit.putFloat("weaponStrengthModifier", (float)strengthModifier);
-		edit.putFloat("weaponCondition", (float)m_randomCondition);
+		edit.putFloat("weaponCondition", (float) m_randomCondition);
 		edit.putBoolean("weaponHasBackup", backup!=null);
 		if (backup!=null)
 		{
@@ -140,6 +142,16 @@ class Cweapon implements Serializable, Parcelable
 		m_randomCondition=primary.m_randomCondition;
 		strengthModifier=primary.strengthModifier;
 		return this;
+	}
+	
+	public Cweapon setPrimary (byte typ, int chars, double strength, String nomer)
+	{
+		return setPrimary(new Cweapon(typ, chars, strength, nomer, null));
+	}
+
+	public Cweapon setPrimary (byte typ, int chars, String nomer)
+	{
+		return setPrimary(typ, chars, 0, nomer);
 	}
 
 	public Cweapon swapWithBackup ()

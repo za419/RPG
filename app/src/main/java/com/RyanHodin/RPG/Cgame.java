@@ -1,22 +1,35 @@
 package com.RyanHodin.RPG;
 
-import android.os.*;
-import android.view.*;
-import android.view.View.*;
-import android.view.inputmethod.*;
-import android.widget.*;
-import android.util.*;
-import android.content.*;
-import android.graphics.*;
-import android.text.*;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.InputType;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
-import java.util.*;
 import java.io.Serializable;
-
-import android.widget.FrameLayout.*;
-import android.annotation.*;
-import android.view.animation.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 class Cgame implements Serializable, Parcelable
 {
@@ -707,9 +720,18 @@ class Cgame implements Serializable, Parcelable
 								@Override
 								public void run()
 								{
-									t.user.weapon.name="sword";
-									t.user.weapon.type=Cweapon.TYPE_SHARP;
-									t.user.weapon.setCharacteristics(Cweapon.ACCURATE|Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.HIGH_CALIBER|Cweapon.LIGHT|Cweapon.ONE_ROUND_MAGAZINE|Cweapon.QUICK_RELOAD);
+									if (t.user.isArthur) {
+										t.user.weapon.name="Excalibur"; // King Arthur gets the greatest of swords
+										t.user.weapon.setCharacteristics(Cweapon.ACCURATE|Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.HIGH_CALIBER|Cweapon.HIGH_POWER_ROUNDS|Cweapon.LEGENDARY|Cweapon.LIGHT|Cweapon.ONE_ROUND_MAGAZINE|Cweapon.QUICK_RELOAD);
+										t.user.weapon.strengthModifier=1+t.gen.nextDouble(); // Excalibur is in epic condition.
+									}
+									else {
+										t.user.weapon.name = "sword";
+										t.user.weapon.setCharacteristics(Cweapon.ACCURATE | Cweapon.CLOSE_RANGE | Cweapon.CLOSE_RANGE_ONLY | Cweapon.HIGH_CALIBER  | Cweapon.ONE_ROUND_MAGAZINE | Cweapon.QUICK_RELOAD);
+										t.user.weapon.strengthModifier=-0.05*t.gen.nextDouble(); // The sword should be in poor condition
+										// This exaggerates the difference between the sword and Excalibur
+									}
+									t.user.weapon.type = Cweapon.TYPE_SHARP;
 									inputted=0;
 									runStage();
 								}
@@ -777,11 +799,19 @@ class Cgame implements Serializable, Parcelable
 							t.th=new Thread(new Runnable()
 							{
 								@Override
-								public void run()
-								{
-									t.user.weapon.name="sword";
-									t.user.weapon.type=Cweapon.TYPE_SHARP;
-									t.user.weapon.setCharacteristics(Cweapon.ACCURATE|Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.HIGH_CALIBER|Cweapon.LIGHT|Cweapon.ONE_ROUND_MAGAZINE|Cweapon.QUICK_RELOAD);
+								public void run() {
+									if (t.user.isArthur) {
+										t.user.weapon.name="Excalibur"; // King Arthur gets the greatest of swords
+										t.user.weapon.setCharacteristics(Cweapon.ACCURATE|Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.HIGH_CALIBER|Cweapon.HIGH_POWER_ROUNDS|Cweapon.LEGENDARY|Cweapon.LIGHT|Cweapon.ONE_ROUND_MAGAZINE|Cweapon.QUICK_RELOAD);
+										t.user.weapon.strengthModifier=1+t.gen.nextDouble(); // Excalibur is in epic condition.
+									}
+									else {
+										t.user.weapon.name = "sword";
+										t.user.weapon.setCharacteristics(Cweapon.ACCURATE | Cweapon.CLOSE_RANGE | Cweapon.CLOSE_RANGE_ONLY | Cweapon.HIGH_CALIBER  | Cweapon.ONE_ROUND_MAGAZINE | Cweapon.QUICK_RELOAD);
+										t.user.weapon.strengthModifier=-0.05*t.gen.nextDouble(); // The sword should be in poor condition
+										// This exaggerates the difference between the sword and Excalibur
+									}
+									t.user.weapon.type = Cweapon.TYPE_SHARP;
 									inputted=1;
 									runStage();
 								}
@@ -807,8 +837,12 @@ class Cgame implements Serializable, Parcelable
 						String title="You enter the cave";
 						if (t.user.dead)
 							t.say(title,"Ignoring the sword, you enter.\n\tImmediately, the creature from the last cave attacks you. It is incredibly angry, and no "+t.user.weapon+" will scare it off.");
-						else
-							t.say(title,"With the sword in hand, you enter.\n\tImmediately, the creature that fled the last cave attacks you. It is incredibly angry, and a stick will not be enough to make it flee.\n\n\tLuckily, you had the prudence to grab the "+t.user.weapon+".\n\tYou ready it.");
+						else {
+							if (t.user.isArthur)
+								t.say(title,"You take the sword, and examine it.\n\nIt seemed to call to you like an old friend, and suddenly you recognize it: It is "+t.user.weapon+"!\n\n\n\tYou take a moment with the blade, twirling it about to remember.\n\n\tAll of a sudden, a shape approaches: You recognize it as the creature from the last cave.\n\tYou bring "+t.user.weapon+" to bear.");
+							else
+								t.say(title, "With the sword in hand, you enter.\n\tImmediately, the creature that fled the last cave attacks you. It is incredibly angry, and a stick will not be enough to make it flee.\n\n\tLuckily, you had the prudence to grab the " + t.user.weapon + ".\n\tYou ready it.");
+						}
 					}
 				});
 				t.th.start();
@@ -1657,11 +1691,8 @@ class Cgame implements Serializable, Parcelable
 							t.th=new Thread(new Runnable()
 							{
 								@Override
-								public void run ()
-								{
-									t.user.weapon.name="bow";
-									t.user.weapon.type=Cweapon.TYPE_ARCHERY;
-									t.user.weapon.setCharacteristics(Cweapon.BOLT_FIRE|Cweapon.CLOSE_RANGE|Cweapon.LOW_POWER|Cweapon.ONE_ROUND_MAGAZINE);
+								public void run () {
+									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_ARCHERY, Cweapon.BOLT_FIRE|Cweapon.CLOSE_RANGE|Cweapon.LOW_POWER|Cweapon.ONE_ROUND_MAGAZINE, 0, "bow", null));
 									runStage();
 								}
 							});
@@ -3195,6 +3226,7 @@ class Cgame implements Serializable, Parcelable
 
 	public void runArthur(final byte stage, String input)
 	{
+		t.user.isArthur=true;
 		switch (stage)
 		{
 		case 0:

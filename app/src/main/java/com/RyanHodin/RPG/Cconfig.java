@@ -94,9 +94,10 @@ class Cconfig implements Serializable, Parcelable
 
 	public boolean triggerEgg(double oddsOfTrigger)
 	{
+		oddsOfTrigger=Math.abs(oddsOfTrigger);
 		if (oddsOfTrigger>=1.0 && easterEggs)
 			return triggerEgg(1.0, oddsOfTrigger);
-		return easterEggs && (t.gen.nextDouble()*t.gen.nextDouble())<=(Math.abs(oddsOfTrigger)*(easterFrequency/100.0));
+		return easterEggs && (t.gen.nextDouble()*t.gen.nextDouble())<=(oddsOfTrigger*(easterFrequency/100.0));
 	}
 
 	public boolean triggerEgg(double num, double den)

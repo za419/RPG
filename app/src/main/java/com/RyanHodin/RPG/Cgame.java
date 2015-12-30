@@ -1977,10 +1977,14 @@ class Cgame implements Serializable, Parcelable
 				@Override
 				public void run()
 				{
-					if (inputted==-1 && t.user.clearedGunstore)
+					if (inputted==-1)
 						t.say("With the monsters defeated, you clean their remnants off of you, then survey your prize, walls and walls full of weapons"+(t.user.gold.amount==0 ? "" : ", and the contents of the cash register"+(t.user.gold.amount==1 ? ": " : ", which is oddly full of ")+t.user.gold)+".\n\n\tYou decide to grab a weapon, then depart.");
-					else
+					else if (t.user.clearedGunstore)
 						t.say("Return", "You return to the gunstore.\n\n\tLuckily, it\'s still lacking as far as things that want to kill and eat you are concerned.\n\n\tYou look to the walls, filled with more weapons than you can count, again resolving to grab one, then go back to the valley.");
+					else {
+						stage=31;
+						runStage();
+					}
 				}
 			});
 			t.th.start();

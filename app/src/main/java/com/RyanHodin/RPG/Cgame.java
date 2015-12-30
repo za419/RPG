@@ -2088,7 +2088,7 @@ class Cgame implements Serializable, Parcelable
 						l.addView(b);
 						b=new Button(t);
 					}
-					b.setText("Revolver");
+					b.setText(t.gen.nextBoolean() ? "Revolver" : "Colt .45");
 					b.setOnClickListener(new OnClickListener()
 					{
 						@Override
@@ -2102,7 +2102,7 @@ class Cgame implements Serializable, Parcelable
 								@Override
 								public void run()
 								{
-									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_MODERN, Cweapon.CLOSE_RANGE|Cweapon.HIGH_CALIBER|Cweapon.LIGHT|Cweapon.SLOW_RELOAD, -.01, t.gen.nextBoolean() ? "revolver" : "six-shot", null));
+									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_MODERN, Cweapon.ANCIENT|Cweapon.CLOSE_RANGE|Cweapon.HIGH_CALIBER|Cweapon.LIGHT|Cweapon.SLOW_RELOAD, .04, t.gen.nextBoolean() ? "revolver" : "six-shot", null));
 									t.game.runStage();
 								}
 							});

@@ -1227,7 +1227,10 @@ class Cgame implements Serializable, Parcelable
 			});
 			break;
 		case 19:
-			t.determineUserDeath(2, 3);
+			if (t.user.weapon.characteristicSet(Cweapon.LEGENDARY)) // Check for Excalibur
+				t.determineUserDeath(3, 10); // Slightly less than one third
+			else
+				t.determineUserDeath(2, 3); // Two thirds "Traditional" weighting
 			t.th=new Thread(new Runnable()
 			{
 				@Override

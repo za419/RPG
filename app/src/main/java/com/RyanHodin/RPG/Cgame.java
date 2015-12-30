@@ -1931,7 +1931,10 @@ class Cgame implements Serializable, Parcelable
 						switch (t.user.weapon.type)
 						{
 						case Cweapon.TYPE_SHARP:
-							t.determineUserDeath(.75);
+							if (t.user.weapon.characteristicSet(Cweapon.LEGENDARY)) // Excalibur check
+								t.determineUserDeath(.4); // Easier weighting for Excalibur
+							else
+								t.determineUserDeath(.75); // Traditional weighting
 							if (t.user.dead)
 								t.say ("Swordfight!", "You slash at one creature, then the other, trying to keep the creatures away from you, but they overwhelm you.");
 							else

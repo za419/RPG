@@ -146,7 +146,7 @@ class Cuser implements Serializable, Parcelable
 		genderAddressComp.put("Multiple", "The One of Non-Singular Genders");
 		genderAddressComp.put("Unsure", "The Indecisive One");
 		genderAddressComp.put("The Dothraki do not follow your Genders", "The Rude Horseman");
-		genderAddressComp.put("Khalëësi", "Also Known As Daenarys Targaryen, Stormborn Mother of Dragons, Native Speaker of Valyrian");
+		genderAddressComp.put("Khaleesi", "Also Known As Daenarys Targaryen, Stormborn Mother of Dragons, Native Speaker of Valyrian");
 		genderAddressComp.put("Kanye West", "The Self-Worshipper");
 		genderAddressComp.put("Cheese", "The Delicious");
 		genderAddressComp.put("Raygun", "The Superweapon");

@@ -1965,6 +1965,7 @@ class Cgame implements Serializable, Parcelable
 			{
 				Random gen=new Random();
 				t.user.gold.amount=(int)((99*Math.abs(gen.nextGaussian()))+1); // If the user is still alive,then they're going to the gunstore. It will be more persistent here.
+				t.user.clearedGunstore=true;
 			}
 			prepContinueButton();
 			break;

@@ -2102,7 +2102,7 @@ class Cgame implements Serializable, Parcelable
 								@Override
 								public void run()
 								{
-									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_MODERN, Cweapon.ANCIENT|Cweapon.CLOSE_RANGE|Cweapon.HIGH_CALIBER|Cweapon.LIGHT|Cweapon.SLOW_RELOAD, .04, t.gen.nextBoolean() ? "revolver" : "six-shot", null));
+									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_MODERN, Cweapon.ANCIENT|Cweapon.CLOSE_RANGE|Cweapon.HIGH_CALIBER|Cweapon.HIGH_POWER_ROUNDS|Cweapon.HIGH_RECOIL|Cweapon.LIGHT|Cweapon.SLOW_RELOAD, .04, t.gen.nextBoolean() ? "Colt .45" : (t.gen.nextBoolean() ? "revolver" : "six-shot"), null));
 									t.game.runStage();
 								}
 							});

@@ -26,6 +26,7 @@ class Cuser implements Serializable, Parcelable
 	public Thread worker;
 	public boolean dead;
 	public boolean isArthur;
+	public boolean clearedGunstore;
 
 	public static MainActivity t;
 
@@ -41,6 +42,7 @@ class Cuser implements Serializable, Parcelable
 		buildGenderAddressComp();
 		buildGenderComp();
 		isArthur=false;
+		clearedGunstore=false;
 	}
 
 	private Cuser (Parcel in)
@@ -54,6 +56,7 @@ class Cuser implements Serializable, Parcelable
 		boolean vals []=new boolean[1];
 		in.readBooleanArray(vals);
 		isArthur=vals[0];
+		clearedGunstore=vals[1];
 	}
 
 	public void saveTo(SharedPreferences.Editor edit) // Does not commit changes. This is the responsibility of the calling function.
@@ -63,6 +66,7 @@ class Cuser implements Serializable, Parcelable
 		edit.putString("userGenderAddress", genderAddress);
 		edit.putInt("userParsedGender", parsedGender);
 		edit.putBoolean("userIsArthur", isArthur);
+		edit.putBoolean("userClearedGunstore", clearedGunstore);
 		weapon.saveTo(edit);
 		gold.saveTo(edit);
 		if (Build.VERSION.SDK_INT>=9)
@@ -78,6 +82,7 @@ class Cuser implements Serializable, Parcelable
 		genderAddress=sp.getString("userGenderAddress", genderAddress);
 		parsedGender=sp.getInt("userParsedGender", parsedGender);
 		isArthur=sp.getBoolean("userIsArthur", isArthur);
+		clearedGunstore=sp.getBoolean("userClearedGunstore", clearedGunstore);
 		if (Thread.interrupted())
 			return;
 		weapon.loadFrom(sp);
@@ -452,7 +457,11 @@ class Cuser implements Serializable, Parcelable
 		p.writeInt(parsedGender);
 		p.writeParcelable(weapon, n);
 		p.writeParcelable(gold, n);
-		p.writeBooleanArray(new boolean[] {isArthur});
+		p.writeBooleanArray(new boolean[]
+				{
+						isArthur,
+						clearedGunstore
+				});
 	}
 
 	public static final Parcelable.Creator<Cuser> CREATOR=new Parcelable.Creator<Cuser>()

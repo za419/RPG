@@ -223,7 +223,7 @@ class Cuser implements Serializable, Parcelable
 		genderComp.put("Multiple", 15);
 		genderComp.put("Unsure", 4);
 		genderComp.put("The Dothraki do not follow your Genders", 16);
-		genderComp.put("Khalëësi", 17);
+		genderComp.put("Khaleesi", 17);
 		genderComp.put("Kanye West", 30);
 		genderComp.put("Cheese", 31);
 		genderComp.put("Raygun", 18);

@@ -1631,7 +1631,7 @@ class Cgame implements Serializable, Parcelable
 							}
 							else {
 								t.determineUserDeath(.5); // Traditional weighting
-								t.say(t.capitalize(t.user.weapon.name) + " battle!", "You run up to the archer, and lunge!\n\n\t" + (t.user.dead ? "Unfortunately, you miss, and get shot in the " + (t.config.easterEggs && t.config.ESEggs && t.config.triggerEgg(.9) ? "knee." : "back.") : "You connect!\n\n\tThe archer falls, dead.\n\n\tThe bow drops to the ground.\n\tYou eye it."));
+								t.say(t.capitalize(t.user.weapon.name) + " battle!", "You run up to the archer, and lunge!\n\n\t" + (t.user.dead ? "Unfortunately, you miss, and get shot in the " + (t.config.ESEggs && t.config.triggerEgg(.9) ? "knee." : "back.") : "You connect!\n\n\tThe archer falls, dead.\n\n\tThe bow drops to the ground.\n\tYou eye it."));
 							}
 							break;
 						case Cweapon.TYPE_MODERN:

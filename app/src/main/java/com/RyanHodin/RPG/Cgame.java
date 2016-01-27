@@ -42,7 +42,7 @@ class Cgame implements Serializable, Parcelable
 
 	public static MainActivity t;
 
-	public Cgame() 
+	public Cgame()
 	{
 		stage=0;
 		line=0;
@@ -1748,7 +1748,10 @@ class Cgame implements Serializable, Parcelable
 				@Override
 				public void run()
 				{
-					t.say("Weaponry is King", "Moving away from the cave yet again, you encounter an abandoned gunstore.\n\n\tInside, there are two shapes.");
+					if (inputted==-1)
+						t.say("Weaponry is King", "Moving away from the cave yet again, you encounter an abandoned gunstore.\n\n\tInside, there are two shapes.");
+					else
+						t.say("Back to the action", "You return to the gunstore.\n\n\tLooking inside, the two shapes you saw earlier are still there, wandering the store.\n\tInhaling apprehensively, you debate entering.");
 				}
 			});
 			t.th.start();
@@ -1983,6 +1986,7 @@ class Cgame implements Serializable, Parcelable
 						t.say("Return", "You return to the gunstore.\n\n\tLuckily, it\'s still lacking as far as things that want to kill and eat you are concerned.\n\n\tYou look to the walls, filled with more weapons than you can count, again resolving to grab one, then go back to the valley.");
 					else {
 						stage=29; // Return to the gunstore fight
+						inputted=-2;
 						runStage();
 					}
 				}
@@ -2085,7 +2089,7 @@ class Cgame implements Serializable, Parcelable
 									public void run()
 									{
 										t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_MODERN, Cweapon.CLOSE_RANGE|Cweapon.HIGH_CALIBER|Cweapon.LARGE_MAGAZINE|Cweapon.LIGHT|Cweapon.QUICK_RELOAD, "pistol", null));
-										t.game.runStage();	
+										t.game.runStage();
 									}
 								});
 								t.th.start();
@@ -2455,7 +2459,7 @@ class Cgame implements Serializable, Parcelable
 								public void run()
 								{
 									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_MODERN, Cweapon.AUTOMATIC|Cweapon.CLOSE_RANGE|Cweapon.HIGH_CALIBER|Cweapon.HIGH_RECOIL|Cweapon.LARGE_MAGAZINE|Cweapon.LIGHT|Cweapon.LOW_POWER|Cweapon.QUICK_RELOAD, .02, "UMP45", null));
-									t.game.runStage(); 
+									t.game.runStage();
 								}
 							});
 							t.th.start();
@@ -3090,7 +3094,7 @@ class Cgame implements Serializable, Parcelable
 					@Override
 					public void run()
 					{
-						String str=new String();
+						String str= "";
 						boolean say=true;
 						if (t.user.weapon.type<=Cweapon.TYPE_BLUNT)
 						{
@@ -3874,7 +3878,7 @@ class Cgame implements Serializable, Parcelable
 						@Override
 						public void run()
 						{
-							t.say("Deserter", "You try to run, but the shadow disappears, and reappears in front of you."); 
+							t.say("Deserter", "You try to run, but the shadow disappears, and reappears in front of you.");
 						}
 					});
 					t.th.start();
@@ -5596,7 +5600,7 @@ class Cgame implements Serializable, Parcelable
 			public void run()
 			{
 				Configuration c=t.getResources().getConfiguration();
-				boolean landscape=(c.orientation==Configuration.ORIENTATION_LANDSCAPE); // If we're in landscape mode, we need all the space we can get. 
+				boolean landscape=(c.orientation==Configuration.ORIENTATION_LANDSCAPE); // If we're in landscape mode, we need all the space we can get.
 
 				t.findViewById(R.id.archeryWait).setVisibility(landscape || t.gen.nextBoolean() ? View.GONE : View.INVISIBLE);
 				((TextView)t.findViewById(R.id.archeryTimingLabel)).setText("Time ends in:");

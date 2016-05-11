@@ -1,22 +1,35 @@
 package com.RyanHodin.RPG;
 
-import android.os.*;
-import android.view.*;
-import android.view.View.*;
-import android.view.inputmethod.*;
-import android.widget.*;
-import android.util.*;
-import android.content.*;
-import android.graphics.*;
-import android.text.*;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.InputType;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
-import java.util.*;
 import java.io.Serializable;
-
-import android.widget.FrameLayout.*;
-import android.annotation.*;
-import android.view.animation.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 class Cgame implements Serializable, Parcelable
 {
@@ -29,7 +42,7 @@ class Cgame implements Serializable, Parcelable
 
 	public static MainActivity t;
 
-	public Cgame() 
+	public Cgame()
 	{
 		stage=0;
 		line=0;
@@ -344,7 +357,7 @@ class Cgame implements Serializable, Parcelable
 											public void run ()
 											{
 												// Close the soft keyboard, now that there's nothing for it to write to.
-												((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(((EditText)t.findViewById(t.user.parsedGender)).getWindowToken(), 0);
+												((InputMethodManager)t.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(t.findViewById(t.user.parsedGender).getWindowToken(), 0);
 
 												t.user.gender=((TextView)t.findViewById(t.user.parsedGender)).getText().toString().trim();
 												if (t.config.addressGender)
@@ -2031,7 +2044,7 @@ class Cgame implements Serializable, Parcelable
 									public void run()
 									{
 										t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_MODERN, Cweapon.CLOSE_RANGE|Cweapon.HIGH_CALIBER|Cweapon.LARGE_MAGAZINE|Cweapon.LIGHT|Cweapon.QUICK_RELOAD, "pistol", null));
-										t.game.runStage();	
+										t.game.runStage();
 									}
 								});
 								t.th.start();
@@ -2401,7 +2414,7 @@ class Cgame implements Serializable, Parcelable
 								public void run()
 								{
 									t.user.weapon.setPrimary(new Cweapon(Cweapon.TYPE_MODERN, Cweapon.AUTOMATIC|Cweapon.CLOSE_RANGE|Cweapon.HIGH_CALIBER|Cweapon.HIGH_RECOIL|Cweapon.LARGE_MAGAZINE|Cweapon.LIGHT|Cweapon.LOW_POWER|Cweapon.QUICK_RELOAD, .02, "UMP45", null));
-									t.game.runStage(); 
+									t.game.runStage();
 								}
 							});
 							t.th.start();
@@ -3528,7 +3541,7 @@ class Cgame implements Serializable, Parcelable
 							@Override
 							public void run()
 							{
-								t.say("Always prepared", "You prepare to fight the spirit with your "+t.user.weapon+".\n\n\n\tIt seemingly finds your effort humorous, as it pauses its approach to laugh.\n\n\n\n\tThinking your "+t.user.weapon.backup+" more suited to the task, you discard the "+t.user.weapon+", throwing it to the side and away from your presence, and draw your "+t.user.weapon.backup+".\n\n\tThe shadow thinks this a more seriosu threat, as it stops its laughter and prepares itself to engage you.");
+								t.say("Always prepared", "You prepare to fight the spirit with your "+t.user.weapon+".\n\n\n\tIt seemingly finds your effort humorous, as it pauses its approach to laugh.\n\n\n\n\tThinking your "+t.user.weapon.backup+" more suited to the task, you discard the "+t.user.weapon+", throwing it to the side and away from your presence, and draw your "+t.user.weapon.backup+".\n\n\tThe shadow thinks this a more serious threat, as it stops its laughter and prepares itself to engage you.");
 							}
 						});
 						t.th.start();
@@ -3816,7 +3829,7 @@ class Cgame implements Serializable, Parcelable
 						@Override
 						public void run()
 						{
-							t.say("Deserter", "You try to run, but the shadow disappears, and reappears in front of you."); 
+							t.say("Deserter", "You try to run, but the shadow disappears, and reappears in front of you.");
 						}
 					});
 					t.th.start();
@@ -5538,7 +5551,7 @@ class Cgame implements Serializable, Parcelable
 			public void run()
 			{
 				Configuration c=t.getResources().getConfiguration();
-				boolean landscape=(c.orientation==Configuration.ORIENTATION_LANDSCAPE); // If we're in landscape mode, we need all the space we can get. 
+				boolean landscape=(c.orientation==Configuration.ORIENTATION_LANDSCAPE); // If we're in landscape mode, we need all the space we can get.
 
 				t.findViewById(R.id.archeryWait).setVisibility(landscape || t.gen.nextBoolean() ? View.GONE : View.INVISIBLE);
 				((TextView)t.findViewById(R.id.archeryTimingLabel)).setText("Time ends in:");

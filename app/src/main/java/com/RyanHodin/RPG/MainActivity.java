@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
@@ -508,13 +509,16 @@ public class MainActivity extends Activity
 						ev.setOnFocusChangeListener(new OnFocusChangeListener()
 						{
 							@Override
-							public void onFocusChange(View v, boolean hasFocus)
+							public void onFocusChange(View unused, boolean hasFocus)
 							{
 								if (hasFocus && t.config.fullscreen)
 								{
 									t.setUi();
 									TextView tv=((TextView)findViewById(R.id.gameTitle));
-									LinearLayout.LayoutParams lp=(LinearLayout.LayoutParams)tv.getLayoutParams();
+									ViewGroup.LayoutParams params=tv.getLayoutParams();
+									if (params==null)
+										return;
+									LinearLayout.LayoutParams lp=(LinearLayout.LayoutParams)params;
 									int result=0;
 									int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
 									if (resourceId > 0) {
@@ -1513,7 +1517,7 @@ public class MainActivity extends Activity
 	{
 		final Animation a=AnimationUtils.loadAnimation(this, R.anim.fadeout);
 		final View v=findViewById(currentView);
-		if (v!=null) // Even if v is null, we let the game wait for the animation to not play 
+		if (v!=null) // Even if v is null, we let the game wait for the animation to not play
 			// This avoids some issues with code that expects fadeout() to play - Even if something happens to currentView, we should still let that code catch up.
 		{
 			runOnUiThread(new Runnable()
@@ -1954,7 +1958,7 @@ public class MainActivity extends Activity
 				b.setText("Savegame "+i+s);
 				b.setTag(i);
 				b.setOnClickListener(new OnClickListener()
-				{	
+				{
 					@Override
 					public void onClick(View v)
 					{

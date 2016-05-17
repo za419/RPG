@@ -3746,7 +3746,7 @@ class Cgame implements Serializable, Parcelable
 									default:
 										word="considerably ";
 									}
-									t.say("Close call", "You swing your sword, and connect.\n\n\n\tThe moment your sword touches the "+(t.gen.nextBoolean() ? "shadow" : "shape")+", the creature dissolves into a swirl of smoke, and your sword continues as if it wasn\'t there.\n\n\n\n\n\tYou shiver, questioning reality, and your sanity, "+word+"more than you already were.\n\n\n\n\n\n\n\tTryijg to walk it off, you deicide to continue along the highway.");
+									t.say("Close call", "You swing your sword, and connect.\n\n\n\tThe moment your sword touches the "+(t.gen.nextBoolean() ? "shadow" : "shape")+", the creature dissolves into a swirl of smoke, and your sword continues as if it wasn\'t there.\n\n\n\n\n\tYou shiver, questioning reality, and your sanity, "+word+"more than you already were.\n\n\n\n\n\n\n\tTrying to walk it off, you decide to continue along the highway.");
 								}
 							}
 						};

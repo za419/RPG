@@ -3531,7 +3531,23 @@ class Cgame implements Serializable, Parcelable
 							}
 						});
 						t.th.start();
-						prepContinueButton();
+						prepContinueButton(new OnClickListener()
+						{
+							@Override
+							public void onClick(View v)
+							{
+								t.user.weapon=(t.user.weapon.backup==null ? new Cweapon() : t.user.weapon.backup);
+								t.th=new Thread(new Runnable()
+								{
+									@Override
+									public void run()
+									{
+										runShadows(number, stage, input);
+									}
+								});
+								t.th.start();
+							}
+						});
 						return;
 					}
 					else

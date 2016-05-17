@@ -3780,7 +3780,7 @@ class Cgame implements Serializable, Parcelable
 										t.say("A shot and a miss", "You take aim, your sights leveled at the "+(t.gen.nextBoolean() ? "shadow" : "figure")+".\n\n\tJust as you pull the trigger, the pits rumble with fiery power, shaking the ground, making you miss.\n\n\n\tOne day, years later, when the pits will have cooled, a child will come across the spot where the shadow consumed you, and all "+(t.gen.nextBoolean() ? "he" : "she")+" will find of you is your "+t.user.weapon+".");
 								}
 								else
-									t.say("Sharpshooter","You level your "+t.user.weapon+" directly at the shadow, and fire.\n\n\tThe round hits it, and the shadow disappears into a swirl of smoke.\n\n\tThe fired round clatters straight to the ground, as the smoke dissipates.\n\n\n\tYou walk over to it, but you can\'t find the round.\n\n\tYou can\'t quite shake the feeling that what you know isn\'t real.");
+									t.say("Sharpshooter","You level your "+t.user.weapon+" directly at the shadow, and fire.\n\n\tThe round hits it, and the shadow disappears into a swirl of smoke.\n\n\tThe fired round clatters straight to the ground, as the smoke dissipates.\n\n\n\tYou walk over to it, but you can\'t find the projectile.\n\n\tYou can\'t quite shake the feeling that what you know isn\'t real.");
 							}
 						};
 						break;

@@ -3791,7 +3791,7 @@ class Cgame implements Serializable, Parcelable
 							@Override
 							public void run()
 							{
-								t.say("Doomsday", "You get out your "+t.user.weapon+", arm it, set the timer to one second, and start it.\n\n\tFrom familiarity, the shopkeepers gaze at the mushroom cloud from where you once stood, as the shadow of a dragon looms behind them.");
+								t.say("Doomsday", "You get out your "+t.user.weapon+", arm it, set the timer to one second, and start it.\n\n\tFrom familiarity, the shopkeepers gaze at the mushroom cloud from where you once stood, as the shadow of a massive beast looms behind them.");
 							}
 						};
 						break;

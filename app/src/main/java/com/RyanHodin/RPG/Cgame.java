@@ -3774,7 +3774,7 @@ class Cgame implements Serializable, Parcelable
 							{
 								if (t.user.dead)
 								{
-									if (t.config.triggerEgg(6))
+									if (t.config.litEggs && t.config.triggerEgg(6))
 										t.say("Alas, poor Yorick...","...I knew that one once.\n\n\tThey also called that adventurer \""+t.user+"\".\n\n\n\tThen, one day, a shadow appeared along the Highway to Hell, and the "+t.user.weapon+" the poor fool was carrying jammed, and no more was poor Yorick.");
 									else
 										t.say("A shot and a miss", "You take aim, your sights leveled at the "+(t.gen.nextBoolean() ? "shadow" : "figure")+".\n\n\tJust as you pull the trigger, the pits rumble with fiery power, shaking the ground, making you miss.\n\n\n\tOne day, years later, when the pits will have cooled, a child will come across the spot where the shadow consumed you, and all "+(t.gen.nextBoolean() ? "he" : "she")+" will find of you is your "+t.user.weapon+".");

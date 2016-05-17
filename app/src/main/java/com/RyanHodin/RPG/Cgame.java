@@ -3672,7 +3672,7 @@ class Cgame implements Serializable, Parcelable
 							}
 						});
 						l.addView(b);
-						if (t.config.triggerEgg(t.gen.nextInt(10)+1/11))
+						if (t.config.triggerEgg(t.gen.nextInt(10)+1,11))
 						{
 							b=new Button(t);
 							b.setText("Make friends with the creature");
@@ -3711,6 +3711,15 @@ class Cgame implements Serializable, Parcelable
 					Runnable r;
 					switch (t.user.weapon.type)
 					{
+					case Cweapon.TYPE_HAND_TO_HAND:
+						t.user.dead=true;
+						r=new Runnable() {
+							@Override
+							public void run() {
+								t.say("Fistfight", t.config.triggerEgg(.2) ? "Why did you think that was a good idea?" : "You run up to the "+(t.gen.nextBoolean() ? "shadow" : "figure")+", and punch it.\n\n\tBewildered, it seems to stare at you for a moment before laughing hysterically and unmaking you.");
+							}
+						};
+						break;
 					case Cweapon.TYPE_SHARP:
 						t.determineUserDeath(t.user.weapon.getRelativeStrength(Cweapon.CLOSE_RANGE|Cweapon.CLOSE_RANGE_ONLY|Cweapon.LIGHT)*.5);
 						r=new Runnable()

@@ -57,6 +57,7 @@
 		 0.6.0b (Oct. 14, 2015) - Current version: Saves now keep copies of config. New config option 'persist' controls if options like typing speed are loaded. Saves now have names - These are stored with the number of saves in the general file, and at the moment are simply the user's name. These are displayed whenever savegames are presented to the user.
 	Same issues as before.
 	Additional changes:
+		Save games are now backed up automatically when they change, so Android can restore them at a later date.
 		A third paragraph in the 'how to' helper describes the main change in a user-friendly manner.
 		A new system was added to config to allow saving config to arbitrary files.
 		Safety checks were added to the difficultyComputer, to prevent some crashes.

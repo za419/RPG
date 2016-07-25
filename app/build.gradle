@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.RyanHodin.RPG"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 23
     }
 
     buildTypes {

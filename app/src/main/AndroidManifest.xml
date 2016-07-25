@@ -12,6 +12,7 @@
         android:hasCode="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
+        android:isGame="true"
         android:installLocation="auto"
         android:label="@string/app_name"
         android:logo="@mipmap/ic_launcher"

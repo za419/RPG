@@ -55,6 +55,12 @@ public class MainActivity extends Activity
 	private static final String LogTag="RPG";
 	public static double TARGET_FPS=60.0; // This can be altered as time progresses.
 
+	// Constants for savegame data
+	public static final String SaveDataFile="RPG Savegames";
+	private static final String SaveDataGameCount="SaveGameCount";
+	private static final String SaveDataGameNamePrefix="SaveGame";
+	public static final String SaveGameFilePrefix="RPG save game ";
+
 	public Cconfig config=new Cconfig(); // To hold our configuration.
 	public Cuser user=new Cuser();
 	public Cgame game;
@@ -1002,12 +1008,12 @@ public class MainActivity extends Activity
 
 	public boolean deleteSave(final int savenum) // Returns true if there was an error
 	{
-		SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
-		int num=sp.getInt("SaveGameCount", 0); // Total number of savegames pre-edit
+		SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
+		int num=sp.getInt(SaveDataGameCount, 0); // Total number of savegames pre-edit
 		if (num<savenum)
 			return true;
 		SharedPreferences.Editor edit=sp.edit();
-		edit.putInt("SaveGameCount", num-1); // There is now one less savegame.
+		edit.putInt(SaveDataGameCount, num-1); // There is now one less savegame.
 		if (Build.VERSION.SDK_INT>=9)
 			edit.apply();
 		else
@@ -1019,8 +1025,12 @@ public class MainActivity extends Activity
 			saveGameTo(i);
 		}
 
-		edit=getSharedPreferences("RPG save game "+num, 0).edit(); // Clear out the last savegame. This is the best we can do with SharedPreferences.
+		edit=getSharedPreferences(SaveGameFilePrefix+num, 0).edit(); // Clear out the last savegame. This is the best we can do with SharedPreferences.
 		edit.clear();
+		if (Build.VERSION.SDK_INT>=9)
+			edit.apply();
+		else
+			edit.commit();
 
 		if (config.gameNumber==savenum) // Unset the game number if we deleted the save
 			config.gameNumber=-1;
@@ -1536,28 +1546,28 @@ public class MainActivity extends Activity
 	{
 		if (game==null)
 			return; // If game is null, we don't have anything to save.
-		SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
+		SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
 		SharedPreferences.Editor edit=sp.edit();
 		int num;
 		if (config.gameNumber==-1)
 		{
-			num=sp.getInt("SaveGameCount", 0)+1;
+			num=sp.getInt(SaveDataGameCount, 0)+1;
 			config.gameNumber=num;
-			edit.putInt("SaveGameCount", num);
+			edit.putInt(SaveDataGameCount, num);
 		}
 		else
 			num=config.gameNumber;
 
 		if (user.isArthur) // Special condition for King Arthur
-			edit.putString("SaveGame"+num, user.toString()+", King of the Britons.");
+			edit.putString(SaveDataGameNamePrefix+num, user.toString()+", King of the Britons.");
 		else
-			edit.putString("SaveGame"+num, user.toString()); // Update the save name. TODO change this in a later release, when save names can be changed.
+			edit.putString(SaveDataGameNamePrefix+num, user.toString()); // Update the save name. TODO change this in a later release, when save names can be changed.
 		if (Build.VERSION.SDK_INT>=9)
 			edit.apply();
 		else
 			edit.commit();
 
-		sp=getSharedPreferences("RPG save game "+num, 0);
+		sp=getSharedPreferences(SaveGameFilePrefix+num, 0);
 		edit=sp.edit();
 		user.saveTo(edit);
 		game.saveTo(edit);
@@ -1572,8 +1582,8 @@ public class MainActivity extends Activity
 	public void saveGameTo (int n) // Saves the current game to slot n or SaveGameCount+1, whichever is lower, without permanently mutating config.
 	{
 		int tmp=config.gameNumber;
-		SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
-		int num=sp.getInt("SaveGameCount", 0)+1;
+		SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
+		int num=sp.getInt(SaveDataGameCount, 0)+1;
 		config.gameNumber=Math.min(n, num);
 		saveGame();
 		config.gameNumber=tmp;
@@ -1581,7 +1591,7 @@ public class MainActivity extends Activity
 
 	public void loadGame()
 	{
-		SharedPreferences sp=getSharedPreferences("RPG save game "+config.gameNumber, 0);
+		SharedPreferences sp=getSharedPreferences(SaveGameFilePrefix+config.gameNumber, 0);
 		if (Thread.interrupted())
 			return;
 		user.loadFrom(sp);
@@ -1616,7 +1626,7 @@ public class MainActivity extends Activity
 	public void loadGameFrom (int n) // Loads the current game from slot n without permanently mutating config.
 	{
 		int tmp=config.gameNumber;
-		SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
+		SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
 		config.gameNumber=n;
 		// TODO check if n is a valid save
 		loadGame();
@@ -1943,8 +1953,8 @@ public class MainActivity extends Activity
 
 	public List<Button> getSavedGameButtons (final SaveCallback sc) // sc.call() is called on the UI thread with the number of the save chosen by the user.
 	{
-		final SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
-		final int max=sp.getInt("SaveGameCount", -1);
+		final SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
+		final int max=sp.getInt(SaveDataGameCount, -1);
 		if (max!=-1)
 		{
 			List<Button> out=new ArrayList<Button>(max);
@@ -1952,7 +1962,7 @@ public class MainActivity extends Activity
 			for (int i=0; i<=max; ++i)
 			{
 				Button b=new Button(t);
-				String s=sp.getString("SaveGame"+i, ""); // Get the saved name.
+				String s=sp.getString(SaveDataGameNamePrefix+i, ""); // Get the saved name.
 				if (!s.equals("")) // If its empty, we want it. Else, we want it formatted.
 					s=":\n"+s;
 				b.setText("Savegame "+i+s);

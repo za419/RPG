@@ -57,8 +57,8 @@ public class MainActivity extends Activity
 
 	// Constants for savegame data
 	public static final String SaveDataFile="RPG Savegames";
-	private static final String SaveDataGameCount="SaveGameCount";
-	private static final String SaveDataGameNamePrefix="SaveGame";
+	public static final String SaveDataGameCount="SaveGameCount";
+	public static final String SaveDataGameNamePrefix="SaveGame";
 	public static final String SaveGameFilePrefix="RPG save game ";
 
 	public Cconfig config=new Cconfig(); // To hold our configuration.

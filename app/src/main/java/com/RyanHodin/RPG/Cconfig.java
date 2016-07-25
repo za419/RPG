@@ -12,6 +12,8 @@ class Cconfig implements Serializable, Parcelable
 {
 	private static final long serialVersionUID = 1686868589364848738L;
 
+	public static final String DefaultConfigFile="RPG Preferences";
+
 	public int difficulty; // Difficulty level.
 	public boolean easterEggs; // Are easter eggs enabled?
 	public int easterFrequency; // If the above is true, frequency of appearance modifier for randomly appearing eggs.
@@ -287,7 +289,7 @@ class Cconfig implements Serializable, Parcelable
 
 			public void writePrefs()
 			{
-				writePrefs(t.getSharedPreferences("RPG Preferences", 0));
+				writePrefs(t.getSharedPreferences(DefaultConfigFile, 0));
 			}
 
 			public void readPrefs (final SharedPreferences sp)

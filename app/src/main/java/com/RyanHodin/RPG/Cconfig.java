@@ -325,6 +325,6 @@ class Cconfig implements Serializable, Parcelable
 
 			public void readPrefs()
 			{
-				readPrefs(t.getSharedPreferences("RPG Preferences", 0));
+				readPrefs(t.getSharedPreferences(DefaultConfigFile, 0));
 			}
 }

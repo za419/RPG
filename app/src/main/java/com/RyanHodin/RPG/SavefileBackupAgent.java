@@ -21,6 +21,7 @@ public class SavefileBackupAgent extends BackupAgentHelper {
 		int n=sp.getInt(MainActivity.SaveDataGameCount, -1);
 		ArrayList<String> args=new ArrayList<>(n<1 ? 1 : n); // What files will be backed up
 		args.add(MainActivity.SaveDataFile); // Add the savegame data file
+		args.add(Cconfig.DefaultConfigFile); // Add the default config data file
 		if (n>0) { // If we have any savegames
 			for (int i=1; i<=n; ++i) // Add all savegame files
 				args.add(MainActivity.SaveGameFilePrefix+i);

@@ -43,7 +43,7 @@
 
 		<TextView
 			android:layout_height="wrap_content"
-			android:text="Configuration options are now saved in each game save. The 'Game Configuration Persistence' parameter in the options menu governs whether changes to the user interface persist through loading savegames. Persisted changes include 'fullscreen', typing speed, and 'batching'. Enable it if you would like these to remain the same even if a save-game is loaded with different values for these - disable it if you would like save-specific behavior for these."
+			android:text="Configuration options are now saved in each game save. The 'Game Configuration Persistence' parameter in the options menu governs whether changes to the user interface persist through loading savegames. Persisted changes include autosaving, 'fullscreen', typing speed, and 'batching'. Enable it if you would like these to remain the same even if a save-game is loaded with different values for these - disable it if you would like save-specific behavior for these."
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_width="wrap_content"
 			android:layout_marginTop="20dp"

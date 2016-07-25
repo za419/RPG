@@ -1045,6 +1045,7 @@ public class MainActivity extends Activity
 				Toast.makeText(t, "Savegame "+savenum+" deleted.", Toast.LENGTH_LONG).show();
 			}
 		});
+		new SavefileBackupAgent().updateHelper();
 		return false;
 	}
 
@@ -1548,12 +1549,14 @@ public class MainActivity extends Activity
 			return; // If game is null, we don't have anything to save.
 		SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
 		SharedPreferences.Editor edit=sp.edit();
+		boolean updateHelper=false; // Whether we should inform the backup agent of a new save
 		int num;
 		if (config.gameNumber==-1)
 		{
 			num=sp.getInt(SaveDataGameCount, 0)+1;
 			config.gameNumber=num;
 			edit.putInt(SaveDataGameCount, num);
+			updateHelper=true;
 		}
 		else
 			num=config.gameNumber;
@@ -1577,6 +1580,9 @@ public class MainActivity extends Activity
 			edit.apply();
 		else
 			edit.commit();
+
+		if (updateHelper)
+			new SavefileBackupAgent().updateHelper();
 	}
 
 	public void saveGameTo (int n) // Saves the current game to slot n or SaveGameCount+1, whichever is lower, without permanently mutating config.

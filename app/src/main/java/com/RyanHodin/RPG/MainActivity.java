@@ -1626,6 +1626,7 @@ public class MainActivity extends Activity
 			config.batching=bak.batching;
 			config.fullscreen=bak.fullscreen;
 			config.pauseMultiplier=bak.pauseMultiplier;
+			config.autosave=bak.autosave;
 		}
 	}
 

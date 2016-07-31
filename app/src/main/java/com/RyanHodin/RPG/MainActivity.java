@@ -1635,7 +1635,8 @@ public class MainActivity extends Activity
 		int tmp=config.gameNumber;
 		SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
 		config.gameNumber=n;
-		// TODO check if n is a valid save
+		if (n>sp.getInt(SaveDataGameCount, 0))
+			; // TODO: Generate an error
 		loadGame();
 		config.gameNumber=tmp;
 	}

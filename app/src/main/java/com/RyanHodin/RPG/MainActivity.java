@@ -1473,7 +1473,7 @@ public class MainActivity extends Activity
 		Thread.yield();
 		if (ms==0)
 			return false;
-		ms*=Math.max(Math.min(config.pauseMultiplier, .1), 1);
+		ms*=Math.min(Math.max(config.pauseMultiplier, .1), 1);
 		synchronized (t)
 		{
 			try

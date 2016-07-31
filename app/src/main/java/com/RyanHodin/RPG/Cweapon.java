@@ -1,15 +1,17 @@
 package com.RyanHodin.RPG;
 
-import android.os.*;
-import android.view.*;
-import android.view.View.*;
-import android.widget.*;
-import android.graphics.*;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
-import java.util.*;
 import java.io.Serializable;
-
-import android.content.*;
+import java.util.Random;
 
 class Cweapon implements Serializable, Parcelable
 {
@@ -50,10 +52,10 @@ class Cweapon implements Serializable, Parcelable
 		m_randomCondition=gen.nextGaussian()/8;
 	}
 
-	public Cweapon (byte typ, int vals, double strength, String nomer, Cweapon secondary)
+	public Cweapon (byte typ, int chars, double strength, String nomer, Cweapon secondary)
 	{
 		type=typ;
-		characteristics=vals;
+		characteristics=chars;
 		name=nomer;
 		backup=secondary;
 		strengthModifier=Math.max(Math.min(strength, .2), -.2);
@@ -95,7 +97,7 @@ class Cweapon implements Serializable, Parcelable
 		edit.putInt("weaponCharacteristics", characteristics);
 		edit.putString("weaponName", name);
 		edit.putFloat("weaponStrengthModifier", (float)strengthModifier);
-		edit.putFloat("weaponCondition", (float)m_randomCondition);
+		edit.putFloat("weaponCondition", (float) m_randomCondition);
 		edit.putBoolean("weaponHasBackup", backup!=null);
 		if (backup!=null)
 		{
@@ -141,6 +143,16 @@ class Cweapon implements Serializable, Parcelable
 		strengthModifier=primary.strengthModifier;
 		return this;
 	}
+	
+	public Cweapon setPrimary (byte typ, int chars, double strength, String nomer)
+	{
+		return setPrimary(new Cweapon(typ, chars, strength, nomer, null));
+	}
+
+	public Cweapon setPrimary (byte typ, int chars, String nomer)
+	{
+		return setPrimary(typ, chars, 0, nomer);
+	}
 
 	public Cweapon swapWithBackup ()
 	{
@@ -154,7 +166,7 @@ class Cweapon implements Serializable, Parcelable
 	public static final byte TYPE_MODERN=4;
 	public static final byte TYPE_NUCLEAR=5;
 	public static final byte TYPE_FUTURE=6;
-	public static final byte TYPE_USED_FOR_CONVIENIENCE=7; // If a weapon type is set to this, attacking with it (should) result in automatic use of the backup. Later, of course.
+	public static final byte TYPE_USED_FOR_CONVENIENCE =7; // If a weapon type is set to this, attacking with it (should) result in automatic use of the backup. Later, of course.
 	// To elaborate further, that last type is used so that calling commitSuicide() with it equipped will trigger the "Gandalf slaps you. You go flying" scene.
 
 	public static final int AUTOMATIC=1;
@@ -619,7 +631,7 @@ class Cweapon implements Serializable, Parcelable
 	{
 		if (backup==null)
 			return false;
-		if (backup.type==TYPE_USED_FOR_CONVIENIENCE) // This shouldn't exist. Remove it.
+		if (backup.type== TYPE_USED_FOR_CONVENIENCE) // This shouldn't exist. Remove it.
 		{
 			if (backup.backup!=null) // If the backup has a backup
 			{

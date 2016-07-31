@@ -7,14 +7,14 @@
 	<string name="changelog">"
 	    {unnamed} (Feb. 27, 2014) - Initial version: Initiation of RPG for Android development. Code for say() and the outline of the runStage() system, along with the text input system's beginnings, borrowed from the 'Eugene' chatterbot. Game structures outlined. Beginning of UI development.
 	Added the about and howto layouts in unnumbered releases. Developed the basic gender mechanism. Began prototype development of the game's opening.
-	    
+
 	    0.1.0m (March 2014): First playable version of the game. Added the ability to get input from the user along with the commitSuicide() system.
 	Added weapons, the user class, gender processing, and the config system.
-	    
+
 	    0.2.0m (Oct. 2014): Refactored code into separate classes to better organize code (and as a workaround to the now-infamous MainActivity error)
 	Added the raygun cave, and the grue, with the special "eaten by grue" event, which currently stands alone as a special monster event.
 	Added the suicide-hijacking code to obtain the raygun and for the early win easter egg.
-	    
+
 	    0.3.0a (Jan. 2015): First year anniversary of RPG development. Game is now in alpha testing. Added the Gunstore and a more advanced weapons system.
 	Also fixed issues with device rotation during games, and enabled the saving of Config between runs of the game.
 	Weapons now have 'backup' weapons, so that grabbing a new weapon does not discard the old one. The mechanic to swap them exists in code, but has to be manually added to the UI for the time being.
@@ -23,7 +23,7 @@
 	Added the batching system for say() optimization at high typing speeds.
 	Across the board memory optimizations - Added pauses to the difficultyComputer, and implemented onLowMemory() and onTrimMemory().
 	Fixed several sources of crashes.
-	    
+
 	    0.3.5a (Feb. 2015): First year anniversary of RPG for Android. Added the Shadows event series.
 	The Shadows is the first main-game (non-easter egg) event to not take place within runStage(). It takes place along the Highway, as the player is attacked by a randomly generated series of new enemies - The Shadows!
 	The Shadows are wispy fragments of an unknown nature, variously described as figments of the player's imagination (since 0.4.0b, this is most clear in the House of Shadows destruction.) or as fragments of prior players/adventurers ('make friends' easter egg)
@@ -32,7 +32,7 @@
 	Additional changes:
 		Added the 'aimer' minigame for the use of firearms in combat. The player uses arrow keys to aim moving crosshairs on a bullseye to determine success or failure.
 		Added the nuclear suitcase easter egg, the Mk-54 nuke, and the TYPE_NUCLEAR weapon class, which kills all enemies except the end-boss at the cost of also killing the player (the boss should take heavy damage from attempting to swallow the first, but not any subsequent, nuke).
-	    
+
 	    0.4.0b (March 2015): Game now in beta! Added the beginning of the Pits!
 	The Pits is a procedurally generated area, massively expanding the work on the Shadows with more expertise, featuring the House of Shadows, a heavily guarded Shadow headquarters with great rewards, and, for the first time in the history of RPG, several courses of events which the user can select!
 	This update also included several architectural upgrades to RPG's backend - Most importantly, preparations to display the input screen were consolidated into a single prepInput() function.
@@ -45,7 +45,7 @@
 		Weapons now have a method addSwapperTo(), which adds a button to the given layout to swap the weapon with its backup. The button text is randomly constructed, is subtly colored based on the types and absolute strengths of the weapons, and calls either a given Runnable or runStage to continue play.
 		Gold is now implemented! Users all carry with them a Gold object, which stores their wealth. Gold objects have specialized toString()s that describe them as gold coins, the ability to accrue compound interest (with variable compounding), debt carrying, and proper handling through Cuser.
 		Gold can now be amassed in the gunstore, and it shall be found at the end of areas in the Pits. It shall eventually be spendable in the Familiar City.
-	    
+
 		0.5.0b (June 2015): Added save/load game mechanics. Games now autosave whenever runStage() is called, if the new corresponding option in config is set.
 	Potential issue: Game saving discards information about places that have their own data, like the Pits. This means that one can progress repeatedly through these areas, collecting Gold or weapons, save the game within them, and load the game at their beginnings with all collected items.
 	A more robust mechanism should eventually be developed to handle at least the Pits as a special case.
@@ -53,16 +53,18 @@
 		Added current layout sensitive options menus to all layouts.
 		Added a special layout for loading a game
 		Fixed some sources of crashes, removed certain StrictMode violations.
-			
+
 		 0.6.0b (Oct. 14, 2015) - Current version: Saves now keep copies of config. New config option 'persist' controls if options like typing speed are loaded. Saves now have names - These are stored with the number of saves in the general file, and at the moment are simply the user's name. These are displayed whenever savegames are presented to the user.
 	Same issues as before.
 	Additional changes:
+		Save games are now backed up automatically when they change, so Android can restore them at a later date.
 		A third paragraph in the 'how to' helper describes the main change in a user-friendly manner.
 		A new system was added to config to allow saving config to arbitrary files.
 		Safety checks were added to the difficultyComputer, to prevent some crashes.
 		Began storing a changelog, and displaying it in the bottom of the about section.
 		Added a boilerplate of the Save Manager, which shall be implemented later to handle the management of save storage - Added a rudimentary deletion system to it as well.
-		Major stability fixes - RPG was extensively tested, fixed, and re-tested, to handle every bug possible, from guaranteed crashes, to occasional crashes, even to minor visual issues. All in all, 44 bugs, 14 of which were crash-sources, were fixed."
+		Added Excalibur - A LEGENDARY TYPE_SHARP weapon, obtainable only after triggering an easter egg - Find out how to trigger it, and you'll get quite a boon!
+		Major stability fixes - RPG was extensively tested, fixed, and re-tested, to handle every bug possible, from guaranteed crashes, to occasional crashes, even to minor visual issues. All in all, 51 bugs, 15 of which were crash-sources, were fixed."
   </string>
 
 </resources>

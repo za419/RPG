@@ -1,13 +1,18 @@
 package com.RyanHodin.RPG;
 
-import android.os.*;
-import android.content.*;
-import java.util.*;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
+import java.util.Random;
 
 class Cconfig implements Serializable, Parcelable
 {
 	private static final long serialVersionUID = 1686868589364848738L;
+
+	public static final String DefaultConfigFile="RPG Preferences";
 
 	public int difficulty; // Difficulty level.
 	public boolean easterEggs; // Are easter eggs enabled?
@@ -91,9 +96,10 @@ class Cconfig implements Serializable, Parcelable
 
 	public boolean triggerEgg(double oddsOfTrigger)
 	{
+		oddsOfTrigger=Math.abs(oddsOfTrigger);
 		if (oddsOfTrigger>=1.0 && easterEggs)
 			return triggerEgg(1.0, oddsOfTrigger);
-		return easterEggs && (t.gen.nextDouble()*t.gen.nextDouble())<=(Math.abs(oddsOfTrigger)*(easterFrequency/100.0));
+		return easterEggs && (t.gen.nextDouble()*t.gen.nextDouble())<=(oddsOfTrigger*(easterFrequency/100.0));
 	}
 
 	public boolean triggerEgg(double num, double den)
@@ -209,20 +215,20 @@ class Cconfig implements Serializable, Parcelable
 		p.writeInt(gameNumber);
 		p.writeBooleanArray(new boolean[]
 				{
-				easterEggs,
-				schoolEggs,
-				GoTEggs,
-				ESEggs,
-				litEggs,
-				specMon,
-				gender,
-				twoGender,
-				specialGender,
-				customGender,
-				addressGender,
-				fullscreen,
-				autosave,
-				persist
+						easterEggs,
+						schoolEggs,
+						GoTEggs,
+						ESEggs,
+						litEggs,
+						specMon,
+						gender,
+						twoGender,
+						specialGender,
+						customGender,
+						addressGender,
+						fullscreen,
+						autosave,
+						persist
 				});
 	}
 
@@ -283,7 +289,7 @@ class Cconfig implements Serializable, Parcelable
 
 			public void writePrefs()
 			{
-				writePrefs(t.getSharedPreferences("RPG Preferences", 0));
+				writePrefs(t.getSharedPreferences(DefaultConfigFile, 0));
 			}
 
 			public void readPrefs (final SharedPreferences sp)
@@ -319,6 +325,6 @@ class Cconfig implements Serializable, Parcelable
 
 			public void readPrefs()
 			{
-				readPrefs(t.getSharedPreferences("RPG Preferences", 0));
+				readPrefs(t.getSharedPreferences(DefaultConfigFile, 0));
 			}
 }

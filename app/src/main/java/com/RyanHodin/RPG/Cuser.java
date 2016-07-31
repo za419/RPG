@@ -26,6 +26,7 @@ class Cuser implements Serializable, Parcelable
 	public Thread worker;
 	public boolean dead;
 	public boolean isArthur;
+	public boolean clearedGunstore;
 
 	public static MainActivity t;
 
@@ -41,6 +42,7 @@ class Cuser implements Serializable, Parcelable
 		buildGenderAddressComp();
 		buildGenderComp();
 		isArthur=false;
+		clearedGunstore=false;
 	}
 
 	private Cuser (Parcel in)
@@ -54,6 +56,7 @@ class Cuser implements Serializable, Parcelable
 		boolean vals []=new boolean[1];
 		in.readBooleanArray(vals);
 		isArthur=vals[0];
+		clearedGunstore=vals[1];
 	}
 
 	public void saveTo(SharedPreferences.Editor edit) // Does not commit changes. This is the responsibility of the calling function.
@@ -63,6 +66,7 @@ class Cuser implements Serializable, Parcelable
 		edit.putString("userGenderAddress", genderAddress);
 		edit.putInt("userParsedGender", parsedGender);
 		edit.putBoolean("userIsArthur", isArthur);
+		edit.putBoolean("userClearedGunstore", clearedGunstore);
 		weapon.saveTo(edit);
 		gold.saveTo(edit);
 		if (Build.VERSION.SDK_INT>=9)
@@ -78,6 +82,7 @@ class Cuser implements Serializable, Parcelable
 		genderAddress=sp.getString("userGenderAddress", genderAddress);
 		parsedGender=sp.getInt("userParsedGender", parsedGender);
 		isArthur=sp.getBoolean("userIsArthur", isArthur);
+		clearedGunstore=sp.getBoolean("userClearedGunstore", clearedGunstore);
 		if (Thread.interrupted())
 			return;
 		weapon.loadFrom(sp);
@@ -141,7 +146,7 @@ class Cuser implements Serializable, Parcelable
 		genderAddressComp.put("Multiple", "The One of Non-Singular Genders");
 		genderAddressComp.put("Unsure", "The Indecisive One");
 		genderAddressComp.put("The Dothraki do not follow your Genders", "The Rude Horseman");
-		genderAddressComp.put("Khalëësi", "Also Known As Daenarys Targaryen, Stormborn Mother of Dragons, Native Speaker of Valyrian");
+		genderAddressComp.put("Khaleesi", "Also Known As Daenarys Targaryen, Stormborn Mother of Dragons, Native Speaker of Valyrian");
 		genderAddressComp.put("Kanye West", "The Self-Worshipper");
 		genderAddressComp.put("Cheese", "The Delicious");
 		genderAddressComp.put("Raygun", "The Superweapon");
@@ -218,7 +223,7 @@ class Cuser implements Serializable, Parcelable
 		genderComp.put("Multiple", 15);
 		genderComp.put("Unsure", 4);
 		genderComp.put("The Dothraki do not follow your Genders", 16);
-		genderComp.put("Khalëësi", 17);
+		genderComp.put("Khaleesi", 17);
 		genderComp.put("Kanye West", 30);
 		genderComp.put("Cheese", 31);
 		genderComp.put("Raygun", 18);
@@ -255,7 +260,7 @@ class Cuser implements Serializable, Parcelable
 		if (tmp==null)
 			parsedGender=999999999;
 		else
-			parsedGender=tmp.intValue();
+			parsedGender=tmp;
 	}
 
 	public void commitSuicide()
@@ -422,7 +427,7 @@ class Cuser implements Serializable, Parcelable
 		if (o==null || !(o instanceof Cuser))
 			return false;
 		Cuser u=(Cuser)o;
-		return toString().equals(u.toString()) && gold.equals(u.gold) && weapon.equals(u.weapon);
+		return toString().equals(u.toString()) && gold.equals(u.gold) && weapon.equals(u.weapon) && isArthur==u.isArthur && clearedGunstore==u.clearedGunstore;
 	}
 
 	@Override
@@ -434,7 +439,7 @@ class Cuser implements Serializable, Parcelable
 	@Override
 	public String toString()
 	{
-		return name+(t.config.gender && t.config.addressGender ? " "+genderAddress : "");
+		return name+(t.config.gender && t.config.addressGender ? " "+genderAddress : "")+(isArthur ? ", King of the Britons" : "");
 	}
 
 	@Override
@@ -452,7 +457,11 @@ class Cuser implements Serializable, Parcelable
 		p.writeInt(parsedGender);
 		p.writeParcelable(weapon, n);
 		p.writeParcelable(gold, n);
-		p.writeBooleanArray(new boolean[] {isArthur});
+		p.writeBooleanArray(new boolean[]
+				{
+						isArthur,
+						clearedGunstore
+				});
 	}
 
 	public static final Parcelable.Creator<Cuser> CREATOR=new Parcelable.Creator<Cuser>()

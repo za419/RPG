@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
@@ -53,6 +54,12 @@ public class MainActivity extends Activity
 	public Random gen=new Random();
 	private static final String LogTag="RPG";
 	public static double TARGET_FPS=60.0; // This can be altered as time progresses.
+
+	// Constants for savegame data
+	public static final String SaveDataFile="RPG Savegames";
+	public static final String SaveDataGameCount="SaveGameCount";
+	public static final String SaveDataGameNamePrefix="SaveGame";
+	public static final String SaveGameFilePrefix="RPG save game ";
 
 	public Cconfig config=new Cconfig(); // To hold our configuration.
 	public Cuser user=new Cuser();
@@ -508,13 +515,16 @@ public class MainActivity extends Activity
 						ev.setOnFocusChangeListener(new OnFocusChangeListener()
 						{
 							@Override
-							public void onFocusChange(View v, boolean hasFocus)
+							public void onFocusChange(View unused, boolean hasFocus)
 							{
 								if (hasFocus && t.config.fullscreen)
 								{
 									t.setUi();
 									TextView tv=((TextView)findViewById(R.id.gameTitle));
-									LinearLayout.LayoutParams lp=(LinearLayout.LayoutParams)tv.getLayoutParams();
+									ViewGroup.LayoutParams params=tv.getLayoutParams();
+									if (params==null)
+										return;
+									LinearLayout.LayoutParams lp=(LinearLayout.LayoutParams)params;
 									int result=0;
 									int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
 									if (resourceId > 0) {
@@ -554,7 +564,7 @@ public class MainActivity extends Activity
 									// Close the soft keyboard, now that there's nothing for it to write to.
 									((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 									String str=view.getText().toString().trim();
-									if ("".equals(str) || str==null)
+									if ("".equals(str))
 										user.name="Blondie";
 									else
 										user.name=capitalize(str);
@@ -624,59 +634,59 @@ public class MainActivity extends Activity
 		SeekBar diff=(SeekBar)findViewById(R.id.configDifficulty);
 		diff.setMax(100);
 		diff.setProgress(config.difficulty);
-		diff.setOnSeekBarChangeListener(new OnSeekBarChangeListener ()
-		{
+		diff.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
-			public void onProgressChanged(SeekBar s, int lev, boolean user)
-			{
-				if (user)
-				{
-					config.difficulty=lev;
-					if (config.difficultyComputer!=null)
-					{
+			public void onProgressChanged(SeekBar s, int lev, boolean user) {
+				if (user) {
+					config.difficulty = lev;
+					if (config.difficultyComputer != null) {
 						config.difficultyComputer.interrupt();
-						config.difficultyComputer=null;
+						config.difficultyComputer = null;
 					}
 				}
 			}
 
-			@Override public void onStartTrackingTouch(SeekBar b){}
-			@Override public void onStopTrackingTouch(SeekBar b){}
+			@Override
+			public void onStartTrackingTouch(SeekBar b) {
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar b) {
+			}
 		});
 
 		SeekBar delay=(SeekBar)findViewById(R.id.configDelay);
 		delay.setMax(200);
-		delay.setProgress((int)(100.0*config.pauseMultiplier));
-		delay.setOnSeekBarChangeListener(new OnSeekBarChangeListener ()
-		{
+		delay.setProgress((int) (100.0 * config.pauseMultiplier));
+		delay.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
-			public void onProgressChanged(SeekBar s, int lev, boolean user)
-			{
-				if (user)
-				{
-					if (lev==0 ^ config.pauseMultiplier==0.0)
-						showConfigBatch(lev!=0);
-					config.pauseMultiplier=lev/100.0;
-					if (lev<=60 && lev>0)
-					{
-						config.batching=(int)Math.min(Math.pow(config.pauseMultiplier, -1), 10)-1;
-						((SeekBar)findViewById(R.id.configBatch)).setProgress(config.batching);
+			public void onProgressChanged(SeekBar s, int lev, boolean user) {
+				if (user) {
+					if (lev == 0 ^ config.pauseMultiplier == 0.0)
+						showConfigBatch(lev != 0);
+					config.pauseMultiplier = lev / 100.0;
+					if (lev <= 60 && lev > 0) {
+						config.batching = (int) Math.min(Math.pow(config.pauseMultiplier, -1), 10) - 1;
+						((SeekBar) findViewById(R.id.configBatch)).setProgress(config.batching);
 					}
 				}
 			}
 
-			@Override public void onStartTrackingTouch(SeekBar b){}
-			@Override public void onStopTrackingTouch(SeekBar b){}
+			@Override
+			public void onStartTrackingTouch(SeekBar b) {
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar b) {
+			}
 		});
-		showConfigBatch(config.pauseMultiplier!=0);
+		showConfigBatch(config.pauseMultiplier != 0);
 
 		Switch EE=(Switch)findViewById(R.id.configEasterEgg);
 		EE.setChecked(config.easterEggs);
-		EE.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
+		EE.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton swit, boolean on)
-			{
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
 				showConfigEasterEggOptions(on);
 				config.easterEggs = on;
 			}
@@ -685,22 +695,18 @@ public class MainActivity extends Activity
 
 		Switch SM=(Switch)findViewById(R.id.configSpecMon);
 		SM.setChecked(config.specMon);
-		SM.setOnCheckedChangeListener(new OnCheckedChangeListener ()
-		{
+		SM.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton b, boolean on)
-			{
-				config.specMon=on;
+			public void onCheckedChanged(CompoundButton b, boolean on) {
+				config.specMon = on;
 			}
 		});
 
 		Switch TG=(Switch)findViewById(R.id.configGenderOptionsTwo);
 		TG.setChecked(config.twoGender);
-		TG.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
+		TG.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton swit, boolean on)
-			{
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
 				showConfigTwoGenderOptions(!on);
 				config.twoGender = on;
 			}
@@ -708,11 +714,9 @@ public class MainActivity extends Activity
 
 		Switch G=(Switch)findViewById(R.id.configGender);
 		G.setChecked(config.gender);
-		G.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
+		G.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton swit, boolean on)
-			{
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
 				showConfigGenderOptions(on);
 				config.gender = on;
 			}
@@ -721,28 +725,33 @@ public class MainActivity extends Activity
 
 		Switch FS=(Switch)findViewById(R.id.configFullscreen);
 		FS.setChecked(config.fullscreen);
-		FS.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
+		FS.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton swit, boolean on)
-			{
-				config.fullscreen=on;
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
+				config.fullscreen = on;
 				t.setUi();
 			}
 		});
 
 		Switch AS=(Switch)findViewById(R.id.configAutosave);
 		AS.setChecked(config.autosave);
-		AS.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
+		AS.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged (CompoundButton swit, boolean on)
-			{
-				config.autosave=on;
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
+				config.autosave = on;
 				showConfigAutosaveWarning(on);
 			}
 		});
 		showConfigAutosaveWarning(config.autosave);
+
+		Switch PR=(Switch)findViewById(R.id.configPersist);
+		PR.setChecked(config.persist);
+		PR.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton swit, boolean on) {
+				config.persist=on;
+			}
+		});
 	}
 
 	private void showConfigBatch(boolean show)
@@ -999,12 +1008,12 @@ public class MainActivity extends Activity
 
 	public boolean deleteSave(final int savenum) // Returns true if there was an error
 	{
-		SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
-		int num=sp.getInt("SaveGameCount", 0); // Total number of savegames pre-edit
+		SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
+		int num=sp.getInt(SaveDataGameCount, 0); // Total number of savegames pre-edit
 		if (num<savenum)
 			return true;
 		SharedPreferences.Editor edit=sp.edit();
-		edit.putInt("SaveGameCount", num-1); // There is now one less savegame.
+		edit.putInt(SaveDataGameCount, num-1); // There is now one less savegame.
 		if (Build.VERSION.SDK_INT>=9)
 			edit.apply();
 		else
@@ -1016,8 +1025,12 @@ public class MainActivity extends Activity
 			saveGameTo(i);
 		}
 
-		edit=getSharedPreferences("RPG save game "+num, 0).edit(); // Clear out the last savegame. This is the best we can do with SharedPreferences.
+		edit=getSharedPreferences(SaveGameFilePrefix+num, 0).edit(); // Clear out the last savegame. This is the best we can do with SharedPreferences.
 		edit.clear();
+		if (Build.VERSION.SDK_INT>=9)
+			edit.apply();
+		else
+			edit.commit();
 
 		if (config.gameNumber==savenum) // Unset the game number if we deleted the save
 			config.gameNumber=-1;
@@ -1032,6 +1045,7 @@ public class MainActivity extends Activity
 				Toast.makeText(t, "Savegame "+savenum+" deleted.", Toast.LENGTH_LONG).show();
 			}
 		});
+		new SavefileBackupAgent().updateHelper();
 		return false;
 	}
 
@@ -1148,7 +1162,7 @@ public class MainActivity extends Activity
 		Message m=Message.obtain();
 		if (m==null)
 			m=new Message();
-		m.obj=new String(""+c);
+		m.obj= "" + c;
 		m.what=1;
 		if (pause(gen.nextInt(gen.nextInt(80)+1)+gen.nextInt(gen.nextInt(80)+1)+10+m.getWhen())) // This line controls typing speed across the entire Activity.
 
@@ -1160,6 +1174,7 @@ public class MainActivity extends Activity
 			 *   (This may not be a bad thing, if it is intentional.)              *
 			 * Finally, if it isn't random enough, then typing will be monotonous. *
 			 * Be careful when tweaking it. TAKE BACKUPS!!!                        *
+			 * (Thank the gods for version control. All hail Git!)                 *
 			 ***********************************************************************/
 
 		{
@@ -1190,6 +1205,7 @@ public class MainActivity extends Activity
 			 *   (This may not be a bad thing, if it is intentional.)              *
 			 * Finally, if it isn't random enough, then typing will be monotonous. *
 			 * Be careful when tweaking it. TAKE BACKUPS!!!                        *
+			 * (Thank the gods for version control. All hail Git!)                 *
 			 ***********************************************************************/
 
 		{
@@ -1233,7 +1249,7 @@ public class MainActivity extends Activity
 
 		public static parcelableView getByViewId (int id)
 		{
-			int view=-1;
+			int view;
 			switch (id)
 			{
 			case R.id.aboutLayout:
@@ -1417,7 +1433,7 @@ public class MainActivity extends Activity
 
 	public String capitalize(String str) // Capitalize the fist character of a string. Usually, this can be used to guarantee that an output is gramatically correct.
 	{
-		return new String(Character.toUpperCase(str.charAt(0))+str.substring(1));
+		return Character.toUpperCase(str.charAt(0)) + str.substring(1);
 	}
 
 	public boolean frameTick()
@@ -1457,7 +1473,7 @@ public class MainActivity extends Activity
 		Thread.yield();
 		if (ms==0)
 			return false;
-		ms*=Math.max(Math.min(config.pauseMultiplier, .1), 1);
+		ms*=Math.min(Math.max(config.pauseMultiplier, .1), 1);
 		synchronized (t)
 		{
 			try
@@ -1512,7 +1528,7 @@ public class MainActivity extends Activity
 	{
 		final Animation a=AnimationUtils.loadAnimation(this, R.anim.fadeout);
 		final View v=findViewById(currentView);
-		if (v!=null) // Even if v is null, we let the game wait for the animation to not play 
+		if (v!=null) // Even if v is null, we let the game wait for the animation to not play
 			// This avoids some issues with code that expects fadeout() to play - Even if something happens to currentView, we should still let that code catch up.
 		{
 			runOnUiThread(new Runnable()
@@ -1531,28 +1547,30 @@ public class MainActivity extends Activity
 	{
 		if (game==null)
 			return; // If game is null, we don't have anything to save.
-		SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
+		SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
 		SharedPreferences.Editor edit=sp.edit();
+		boolean updateHelper=false; // Whether we should inform the backup agent of a new save
 		int num;
 		if (config.gameNumber==-1)
 		{
-			num=sp.getInt("SaveGameCount", 0)+1;
+			num=sp.getInt(SaveDataGameCount, 0)+1;
 			config.gameNumber=num;
-			edit.putInt("SaveGameCount", num);
+			edit.putInt(SaveDataGameCount, num);
+			updateHelper=true;
 		}
 		else
 			num=config.gameNumber;
 
 		if (user.isArthur) // Special condition for King Arthur
-			edit.putString("SaveGame"+num, user.toString()+", King of the Britons.");
+			edit.putString(SaveDataGameNamePrefix+num, user.toString()+", King of the Britons.");
 		else
-			edit.putString("SaveGame"+num, user.toString()); // Update the save name. TODO change this in a later release, when save names can be changed.
+			edit.putString(SaveDataGameNamePrefix+num, user.toString()); // Update the save name. TODO change this in a later release, when save names can be changed.
 		if (Build.VERSION.SDK_INT>=9)
 			edit.apply();
 		else
 			edit.commit();
 
-		sp=getSharedPreferences("RPG save game "+num, 0);
+		sp=getSharedPreferences(SaveGameFilePrefix+num, 0);
 		edit=sp.edit();
 		user.saveTo(edit);
 		game.saveTo(edit);
@@ -1562,13 +1580,16 @@ public class MainActivity extends Activity
 			edit.apply();
 		else
 			edit.commit();
+
+		if (updateHelper)
+			new SavefileBackupAgent().updateHelper();
 	}
 
 	public void saveGameTo (int n) // Saves the current game to slot n or SaveGameCount+1, whichever is lower, without permanently mutating config.
 	{
 		int tmp=config.gameNumber;
-		SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
-		int num=sp.getInt("SaveGameCount", 0)+1;
+		SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
+		int num=sp.getInt(SaveDataGameCount, 0)+1;
 		config.gameNumber=Math.min(n, num);
 		saveGame();
 		config.gameNumber=tmp;
@@ -1576,7 +1597,7 @@ public class MainActivity extends Activity
 
 	public void loadGame()
 	{
-		SharedPreferences sp=getSharedPreferences("RPG save game "+config.gameNumber, 0);
+		SharedPreferences sp=getSharedPreferences(SaveGameFilePrefix+config.gameNumber, 0);
 		if (Thread.interrupted())
 			return;
 		user.loadFrom(sp);
@@ -1600,19 +1621,22 @@ public class MainActivity extends Activity
 		if (config.persist)
 			bak=config;
 		config.readPrefs(sp);
-		if (bak.persist) // Restore config values that shouldn't be changed in save load 
+		if (bak!=null && bak.persist) // Restore config values that shouldn't be changed in save load
 		{
 			config.batching=bak.batching;
 			config.fullscreen=bak.fullscreen;
 			config.pauseMultiplier=bak.pauseMultiplier;
+			config.autosave=bak.autosave;
 		}
 	}
 
 	public void loadGameFrom (int n) // Loads the current game from slot n without permanently mutating config.
 	{
 		int tmp=config.gameNumber;
-		SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
+		SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
 		config.gameNumber=n;
+		if (n>sp.getInt(SaveDataGameCount, 0))
+			; // TODO: Generate an error
 		loadGame();
 		config.gameNumber=tmp;
 	}
@@ -1937,8 +1961,8 @@ public class MainActivity extends Activity
 
 	public List<Button> getSavedGameButtons (final SaveCallback sc) // sc.call() is called on the UI thread with the number of the save chosen by the user.
 	{
-		final SharedPreferences sp=getSharedPreferences("RPG Savegames", 0);
-		final int max=sp.getInt("SaveGameCount", -1);
+		final SharedPreferences sp=getSharedPreferences(SaveDataFile, 0);
+		final int max=sp.getInt(SaveDataGameCount, -1);
 		if (max!=-1)
 		{
 			List<Button> out=new ArrayList<Button>(max);
@@ -1946,13 +1970,13 @@ public class MainActivity extends Activity
 			for (int i=0; i<=max; ++i)
 			{
 				Button b=new Button(t);
-				String s=sp.getString("SaveGame"+i, ""); // Get the saved name.
+				String s=sp.getString(SaveDataGameNamePrefix+i, ""); // Get the saved name.
 				if (!s.equals("")) // If its empty, we want it. Else, we want it formatted.
 					s=":\n"+s;
 				b.setText("Savegame "+i+s);
 				b.setTag(i);
 				b.setOnClickListener(new OnClickListener()
-				{	
+				{
 					@Override
 					public void onClick(View v)
 					{
@@ -1998,7 +2022,7 @@ public class MainActivity extends Activity
 			return "";
 		if (count==1)
 			return what;
-		StringBuffer sb=new StringBuffer(what);
+		StringBuilder sb=new StringBuilder(what);
 		for (; count>1; --count)
 			sb.append(what);
 		return sb.toString();
@@ -2010,7 +2034,7 @@ public class MainActivity extends Activity
 			return "";
 		if (count==1)
 			return ""+what;
-		StringBuffer sb=new StringBuffer(what);
+		StringBuilder sb=new StringBuilder(""+what);
 		for (; count>1; --count)
 			sb.append(what);
 		return sb.toString();

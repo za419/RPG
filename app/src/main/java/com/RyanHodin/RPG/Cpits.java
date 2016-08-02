@@ -1,16 +1,22 @@
 package com.RyanHodin.RPG;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.io.Serializable;
+
 /**
  * Created by Ryan on 8/2/2016.
  */
-class Cpits {
+class Cpits implements Serializable, Parcelable {
 	public Cgame game;
 	private MainActivity t;
+
+	private static final long serialVersionUID=0L; // Update when necessary
 
 	byte number;
 	byte stage;
@@ -29,6 +35,47 @@ class Cpits {
 		input2=0;
 		hasAssaultedHQ=false;
 	}
+
+	private Cpits(Parcel in)
+	{
+		number=in.readByte();
+		stage=in.readByte();
+		input=in.readByte();
+		input2=in.readByte();
+		hasAssaultedHQ=in.readByte()==1; // Saved as a byte. Correct this if we ever have multiple bools
+	}
+
+	@Override
+	public int describeContents()
+	{
+		return 10;
+	}
+
+	@Override
+	public void writeToParcel(Parcel out, int unused)
+	{
+		out.writeByte(number);
+		out.writeByte(stage);
+		out.writeByte(input);
+		out.writeByte(input2);
+		out.writeByte((byte)(hasAssaultedHQ ? 1 : 0)); // Saved as a byte. Correct this if we ever have multiple bools
+	}
+
+	public static final Parcelable.Creator<Cpits> CREATOR=new Parcelable.Creator<Cpits> ()
+	{
+		@Override
+		public Cpits createFromParcel (Parcel in)
+		{
+			return new Cpits(in);
+		}
+
+		@Override
+		public Cpits[] newArray (int n)
+		{
+			return new Cpits[n];
+		}
+	};
+
 	public void runStage()
 	{
 		if (t.config.autosave)

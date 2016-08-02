@@ -1,6 +1,7 @@
 package com.RyanHodin.RPG;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
@@ -73,6 +74,10 @@ class Cshadows implements Parcelable, Serializable{
 		edit.putInt("shadowsNumber", number);
 		edit.putInt("shadowsStage", stage);
 		edit.putInt("shadowsInput", input);
+		if (Build.VERSION.SDK_INT>=9)
+			edit.apply();
+		else
+			edit.commit();
 	}
 
 	public void loadFrom(SharedPreferences sp)

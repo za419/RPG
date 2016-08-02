@@ -1,11 +1,12 @@
 package com.RyanHodin.RPG;
 
-import android.os.*;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.util.*;
 import java.io.Serializable;
-
-import android.content.*;
+import java.util.Random;
 
 class Cgold implements Serializable, Parcelable
 {
@@ -81,7 +82,7 @@ class Cgold implements Serializable, Parcelable
 		{
 			interest=Math.abs(interest);
 			compoundsPerCycle=Math.abs(compoundsPerCycle);
-			if (compoundsPerCycle==0) // Continuous compounding
+			if (compoundsPerCycle==CONTINUOUSLY_COMPOUNDED) // Continuous compounding
 				amount*=Math.pow(Math.E, interest);
 			else
 				amount*=Math.pow(1+(interest/compoundsPerCycle), compoundsPerCycle);
@@ -121,7 +122,7 @@ class Cgold implements Serializable, Parcelable
 
 	public static String toString(Cgold c)
 	{
-		return c.toString(); 
+		return c.toString();
 	}
 
 	@Override

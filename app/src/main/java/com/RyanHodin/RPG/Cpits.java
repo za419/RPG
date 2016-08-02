@@ -1,5 +1,7 @@
 package com.RyanHodin.RPG;
 
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -75,6 +77,28 @@ class Cpits implements Serializable, Parcelable {
 			return new Cpits[n];
 		}
 	};
+
+	public void saveTo(SharedPreferences.Editor edit)
+	{
+		edit.putInt("pitsNumber", number);
+		edit.putInt("pitsStage", stage);
+		edit.putInt("pitsInput", input);
+		edit.putInt("pitsInput2", input2);
+		edit.putBoolean("pitsHasAssaultedHQ", hasAssaultedHQ);
+		if (Build.VERSION.SDK_INT>=9)
+			edit.apply();
+		else
+			edit.commit();
+	}
+
+	public void loadFrom(SharedPreferences sp)
+	{
+		number=(byte)sp.getInt("pitsNumber", number);
+		stage=(byte)sp.getInt("pitsStage", stage);
+		input=(byte)sp.getInt("pitsInput", input);
+		input2=(byte)sp.getInt("pitsInput2", input2);
+		hasAssaultedHQ=sp.getBoolean("pitsHasAssaultedHQ", hasAssaultedHQ);
+	}
 
 	public void runStage()
 	{

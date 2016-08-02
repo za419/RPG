@@ -61,6 +61,7 @@ class Cgame implements Serializable, Parcelable
 		inputted=in.readInt();
 
 		shadows=in.readParcelable(Cshadows.class.getClassLoader());
+		shadows.game=this;
 		pits=in.readParcelable(Cpits.class.getClassLoader());
 	}
 

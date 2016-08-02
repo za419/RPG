@@ -5854,35 +5854,6 @@ class Cgame implements Serializable, Parcelable
 		}
 			};
 
-			// Data-Only classes: NOT CONSERVED through onRestoreInstanceState()
-			private static class keypressMinigame
-			{
-				public int presses;
-				public double deltaX;
-				public double deltaY;
-				public double timeRemaining;
-				public boolean done;
-				public View button;
-
-				public keypressMinigame()
-				{
-					presses=0;
-					deltaX=t.gen.nextGaussian();
-					deltaY=t.gen.nextGaussian();
-					timeRemaining=t.gen.nextInt(3)+3+t.gen.nextGaussian();
-					done=false;
-				}
-
-				public keypressMinigame(double speedMult)
-				{
-					presses=0;
-					deltaX=speedMult*t.gen.nextGaussian();
-					deltaY=speedMult*t.gen.nextGaussian();
-					timeRemaining=t.gen.nextInt(3)+3+t.gen.nextGaussian();
-					done=false;
-				}
-			}
-
 			private static class targetingMinigame
 			{
 				public static class output // The type for returned data.

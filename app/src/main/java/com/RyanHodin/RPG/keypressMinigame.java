@@ -14,8 +14,12 @@ class keypressMinigame
 	public boolean done;
 	public View button;
 
+	private MainActivity t;
+
 	public keypressMinigame()
 	{
+		t=Cgame.t;
+
 		presses=0;
 		deltaX=t.gen.nextGaussian();
 		deltaY=t.gen.nextGaussian();
@@ -25,6 +29,8 @@ class keypressMinigame
 
 	public keypressMinigame(double speedMult)
 	{
+		t=Cgame.t;
+
 		presses=0;
 		deltaX=speedMult*t.gen.nextGaussian();
 		deltaY=speedMult*t.gen.nextGaussian();

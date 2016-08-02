@@ -62,6 +62,7 @@ class Cgame implements Serializable, Parcelable
 
 		shadows=in.readParcelable(Cshadows.class.getClassLoader());
 		pits=in.readParcelable(Cpits.class.getClassLoader());
+		pits.game=this;
 	}
 
 	public void saveTo(SharedPreferences.Editor edit)

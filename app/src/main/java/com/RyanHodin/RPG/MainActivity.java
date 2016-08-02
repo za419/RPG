@@ -99,6 +99,7 @@ public class MainActivity extends Activity
 		Cuser.t=this;
 		Cgame.t=this;
 		Cweapon.t=this;
+		Cshadows.t=this;
 		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 	}
 

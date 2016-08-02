@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 class Cshadows implements Parcelable, Serializable{
 	public Cgame game;
-	private MainActivity t;
+	public static MainActivity t;
 
 	private static final long serialVersionUID=0L; // Augment when appropriate
 
@@ -24,7 +24,6 @@ class Cshadows implements Parcelable, Serializable{
 	byte input;
 
 	public Cshadows() {
-		t=Cgame.t;
 		game=t.game;
 
 		number=(byte)((t.config.difficultyMult*t.gen.nextInt(10))+3);
@@ -33,9 +32,6 @@ class Cshadows implements Parcelable, Serializable{
 	}
 
 	private Cshadows(Parcel in) {
-		t=Cgame.t;
-		game=t.game;
-
 		number=in.readByte();
 		stage=in.readByte();
 		input=in.readByte();

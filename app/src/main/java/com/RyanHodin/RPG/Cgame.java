@@ -49,6 +49,8 @@ class Cgame implements Serializable, Parcelable
 		stage=0;
 		line=0;
 		inputted=-1;
+
+		shadows=new CShadows();
 	}
 
 	private Cgame (Parcel in)
@@ -56,6 +58,8 @@ class Cgame implements Serializable, Parcelable
 		stage=in.readInt();
 		line=in.readInt();
 		inputted=in.readInt();
+
+		shadows=in.readParcelable(CShadows.class.getClassLoader());
 	}
 
 	public void saveTo(SharedPreferences.Editor edit)
@@ -5394,6 +5398,8 @@ class Cgame implements Serializable, Parcelable
 		out.writeInt(--stage);
 		out.writeInt(line);
 		out.writeInt(inputted);
+
+		out.writeParcelable(shadows, n);
 	}
 
 	public static final Parcelable.Creator<Cgame> CREATOR=new Parcelable.Creator<Cgame> ()

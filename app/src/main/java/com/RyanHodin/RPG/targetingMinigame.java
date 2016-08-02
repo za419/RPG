@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 /**
  * Created by Ryan on 8/2/2016.
  */
-public class targetingMinigame
+class targetingMinigame
 {
 	public static class output // The type for returned data.
 	{

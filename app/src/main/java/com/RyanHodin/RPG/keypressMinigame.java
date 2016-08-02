@@ -5,7 +5,7 @@ import android.view.View;
 /**
  * Created by Ryan on 8/2/2016.
  */
-public class keypressMinigame
+class keypressMinigame
 {
 	public int presses;
 	public double deltaX;

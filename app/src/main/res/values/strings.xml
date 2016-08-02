@@ -62,6 +62,7 @@
 		Safety checks were added to the difficultyComputer, to prevent some crashes.
 		Began storing a changelog, and displaying it in the bottom of the about section.
 		Added a boilerplate of the Save Manager, which shall be implemented later to handle the management of save storage - Added a rudimentary deletion system to it as well.
+		Allow saving of information about the Pits and the Highway, fixing the issue referenced in 0.5.0b notes.
 		Added Excalibur - A LEGENDARY TYPE_SHARP weapon, obtainable only after triggering an easter egg - Find out how to trigger it, and you'll get quite a boon!
 		Major stability fixes - RPG was extensively tested, fixed, and re-tested, to handle every bug possible, from guaranteed crashes, to occasional crashes, even to minor visual issues. All in all, 55 bugs, 15 of which were crash-sources, were fixed."
   </string>

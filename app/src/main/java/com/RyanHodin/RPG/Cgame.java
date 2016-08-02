@@ -61,6 +61,7 @@ class Cgame implements Serializable, Parcelable
 		inputted=in.readInt();
 
 		shadows=in.readParcelable(Cshadows.class.getClassLoader());
+		pits=in.readParcelable(Cpits.class.getClassLoader());
 	}
 
 	public void saveTo(SharedPreferences.Editor edit)
@@ -4491,10 +4492,11 @@ class Cgame implements Serializable, Parcelable
 		out.writeInt(inputted);
 
 		out.writeParcelable(shadows, n);
+		out.writeParcelable(pits, n);
 	}
 
 	public static final Parcelable.Creator<Cgame> CREATOR=new Parcelable.Creator<Cgame> ()
-			{
+	{
 		@Override
 		public Cgame createFromParcel (Parcel in)
 		{
@@ -4506,5 +4508,5 @@ class Cgame implements Serializable, Parcelable
 		{
 			return new Cgame[n];
 		}
-			};
+	};
 }

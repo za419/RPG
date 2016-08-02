@@ -42,7 +42,7 @@ class Cgame implements Serializable, Parcelable
 
 	public static MainActivity t;
 
-	public CShadows shadows; // runShadows
+	public Cshadows shadows; // runShadows
 
 	public Cgame()
 	{
@@ -50,7 +50,7 @@ class Cgame implements Serializable, Parcelable
 		line=0;
 		inputted=-1;
 
-		shadows=new CShadows();
+		shadows=new Cshadows();
 	}
 
 	private Cgame (Parcel in)
@@ -59,7 +59,7 @@ class Cgame implements Serializable, Parcelable
 		line=in.readInt();
 		inputted=in.readInt();
 
-		shadows=in.readParcelable(CShadows.class.getClassLoader());
+		shadows=in.readParcelable(Cshadows.class.getClassLoader());
 	}
 
 	public void saveTo(SharedPreferences.Editor edit)

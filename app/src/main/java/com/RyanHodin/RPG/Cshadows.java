@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * Created by Ryan on 8/2/2016.
  */
-class CShadows implements Parcelable, Serializable{
+class Cshadows implements Parcelable, Serializable{
 	public Cgame game;
 	private MainActivity t;
 
@@ -21,7 +21,7 @@ class CShadows implements Parcelable, Serializable{
 	byte stage;
 	byte input;
 
-	public CShadows() {
+	public Cshadows() {
 		t=Cgame.t;
 		game=t.game;
 
@@ -30,7 +30,7 @@ class CShadows implements Parcelable, Serializable{
 		input=0;
 	}
 
-	private CShadows(Parcel in) {
+	private Cshadows(Parcel in) {
 		t=Cgame.t;
 		game=t.game;
 
@@ -52,18 +52,18 @@ class CShadows implements Parcelable, Serializable{
 		out.writeByte(input);
 	}
 
-	public static final Parcelable.Creator<CShadows> CREATOR=new Parcelable.Creator<CShadows> ()
+	public static final Parcelable.Creator<Cshadows> CREATOR=new Parcelable.Creator<Cshadows> ()
 	{
 		@Override
-		public CShadows createFromParcel (Parcel in)
+		public Cshadows createFromParcel (Parcel in)
 		{
-			return new CShadows(in);
+			return new Cshadows(in);
 		}
 
 		@Override
-		public CShadows[] newArray (int n)
+		public Cshadows[] newArray (int n)
 		{
-			return new CShadows[n];
+			return new Cshadows[n];
 		}
 	};
 

@@ -1,15 +1,21 @@
 package com.RyanHodin.RPG;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.io.Serializable;
+
 /**
  * Created by Ryan on 8/2/2016.
  */
-public class CShadows {
+public class CShadows implements Parcelable, Serializable{
 	public Cgame game;
 	private MainActivity t;
+
+	private static final long serialVersionUID=0L; // Augment when appropriate
 
 	byte number;
 	byte stage;
@@ -23,6 +29,43 @@ public class CShadows {
 		stage=0;
 		input=0;
 	}
+
+	private CShadows(Parcel in) {
+		t=Cgame.t;
+		game=t.game;
+
+		number=in.readByte();
+		stage=in.readByte();
+		input=in.readByte();
+	}
+
+	@Override
+	public int describeContents()
+	{
+		return 9;
+	}
+
+	@Override
+	public void writeToParcel(Parcel out, int unused) {
+		out.writeByte(number);
+		out.writeByte(stage);
+		out.writeByte(input);
+	}
+
+	public static final Parcelable.Creator<CShadows> CREATOR=new Parcelable.Creator<CShadows> ()
+	{
+		@Override
+		public CShadows createFromParcel (Parcel in)
+		{
+			return new CShadows(in);
+		}
+
+		@Override
+		public CShadows[] newArray (int n)
+		{
+			return new CShadows[n];
+		}
+	};
 
 	public void runStage()
 	{

@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * Created by Ryan on 8/2/2016.
  */
-public class CShadows implements Parcelable, Serializable{
+class CShadows implements Parcelable, Serializable{
 	public Cgame game;
 	private MainActivity t;
 

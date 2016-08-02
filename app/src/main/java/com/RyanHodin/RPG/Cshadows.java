@@ -102,7 +102,7 @@ class Cshadows implements Parcelable, Serializable{
 		}
 
 		if (number==0)
-			runStage();
+			game.runStage();
 		else
 		{
 			if (stage==0)

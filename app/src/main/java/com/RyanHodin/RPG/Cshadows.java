@@ -1,5 +1,6 @@
 package com.RyanHodin.RPG;
 
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
@@ -66,6 +67,20 @@ class Cshadows implements Parcelable, Serializable{
 			return new Cshadows[n];
 		}
 	};
+
+	public void saveTo(SharedPreferences.Editor edit)
+	{
+		edit.putInt("shadowsNumber", number);
+		edit.putInt("shadowsStage", stage);
+		edit.putInt("shadowsInput", input);
+	}
+
+	public void loadFrom(SharedPreferences sp)
+	{
+		number=(byte)sp.getInt("shadowsNumber", number);
+		stage=(byte)sp.getInt("shadowsStage", stage);
+		input=(byte)sp.getInt("shadowsInput", input);
+	}
 
 	public void runStage()
 	{

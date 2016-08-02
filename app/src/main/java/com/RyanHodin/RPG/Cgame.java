@@ -70,6 +70,7 @@ class Cgame implements Serializable, Parcelable
 		edit.putInt("gameLine", line);
 		edit.putInt("gameInputted", inputted);
 		shadows.saveTo(edit);
+		pits.saveTo(edit);
 		if (Build.VERSION.SDK_INT>=9)
 			edit.apply();
 		else
@@ -82,6 +83,7 @@ class Cgame implements Serializable, Parcelable
 		line=sp.getInt("gameLine", line);
 		inputted=sp.getInt("gameInputted", inputted);
 		shadows.loadFrom(sp);
+		pits.loadFrom(sp);
 	}
 
 	public void runStage()

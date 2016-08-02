@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 class Cpits implements Serializable, Parcelable {
 	public Cgame game;
-	private MainActivity t;
+	public static MainActivity t;
 
 	private static final long serialVersionUID=0L; // Update when necessary
 
@@ -28,7 +28,6 @@ class Cpits implements Serializable, Parcelable {
 
 	public Cpits()
 	{
-		t=Cgame.t;
 		game=t.game;
 
 		number=(byte)(t.gen.nextInt(6)+3);

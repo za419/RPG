@@ -1582,7 +1582,7 @@ public class MainActivity extends Activity
 			edit.commit();
 
 		if (updateHelper)
-			new SavefileBackupAgent().updateHelper();
+			new SavefileBackupAgent();
 	}
 
 	public void saveGameTo (int n) // Saves the current game to slot n or SaveGameCount+1, whichever is lower, without permanently mutating config.

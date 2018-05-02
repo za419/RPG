@@ -1997,7 +1997,7 @@ public class MainActivity extends Activity
 			if (gen.nextDouble()>config.difficultyMult)
 				user.dead=false;
 		}*/
-		user.dead=(((oddsOfDeath+config.difficultyMult)/2)<gen.nextDouble());
+		user.dead=(((oddsOfDeath+config.difficultyMult)/2)>=gen.nextDouble());
 		//if (config.difficulty<50) // Runtime debugging
 		//	user.dead=false; // Debugging only
 		return user.dead;

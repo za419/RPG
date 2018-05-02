@@ -1045,7 +1045,7 @@ public class MainActivity extends Activity
 				Toast.makeText(t, "Savegame "+savenum+" deleted.", Toast.LENGTH_LONG).show();
 			}
 		});
-		new SavefileBackupAgent().updateHelper();
+		new SavefileBackupAgent();
 		return false;
 	}
 

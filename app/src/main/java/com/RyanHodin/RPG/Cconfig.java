@@ -198,6 +198,29 @@ class Cconfig implements Serializable, Parcelable
 		computerPaused=false;
 	}
 
+	// Used for logging
+	public String statusMessage() {
+		return "Configuration status, game "+gameNumber+":\n"+
+				"\tdifficulty:        "+difficulty+"\n"+
+				"\t  multiplier:      "+difficultyMult+"\n"+
+				"\teaster eggs:       "+(easterEggs ? "on" : "off")+"\n"+
+				"\t  frequency:       "+easterFrequency+"\n"+
+				"\t  school:          "+(schoolEggs ? "on" : "off")+"\n"+
+				"\t  GoT:             "+(GoTEggs ? "on" : "off")+"\n"+
+				"\t  literature:      "+(litEggs ? "on" : "off")+"\n"+
+				"\tspecial actions:   "+(specMon ? "on" : "off")+"\n"+
+				"\tgender:            "+(gender ? "on" : "off")+"\n"+
+				"\t  two only:        "+(twoGender ? "on" : "off")+"\n"+
+				"\t  special:         "+(specialGender ? "on" : "off")+"\n"+
+				"\t  custom:          "+(customGender ? "on" : "off")+"\n"+
+				"\t  addressing:      "+(addressGender ? "on" : "off")+"\n"+
+				"\tfullscreen:        "+(fullscreen ? "on" : "off")+"\n"+
+				"\tautosave:          "+(autosave ? "on" : "off")+"\n"+
+				"\tconfig peristence: "+(persist ? "on" : "off")+"\n"+
+				"\tpause multiplier:  "+pauseMultiplier+"\n"+
+				"\tbatching level:    "+batching;
+	}
+
 	@Override
 	public int describeContents()
 	{

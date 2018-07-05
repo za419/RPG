@@ -40,6 +40,9 @@ class Cpits implements Serializable, Parcelable {
 
 	private Cpits(Parcel in)
 	{
+		t=Cgame.t;
+		game=t.game;
+
 		number=in.readByte();
 		stage=in.readByte();
 		input=in.readByte();

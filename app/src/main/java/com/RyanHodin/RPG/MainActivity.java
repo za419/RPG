@@ -484,6 +484,8 @@ public class MainActivity extends Activity
 
 	public void startPlay (View v)
 	{
+		log(config.statusMessage());
+
 		th=new Thread (new Runnable()
 		{
 			@Override

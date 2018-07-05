@@ -218,7 +218,7 @@ class Cconfig implements Serializable, Parcelable
 				"\tautosave:          "+(autosave ? "on" : "off")+"\n"+
 				"\tconfig peristence: "+(persist ? "on" : "off")+"\n"+
 				"\tpause multiplier:  "+pauseMultiplier+"\n"+
-				"\tbatching level:    "+batching;
+				"\tbatching level:    "+batching+"\n";
 	}
 
 	@Override

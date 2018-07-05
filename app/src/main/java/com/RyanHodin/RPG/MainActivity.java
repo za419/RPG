@@ -155,6 +155,7 @@ public class MainActivity extends Activity
 												public void run()
 												{
 													t.loadGame();
+													t.log(t.config.statusMessage());
 													t.game.runStage();
 												}
 											});

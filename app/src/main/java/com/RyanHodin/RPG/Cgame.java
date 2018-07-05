@@ -88,6 +88,8 @@ class Cgame implements Serializable, Parcelable
 
 	public void runStage()
 	{
+		t.log("Running stage "+stage+". Line "+line+", inputted "+inputted);
+
 		t.displayHandler.removeMessages(1);
 		if (Thread.interrupted())
 			return;
